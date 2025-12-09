@@ -146,8 +146,8 @@
               <!-- Single Widget -->
               <div class="footer-widget f-about">
                 <div class="logo">
-                  <a href="index.html">
-                    <img src="{{asset('front/images/logo.svg')}}" alt="#" class="img-fluid" />
+                  <a href="{{ url('/') }}">
+                    <img src="{{asset('front/images/logo-og.png')}}" alt="#" class="img-fluid" />
                   </a>
                 </div>
                 <p>

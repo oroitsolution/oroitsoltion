@@ -434,7 +434,7 @@ p {
 /* For smaller screens */
 @media (max-width: 768px) {
     .navbar-brand .logo-img {
-        max-height: 40px; /* Smaller on mobile */
+        max-height: 80px; /* Smaller on mobile */
     }
 }
 
@@ -1921,24 +1921,58 @@ p {
   background-color: var(--primary-dark);
 }
 
+/* Add these to your existing CSS */
 
-/* Navbar Enhancement */
+/* Navbar height control */
 .navbar-area {
-    background: #ffffff;
-    border-bottom: 1px solid #f1f1f1;
+    min-height: 70px;
+    padding: 0;
 }
 
-.navbar-nav .nav-link {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-    padding: 10px 15px !important;
+.navbar {
+    padding: 10px 0;
+}
+
+/* Brand logo sizing */
+.navbar-brand img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* Reduce button padding for smaller buttons */
+.btn-login,
+.btn-register,
+.btn-dashboard {
+    padding: 6px 18px !important;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        padding: 15px 0;
+    }
+    
+    .navbar-nav {
+        margin-bottom: 10px;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 5px;
+    }
+}
+
+/* Auth Buttons Enhancement */
+.btn-login, .btn-register, .btn-dashboard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 25px;
     transition: all 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-    color: #0066ff;
 }
 
 /* Login Button */
@@ -1946,49 +1980,91 @@ p {
     background: transparent;
     border: 2px solid #0066ff;
     color: #0066ff;
-    border-radius: 30px;
-    padding: 8px 20px;
-    font-weight: 600;
-    transition: 0.3s;
 }
 
 .btn-login:hover {
     background: #0066ff;
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
 }
 
 /* Register Button */
 .btn-register {
     background: #0066ff;
+    border: 2px solid #0066ff;
     color: #fff;
-    border-radius: 30px;
-    padding: 8px 20px;
-    font-weight: 600;
-    transition: 0.3s;
 }
 
 .btn-register:hover {
     background: #004dcc;
+    border-color: #004dcc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
 }
 
-/* Dashboard */
+/* Dashboard Button */
 .btn-dashboard {
     background: #0c8a3e;
+    border: 2px solid #0c8a3e;
     color: #fff;
-    border-radius: 30px;
-    padding: 8px 20px;
-    font-weight: 600;
 }
 
 .btn-dashboard:hover {
     background: #0a6f32;
+    border-color: #0a6f32;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(12, 138, 62, 0.2);
 }
 
-/* Mobile Toggler Icons */
-.navbar-toggler .toggler-icon {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 5px 0;
-    transition: 0.3s;
+/* Auth Separator */
+.auth-separator {
+    color: #888;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Navbar Bottom Line */
+.navbar-bottom-line {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 102, 255, 0.1) 20%, 
+        rgba(0, 102, 255, 0.3) 50%, 
+        rgba(0, 102, 255, 0.1) 80%, 
+        transparent 100%);
+    margin: 5px 0 0 0;
+    opacity: 0.8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+    .navbar-nav.ms-auto {
+        flex-direction: column;
+        align-items: flex-start !important;
+        padding-top: 15px;
+        border-top: 1px solid #f1f1f1;
+        margin-top: 15px;
+    }
+    
+    .d-flex.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+    
+    .auth-separator {
+        display: none;
+    }
+    
+    .btn-login, .btn-register, .btn-dashboard {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Button icons */
+.btn i {
+    font-size: 14px;
 }

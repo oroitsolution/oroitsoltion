@@ -140,8 +140,8 @@
             <!-- Overlay Content -->
             <div class="position-relative h-100 d-flex align-items-center justify-content-center text-white p-5">
                 <div class="text-center" style="max-width: 700px;">
-                    <h1 class="display-4 fw-bold mb-4 text-white">ORO IT Solutions</h1>
-                    <p class="lead fs-4 mb-4 text-white">
+                    <h1 class="display-4 fw-bold mb-4">Gro IT Solutions</h1>
+                    <p class="lead fs-4 mb-4">
                         We are a digital agency that helps brands to achieve their business outcomes. 
                         We see technology as a tool to create amazing things.
                     </p>
