@@ -1,5 +1,48 @@
 @extends('frontlayout.app')
 @section('content')
+
+<!-- ====== Header Hero Section ====== -->
+<section id="hero-area" class="header-area header-eight">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 col-md-12">
+                <div class="header-content">
+
+                    <h1>Smart Fintech Solutions for Modern Businesses</h1>
+                    <p>
+                        We build secure, scalable, and intelligent financial technology platforms
+                        that empower businesses to streamline payments, automate workflows, and
+                        grow with confidence. Our mission is to make finance simpler, faster, and
+                        more accessible through innovation.
+                    </p>
+
+                    <div class="button">
+                        <a href="javascript:void(0)" class="btn primary-btn">Get Started</a>
+
+                        <a href="https://www.youtube.com/watch?v=r44RKWyfcFw"
+                           class="glightbox video-button">
+                            <span class="btn icon-btn rounded-full">
+                                <i class="lni lni-play"></i>
+                            </span>
+                            <span class="text">Watch Intro</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div class="header-image">
+                    <img src="{{ asset('front/images/header/hero2.png') }}" alt="Hero Image">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+ 
+
   <!--====== ABOUT FIVE PART START ======-->
 
   <section class="about-area about-five">
@@ -90,7 +133,7 @@
               <circle cx="60.333" cy="132" r="1.66667" fill="#DADADA" />
               <circle cx="104" cy="132" r="1.66667" fill="#DADADA" />
             </svg>
-            <img src="assets/images/about/about-img1.jpg" alt="about" />
+            <img src="{{ asset('front/images/about/about-img1.jpg') }} " alt="about" />
           </div>
         </div>
         <div class="col-lg-6 col-12">
@@ -156,352 +199,260 @@
           <div class="col-12">
             <div class="content">
               <h6>Services</h6>
-              <h2 class="fw-bold">Our Best Services</h2>
+              <h2 class="fw-bold">Our Fintech Solutions</h2>
               <p>
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form.
+                We deliver secure, scalable, and intelligent financial technology 
+                solutions that empower businesses to streamline payments, 
+                automate financial workflows, and accelerate growth.
               </p>
             </div>
           </div>
         </div>
-        <!-- row -->
       </div>
-      <!-- container -->
     </div>
     <!--======  End Section Title Five ======-->
+
     <div class="container">
       <div class="row">
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-capsule"></i>
+              <i class="lni lni-credit-cards"></i>
             </div>
             <div class="service-content">
-              <h4>Refreshing Design</h4>
+              <h4>Digital Payments</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Seamless, fast, and secure online payments including UPI, 
+                cards, net-banking, and wallet integrations for your platform.
               </p>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-bootstrap"></i>
+              <i class="lni lni-protection"></i>
             </div>
             <div class="service-content">
-              <h4>Solid Bootstrap 5</h4>
+              <h4>Financial Security</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Multi-layered encryption, fraud detection, and compliance 
+                (KYC, AML) to ensure safe and reliable financial operations.
               </p>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-shortcode"></i>
+              <i class="lni lni-stats-up"></i>
             </div>
             <div class="service-content">
-              <h4>100+ Components</h4>
+              <h4>Automated Analytics</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Real-time dashboards, transaction insights, and performance 
+                analytics for smarter decision-making and improved efficiency.
               </p>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-dashboard"></i>
+              <i class="lni lni-network"></i>
             </div>
             <div class="service-content">
-              <h4>Speed Optimized</h4>
+              <h4>API Banking</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Plug-and-play API banking features such as payouts, collections, 
+                account validation, and virtual accounts for seamless operations.
               </p>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-layers"></i>
+              <i class="lni lni-cog"></i>
             </div>
             <div class="service-content">
-              <h4>Fully Customizable</h4>
+              <h4>Custom Fintech Development</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Tailor-made fintech platforms built with security, scalability, 
+                and automation to support unique business requirements.
               </p>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
           <div class="single-services">
             <div class="service-icon">
-              <i class="lni lni-reload"></i>
+              <i class="lni lni-cloud-sync"></i>
             </div>
             <div class="service-content">
-              <h4>Regular Updates</h4>
+              <h4>Fast & Regular Updates</h4>
               <p>
-                Lorem ipsum dolor sit amet, adipscing elitr, sed diam nonumy
-                eirmod tempor ividunt labor dolore magna.
+                Continuous enhancements, feature updates, and system 
+                optimizations to keep your fintech solution future-ready.
               </p>
             </div>
           </div>
         </div>
+
       </div>
     </div>
-  </section>
+</section>
+
   <!-- ===== service-area end ===== -->
 
 
-  <!-- Start Pricing  Area -->
-  <section id="pricing" class="pricing-area pricing-fourteen">
-    <!--======  Start Section Title Five ======-->
-    <div class="section-title-five">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="content">
-              <h6>Pricing</h6>
-              <h2 class="fw-bold">Pricing & Plans</h2>
-              <p>
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form.
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- row -->
-      </div>
-      <!-- container -->
-    </div>
-    <!--======  End Section Title Five ======-->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="pricing-style-fourteen">
-            <div class="table-head">
-              <h6 class="title">Starter</h4>
-                <p>Lorem Ipsum is simply dummy text of the printing and industry.</p>
-                <div class="price">
-                  <h2 class="amount">
-                    <span class="currency">$</span>0<span class="duration">/mo </span>
-                  </h2>
-                </div>
-            </div>
 
-            <div class="light-rounded-buttons">
-              <a href="javascript:void(0)" class="btn primary-btn-outline">
-                Start free trial
-              </a>
-            </div>
-
-            <div class="table-content">
-              <ul class="table-list">
-                <li> <i class="lni lni-checkmark-circle"></i> Cras justo odio.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Dapibus ac facilisis in.</li>
-                <li> <i class="lni lni-checkmark-circle deactive"></i> Morbi leo risus.</li>
-                <li> <i class="lni lni-checkmark-circle deactive"></i> Excepteur sint occaecat velit.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="pricing-style-fourteen middle">
-            <div class="table-head">
-              <h6 class="title">Exclusive</h4>
-                <p>Lorem Ipsum is simply dummy text of the printing and industry.</p>
-                <div class="price">
-                  <h2 class="amount">
-                    <span class="currency">$</span>99<span class="duration">/mo </span>
-                  </h2>
-                </div>
-            </div>
-
-            <div class="light-rounded-buttons">
-              <a href="javascript:void(0)" class="btn primary-btn">
-                Start free trial
-              </a>
-            </div>
-
-            <div class="table-content">
-              <ul class="table-list">
-                <li> <i class="lni lni-checkmark-circle"></i> Cras justo odio.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Dapibus ac facilisis in.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Morbi leo risus.</li>
-                <li> <i class="lni lni-checkmark-circle deactive"></i> Excepteur sint occaecat velit.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="pricing-style-fourteen">
-            <div class="table-head">
-              <h6 class="title">Premium</h4>
-                <p>Lorem Ipsum is simply dummy text of the printing and industry.</p>
-                <div class="price">
-                  <h2 class="amount">
-                    <span class="currency">$</span>150<span class="duration">/mo </span>
-                  </h2>
-                </div>
-            </div>
-
-            <div class="light-rounded-buttons">
-              <a href="javascript:void(0)" class="btn primary-btn-outline">
-                Start free trial
-              </a>
-            </div>
-
-            <div class="table-content">
-              <ul class="table-list">
-                <li> <i class="lni lni-checkmark-circle"></i> Cras justo odio.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Dapibus ac facilisis in.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Morbi leo risus.</li>
-                <li> <i class="lni lni-checkmark-circle"></i> Excepteur sint occaecat velit.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--/ End Pricing  Area -->
 
 
 
   <!-- Start Cta Area -->
   <section id="call-action" class="call-action">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-9">
-          <div class="inner-content">
-            <h2>We love to make perfect <br />solutions for your business</h2>
-            <p>
-              Why I say old chap that is, spiffing off his nut cor blimey
-              guvnords geeza<br />
-              bloke knees up bobby, sloshed arse William cack Richard. Bloke
-              fanny around chesed of bum bag old lost the pilot say there
-              spiffing off his nut.
-            </p>
-            <div class="light-rounded-buttons">
-              <a href="javascript:void(0)" class="btn primary-btn-outline">Get Started</a>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-9">
+            <div class="inner-content">
+              <h2>
+                Empowering Businesses with <br />Smart Fintech Solutions
+              </h2>
+              <p>
+                From digital payments to API banking and financial automation, 
+                we deliver secure and scalable fintech solutions designed to 
+                streamline operations, reduce costs, and accelerate business growth. 
+                Build smarter, faster, and more confidently with our technology.
+              </p>
+              <div class="light-rounded-buttons">
+                <a href="javascript:void(0)" class="btn primary-btn-outline">Get Started</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </section>
+
   <!-- End Cta Area -->
 
 
 
   <!-- Start Latest News Area -->
   <div id="blog" class="latest-news-area section">
-    <!--======  Start Section Title Five ======-->
-    <div class="section-title-five">
+      <!--======  Start Section Title Five ======-->
+      <div class="section-title-five">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="content">
+                <h6>Latest Insights</h6>
+                <h2 class="fw-bold">Fintech News & Updates</h2>
+                <p>
+                  Stay updated with the latest trends, innovations, and insights 
+                  shaping the future of financial technology across the globe.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--======  End Section Title Five ======-->
+
       <div class="container">
         <div class="row">
-          <div class="col-12">
-            <div class="content">
-              <h6>latest news</h6>
-              <h2 class="fw-bold">Latest News & Blog</h2>
-              <p>
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form.
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- row -->
-      </div>
-      <!-- container -->
-    </div>
-    <!--======  End Section Title Five ======-->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-6 col-12">
-          <!-- Single News -->
-          <div class="single-news">
-            <div class="image">
-              <a href="javascript:void(0)"><img class="thumb" src="assets/images/blog/1.jpg" alt="Blog" /></a>
-              <div class="meta-details">
-                <img class="thumb" src="assets/images/blog/b6.jpg" alt="Author" />
-                <span>BY TIM NORTON</span>
-              </div>
-            </div>
-            <div class="content-body">
-              <h4 class="title">
-                <a href="javascript:void(0)"> Make your team a Design driven company </a>
-              </h4>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard.
-              </p>
-            </div>
-          </div>
-          <!-- End Single News -->
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <!-- Single News -->
-          <div class="single-news">
-            <div class="image">
-              <a href="javascript:void(0)"><img class="thumb" src="assets/images/blog/2.jpg" alt="Blog" /></a>
-              <div class="meta-details">
-                <img class="thumb" src="assets/images/blog/b6.jpg" alt="Author" />
-                <span>BY TIM NORTON</span>
-              </div>
-            </div>
-            <div class="content-body">
-              <h4 class="title">
+
+          <div class="col-lg-4 col-md-6 col-12">
+            <!-- Single News -->
+            <div class="single-news">
+              <div class="image">
                 <a href="javascript:void(0)">
-                  The newest web framework that changed the world
+                  <img class="thumb" src="{{ asset('front/images/blog/1.jpg') }}" alt="Fintech Blog" />
                 </a>
-              </h4>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard.
-              </p>
-            </div>
-          </div>
-          <!-- End Single News -->
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <!-- Single News -->
-          <div class="single-news">
-            <div class="image">
-              <a href="javascript:void(0)"><img class="thumb" src="assets/images/blog/3.jpg" alt="Blog" /></a>
-              <div class="meta-details">
-                <img class="thumb" src="assets/images/blog/b6.jpg" alt="Author" />
-                <span>BY TIM NORTON</span>
+                <div class="meta-details">
+                  <img class="thumb" src="{{ asset('front/images/blog/b6.jpg') }}" alt="Author" />
+                  <span>BY FINTECH EXPERTS</span>
+                </div>
+              </div>
+              <div class="content-body">
+                <h4 class="title">
+                  <a href="javascript:void(0)">
+                    How Digital Payments Are Transforming Modern Businesses
+                  </a>
+                </h4>
+                <p>
+                  Digital transactions are reshaping the financial landscape. Learn how 
+                  UPI, wallets, and API banking are helping companies scale faster.
+                </p>
               </div>
             </div>
-            <div class="content-body">
-              <h4 class="title">
+          </div>
+          <!-- End Single News -->
+
+          <div class="col-lg-4 col-md-6 col-12">
+            <!-- Single News -->
+            <div class="single-news">
+              <div class="image">
                 <a href="javascript:void(0)">
-                  5 ways to improve user retention for your startup
+                  <img class="thumb" src="{{ asset('front/images/blog/2.jpg') }}" alt="Fintech Blog" />
                 </a>
-              </h4>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard.
-              </p>
+                <div class="meta-details">
+                  <img class="thumb" src="{{ asset('front/images/blog/b6.jpg') }}" alt="Author" />
+                  <span>BY FINTECH ANALYST</span>
+                </div>
+              </div>
+              <div class="content-body">
+                <h4 class="title">
+                  <a href="javascript:void(0)">
+                    The Rise of API Banking: What Every Business Should Know
+                  </a>
+                </h4>
+                <p>
+                  API banking enables automated payouts, collections, KYC checks, 
+                  and more. Here’s why it’s becoming essential for digital businesses.
+                </p>
+              </div>
             </div>
           </div>
           <!-- End Single News -->
+
+          <div class="col-lg-4 col-md-6 col-12">
+            <!-- Single News -->
+            <div class="single-news">
+              <div class="image">
+                <a href="javascript:void(0)">
+                  <img class="thumb" src="{{ asset('front/images/blog/3.jpg') }}" alt="Fintech Blog" />
+                </a>
+                <div class="meta-details">
+                  <img class="thumb" src="{{ asset('front/images/blog/b6.jpg') }}" alt="Author" />
+                  <span>BY INDUSTRY LEADERS</span>
+                </div>
+              </div>
+              <div class="content-body">
+                <h4 class="title">
+                  <a href="javascript:void(0)">
+                    Future of Fintech: Automation, AI, and Secure Transactions
+                  </a>
+                </h4>
+                <p>
+                  Explore how artificial intelligence, automation, and advanced 
+                  security standards are redefining the future of financial systems.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- End Single News -->
+
         </div>
       </div>
-    </div>
   </div>
+
   <!-- End Latest News Area -->
 
   <!-- Start Brand Area -->
@@ -531,22 +482,22 @@
         <div class="col-lg-8 offset-lg-2 col-12">
           <div class="clients-logos">
             <div class="single-image">
-              <img src="assets/images/client-logo/graygrids.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/pb.png') }} " alt="Brand Logo Images" />
             </div>
             <div class="single-image">
-              <img src="assets/images/client-logo/uideck.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/uideck.svg') }} " alt="Brand Logo Images" />
             </div>
             <div class="single-image">
-              <img src="assets/images/client-logo/ayroui.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/ayroui.svg') }} " alt="Brand Logo Images" />
             </div>
             <div class="single-image">
-              <img src="assets/images/client-logo/lineicons.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/mobiq.png') }}" alt="Brand Logo Images" />
             </div>
             <div class="single-image">
-              <img src="assets/images/client-logo/tailwindtemplates.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/equits.png') }} " alt="Brand Logo Images" />
             </div>
             <div class="single-image">
-              <img src="assets/images/client-logo/ecomhtml.svg" alt="Brand Logo Images" />
+              <img src="{{ asset('front/images/client-logo/cred.png') }} " alt="Brand Logo Images" />
             </div>
           </div>
         </div>

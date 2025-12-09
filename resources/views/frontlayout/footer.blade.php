@@ -155,8 +155,8 @@
                   hierarchies.
                 </p>
                 <p class="copyright-text">
-                  <span>© 2024 Ayro UI.</span>Designed and Developed by
-                  <a href="javascript:void(0)" rel="nofollow"> Ayro UI </a>. <br> Distributed by <a href="http://themewagon.com" target="_blank">ThemeWagon</a>
+                  <span>© 2024 ORO IT.</span>Designed and Developed by
+                  <a href="javascript:void(0)" rel="nofollow"> ORO IT SOLUTION </a></a>
                 </p>
               </div>
               <!-- End Single Widget -->

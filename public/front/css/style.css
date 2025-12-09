@@ -423,6 +423,21 @@ p {
 .navbar-area.navbar-nine .navbar-brand {
   margin: 0;
 }
+
+/* Logo styling */
+.navbar-brand .logo-img {
+    max-height: 50px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure proper scaling */
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .navbar-brand .logo-img {
+        max-height: 40px; /* Smaller on mobile */
+    }
+}
+
 .navbar-area.navbar-nine .navbar {
   position: relative;
   padding: 0;
@@ -1904,4 +1919,76 @@ p {
 .footer-eleven .newsletter-form .sub-btn:hover {
   color: var(--white);
   background-color: var(--primary-dark);
+}
+
+
+/* Navbar Enhancement */
+.navbar-area {
+    background: #ffffff;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #0066ff;
+}
+
+/* Login Button */
+.btn-login {
+    background: transparent;
+    border: 2px solid #0066ff;
+    color: #0066ff;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background: #0066ff;
+    color: #fff;
+}
+
+/* Register Button */
+.btn-register {
+    background: #0066ff;
+    color: #fff;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-register:hover {
+    background: #004dcc;
+}
+
+/* Dashboard */
+.btn-dashboard {
+    background: #0c8a3e;
+    color: #fff;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 600;
+}
+
+.btn-dashboard:hover {
+    background: #0a6f32;
+}
+
+/* Mobile Toggler Icons */
+.navbar-toggler .toggler-icon {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px 0;
+    transition: 0.3s;
 }
