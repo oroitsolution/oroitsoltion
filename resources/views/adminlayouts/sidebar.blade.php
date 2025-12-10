@@ -6,6 +6,13 @@
         <span class="menu-title">Dashboard</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('superadmin/charges') }}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">User Fees & Charges</span>
+        </a>
+    </li>
     
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
@@ -20,6 +27,16 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('roles.index') }}">Roles</a></li>
             </ul>
         </div>
+    </li>
+
+    <li class="nav-item">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
+        @csrf
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="ms-2">Logout</span>
+            </a>
+        </form>
     </li>
     
     </ul>

@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\charges\ChargesController;
 use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
 
@@ -20,7 +21,10 @@ use App\Http\Controllers\Permission\RoleController;
 
 
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
+    Route::middleware('auth')->prefix('superadmin')->group(function () 
+    {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -53,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/{id}', [UserController::class, 'update'])->name('users.update');
   // end
 
+    Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
+    Route::resource('charges', ChargesController::class);
  
 
 });
