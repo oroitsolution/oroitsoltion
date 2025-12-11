@@ -50,10 +50,10 @@
     <!-- ====== JS FILES ====== -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="{{ asset('front/js/bootstrap.bundle.min.js') }}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('front/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('front/js/tiny-slider.js') }}"></script>
-
     <!-- Your main JS -->
     <script src="{{ asset('front/js/main.js') }}"></script>
 
