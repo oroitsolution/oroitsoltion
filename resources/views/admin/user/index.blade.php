@@ -6,7 +6,7 @@
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <!-- <a href="{{ route('roles.create') }}" class="btn btn-primary">Create Roles</a> -->
+            <!-- <a href="{{ route('superadmin.roles.create') }}" class="btn btn-primary">Create Roles</a> -->
             </p>
             <div class="table-responsive">
               <table class="table table-striped">
@@ -30,7 +30,7 @@
                           <td>{{$user->email}}</td>
                           <td>{{$user->roles->pluck('name')->implode(',')}}</td>
                           <td>{{\Carbon\Carbon::parse($user->created_at)->format('d M, Y')}}</td>
-                          <td><a href="{{route('users.edit',$user->id)}}" class="btn btn-bg btn-warning">Edit</a>
+                          <td><a href="{{route('superadmin.users.edit',$user->id)}}" class="btn btn-bg btn-warning">Edit</a>
                           
                         </td>
                         </tr>
@@ -59,7 +59,7 @@
     function deleterole(id){
         if(confirm("Are you sure you want to delete?")){
             $.ajax({
-                url: '{{ route("roles.destroy") }}',
+                url: '{{ route("superadmin.roles.destroy") }}',
                 type: 'DELETE',
                 data: {
                     id: id,
@@ -67,7 +67,7 @@
                 },
                 dataType: 'json',  // Correct casing here
                 success: function(response){
-                    window.location.href = '{{ route("roles.index") }}';
+                    window.location.href = '{{ route("superadmin.roles.index") }}';
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);

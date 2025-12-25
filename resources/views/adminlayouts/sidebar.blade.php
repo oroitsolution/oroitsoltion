@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('dashboard') }}">
+        <a class="nav-link" href="{{ route('superadmin.dashboard') }}">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">Dashboard</span>
         </a>
@@ -22,9 +22,9 @@
         </a>
         <div class="collapse" id="form-elements">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('permissions.index') }}">Permissions</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('roles.index') }}">Roles</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.users.index') }}">Users</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.permissions.index') }}">Permissions</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.roles.index') }}">Roles</a></li>
             </ul>
         </div>
     </li>

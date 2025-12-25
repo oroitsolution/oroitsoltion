@@ -8,7 +8,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Permissions</h4>
         
-                   <form action="{{route('permissions.store')}}" method="post">
+                   <form action="{{route('superadmin.permissions.store')}}" method="post">
                     @csrf
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>

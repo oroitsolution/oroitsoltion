@@ -19,19 +19,18 @@ use App\Http\Controllers\Permission\RoleController;
   //  return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
- Route::get('/', [FrontController::class, 'index'])->name('/');
+Route::get('/', [FrontController::class, 'index'])->name('/');
 
 
 
  Route::middleware('auth')->group(function () 
   {
-    Route::middleware('superadmin')->prefix('superadmin')->group(function () 
-      {
+  
+    Route::middleware('superadmin')->prefix('superadmin')->name('superadmin.')->group(function () {
 
           Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
           Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
           Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-          Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
           Route::get('/dashboard',  [DashboardController::class, 'index'])->name('dashboard');
           
         //Permission Route
@@ -63,9 +62,15 @@ use App\Http\Controllers\Permission\RoleController;
 
       });
 
-      Route::middleware('user')->prefix('user')->group(function ()
+
+
+      // ----------------------------------------------------------------//
+
+
+
+      Route::middleware('user')->prefix('user')->name('user.')->group(function ()
       {
-          Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('user.dashboard');
+          Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('dashboard');
           Route::get('/payment-send',  [PaymentController::class, 'index'])->name('payment.send');
           Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
           Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');

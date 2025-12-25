@@ -7,7 +7,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Roles</h4>
         
-                    <form action="{{route('roles.update',$role->id)}}" method="post">
+                    <form action="{{route('superadmin.roles.update',$role->id)}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="mb-3 col-md-12">

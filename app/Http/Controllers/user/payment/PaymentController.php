@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\Charge;
 use Illuminate\Support\Facades\Http;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\User;
 
 class PaymentController extends Controller
 {
@@ -36,8 +37,8 @@ class PaymentController extends Controller
     }
 
     public function index(){
-       
-        return view('user.payment.sendpayment');
+        $user = Auth::user();
+        return view('user.payment.sendpayment',compact( 'user'));
     }
 
      public function show(): JsonResponse

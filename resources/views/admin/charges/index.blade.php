@@ -199,7 +199,7 @@ $(document).ready(function () {
     let formData = form.serialize();
     let chargeId = $('#charge_id').val();
 
-    let ajaxUrl = chargeId ? `/admin/charges/${chargeId}` : `{{ route('charges.store') }}`;
+    let ajaxUrl = chargeId ? `/admin/charges/${chargeId}` : `{{ route('superadmin.charges.store') }}`;
     let ajaxType = chargeId ? "PUT" : "POST";
 
     $('.text-danger').remove();

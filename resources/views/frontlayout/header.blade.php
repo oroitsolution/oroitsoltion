@@ -31,7 +31,7 @@
                     <div class="navbar-nav ms-auto align-items-center">
                         @auth
                             <!-- Dashboard Button -->
-                            <a href="{{ url('/dashboard') }}" class="btn btn-dashboard">
+                            <a href="{{ url('user/dashboard') }}" class="btn btn-dashboard">
                                 <i class="lni lni-dashboard me-1"></i>Dashboard
                             </a>
                         @else

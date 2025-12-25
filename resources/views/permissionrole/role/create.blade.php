@@ -8,7 +8,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Roles</h4>
         
-                   <form action="{{route('roles.store')}}" method="post">
+                   <form action="{{route('superadmin.roles.store')}}" method="post">
                 						@csrf
                                         <div class="row">
                                             <div class="mb-3 col-md-12">

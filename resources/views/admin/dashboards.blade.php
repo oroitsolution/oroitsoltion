@@ -1,4 +1,5 @@
 @extends('adminlayouts.app')
+@section('title', 'ADMIN DASHBAORD')
 @section('content')
           <div class="content-wrapper">
             <div class="row">

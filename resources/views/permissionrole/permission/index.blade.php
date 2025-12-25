@@ -8,7 +8,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Permissions</h4>
-                   <a href="{{ route('permissions.create') }}" class="btn btn-primary">Create Permission</a>
+                   <a href="{{ route('superadmin.permissions.create') }}" class="btn btn-primary">Create Permission</a>
                     </p>
                     <div class="table-responsive">
                       <table class="table table-striped">
@@ -27,7 +27,7 @@
                         <tr class="align-middle">
                           <td>{{$value->id}}</td>
                           <td>{{$value->name}}</td>
-                          <td><a href="{{ route('permissions.edit', $value->id) }}" class="btn btn-bg btn-warning">Edit</a>
+                          <td><a href="{{ route('superadmin.permissions.edit', $value->id) }}" class="btn btn-bg btn-warning">Edit</a>
                           <a href="javascript:void(0);" onclick="deletepermission({{$value->id}})" class="btn btn-bg btn-danger">Delete</a>
                         </td>
                         </tr>
@@ -48,7 +48,7 @@
     function deletepermission(id){
         if(confirm("Are you sure you want to delete?")){
             $.ajax({
-                url: '{{ route("permissions.destroy") }}',
+                url: '{{ route("superadmin.permissions.destroy") }}',
                 type: 'DELETE',
                 data: {
                     id: id,
@@ -56,7 +56,7 @@
                 },
                 dataType: 'json',  // Correct casing here
                 success: function(response){
-                    window.location.href = '{{ route("permissions.index") }}';
+                    window.location.href = '{{ route("superadmin.permissions.index") }}';
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);

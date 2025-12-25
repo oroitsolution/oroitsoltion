@@ -8,7 +8,7 @@
             <div class="card-body">
             <h4 class="card-title">Permissions/edit</h4>
 
-            <form action="{{route('permissions.update',$permission->id)}}" method="post">
+            <form action="{{route('superadmin.permissions.update',$permission->id)}}" method="post">
             @csrf
                 <div class="form-group">
                 <label for="exampleInputName1">Name</label>

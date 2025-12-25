@@ -914,6 +914,9 @@
                                 <!-- Login Link -->
                                 <div class="login-link">
                                     <p>Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+                                    <a href="{{ url('/') }}" class="text-decoration-none small text-muted mt-2 d-block">
+                                        <i class="fas fa-arrow-left me-1"></i> Back to Home
+                                    </a>
                                 </div>
                             </form>
                         </div>
