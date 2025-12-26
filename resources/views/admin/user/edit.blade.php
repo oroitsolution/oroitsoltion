@@ -5,10 +5,10 @@
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                   <a href="{{ route('users.index') }}" class="btn btn-primary" style="margin-left:20px">Back</a>
+                   <a href="{{ route('superadmin.users.index') }}" class="btn btn-primary" style="margin-left:20px">Back</a>
                     </p>
         
-                  <form action="{{route('users.update',$user->id)}}" method="post">
+                  <form action="{{route('superadmin.users.update',$user->id)}}" method="post">
                 @csrf
                 <!--begin::Body-->
                 <div class="card-body">

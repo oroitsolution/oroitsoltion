@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
 use App\Traits\ApiJsonResponse;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Kyc;
+use App\Models\Clints;
 
 class UserdashboardController extends Controller
 {
@@ -28,4 +30,14 @@ class UserdashboardController extends Controller
         $user = Auth::user();
         return view('user.userdashboard',compact( 'user'));
     }
+
+
+
+    // ----------------Profile -----------------------/ # 
+
+    public function view_profile(){
+        $user = Auth::user();
+        return view('user.profile',compact( 'user'));
+    }
+
 }

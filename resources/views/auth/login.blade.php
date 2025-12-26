@@ -16,7 +16,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
-
+    <link rel="shortcut icon" href="{{ asset('admin/layout/assets/images/favicon.png') }}"/>
     <style>
         :root {
             --primary: #667eea;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - ORO IT SOLUTION</title>
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -13,7 +13,7 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link rel="shortcut icon" href="{{ asset('admin/layout/assets/images/favicon.png') }}"/>
     <style>
         :root {
             --primary: #667eea;
@@ -660,7 +660,7 @@
                                 <p>Join ORO IT Solution and start your digital journey</p>
                             </div>
                             
-                            <form method="POST" action="{{ route('register') }}" id="registerForm" novalidate>
+                            <form id="registerForm" method="POST">
                                 @csrf
                                 
                                 <!-- Account Type Selection -->
@@ -925,286 +925,409 @@
             </div>
         </div>
     </div>
-    
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="authToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="authToastMessage"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('ORO IT Solution - Registration Page Initialized');
-            
-            // Initialize all components
-            initAccountTypeToggle();
-            initPasswordToggles();
-            initPasswordStrength();
-            initPasswordMatch();
-            initFormValidation();
-            
-            // Test: Log all important elements
-            console.log('Elements loaded:', {
-                businessRadio: document.getElementById('business'),
-                personalRadio: document.getElementById('personal'),
-                businessFields: document.getElementById('businessFields'),
-                personalCard: document.getElementById('personalCard'),
-                businessCard: document.getElementById('businessCard')
-            });
-        });
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('ORO IT Solution - Registration Page Initialized');
         
-        // Account Type Toggle
-        function initAccountTypeToggle() {
-            const businessRadio = document.getElementById('business');
-            const personalRadio = document.getElementById('personal');
-            const businessFields = document.getElementById('businessFields');
-            const personalCard = document.getElementById('personalCard');
-            const businessCard = document.getElementById('businessCard');
+        // Initialize all components
+        initAccountTypeToggle();
+        initPasswordToggles();
+        initPasswordStrength();
+        initPasswordMatch();
+        initFormValidation();
+        initToast();
+        
+        // Test: Log all important elements
+        console.log('Elements loaded:', {
+            businessRadio: document.getElementById('business'),
+            personalRadio: document.getElementById('personal'),
+            businessFields: document.getElementById('businessFields'),
+            personalCard: document.getElementById('personalCard'),
+            businessCard: document.getElementById('businessCard')
+        });
+    });
+    
+    // Toast Notification System
+    function initToast() {
+        window.showToast = function(message, type = 'success') {
+            const toast = document.getElementById('authToast');
+            const toastMessage = document.getElementById('authToastMessage');
             
-            if (!businessRadio || !personalRadio || !businessFields) {
-                console.error('Required elements not found for account type toggle');
+            if (!toast || !toastMessage) return;
+            
+            // Set message and type
+            toastMessage.textContent = message;
+            toast.className = 'toast align-items-center text-white border-0';
+            
+            if (type === 'success') {
+                toast.classList.add('bg-success');
+            } else if (type === 'danger') {
+                toast.classList.add('bg-danger');
+            } else if (type === 'warning') {
+                toast.classList.add('bg-warning');
+            } else {
+                toast.classList.add('bg-primary');
+            }
+            
+            // Show toast
+            const bsToast = new bootstrap.Toast(toast, {
+                delay: 3000
+            });
+            bsToast.show();
+        };
+    }
+    
+    // Account Type Toggle
+    function initAccountTypeToggle() {
+        const businessRadio = document.getElementById('business');
+        const personalRadio = document.getElementById('personal');
+        const businessFields = document.getElementById('businessFields');
+        const personalCard = document.getElementById('personalCard');
+        const businessCard = document.getElementById('businessCard');
+        
+        if (!businessRadio || !personalRadio || !businessFields) {
+            console.error('Required elements not found for account type toggle');
+            return;
+        }
+        
+        // Function to update UI based on selected account type
+        function updateAccountTypeUI() {
+            const isBusiness = businessRadio.checked;
+            
+            // Show/hide business fields with animation
+            if (isBusiness) {
+                businessFields.classList.remove('d-none');
+                setTimeout(() => {
+                    businessFields.style.opacity = '1';
+                    businessFields.style.transform = 'translateY(0)';
+                }, 10);
+                
+                // Make business fields required
+                document.getElementById('business_type')?.setAttribute('required', 'required');
+                document.querySelector('[name="company_name"]')?.setAttribute('required', 'required');
+            } else {
+                businessFields.style.opacity = '0';
+                businessFields.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    businessFields.classList.add('d-none');
+                }, 300);
+                
+                // Remove required from business fields
+                document.getElementById('business_type')?.removeAttribute('required');
+                document.querySelector('[name="company_name"]')?.removeAttribute('required');
+            }
+            
+            // Update card styles
+            if (personalCard) {
+                personalCard.classList.toggle('active', !isBusiness);
+            }
+            if (businessCard) {
+                businessCard.classList.toggle('active', isBusiness);
+            }
+            
+            console.log('Account type updated:', isBusiness ? 'Business' : 'Personal');
+        }
+        
+        // Add event listeners to radio buttons
+        businessRadio.addEventListener('change', updateAccountTypeUI);
+        personalRadio.addEventListener('change', updateAccountTypeUI);
+        
+        // Add event listeners to cards
+        if (personalCard) {
+            personalCard.addEventListener('click', function(e) {
+                if (e.target.type !== 'radio') {
+                    personalRadio.checked = true;
+                    updateAccountTypeUI();
+                }
+            });
+        }
+        
+        if (businessCard) {
+            businessCard.addEventListener('click', function(e) {
+                if (e.target.type !== 'radio') {
+                    businessRadio.checked = true;
+                    updateAccountTypeUI();
+                }
+            });
+        }
+        
+        // Initial update
+        updateAccountTypeUI();
+    }
+    
+    // Password Toggles
+    function initPasswordToggles() {
+        // Password toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+        
+        if (togglePassword && passwordInput && togglePasswordIcon) {
+            togglePassword.addEventListener('click', function() {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                togglePasswordIcon.classList.toggle('fa-eye');
+                togglePasswordIcon.classList.toggle('fa-eye-slash');
+                togglePassword.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            });
+        }
+        
+        // Confirm password toggle
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const toggleConfirmPasswordIcon = document.getElementById('toggleConfirmPasswordIcon');
+        
+        if (toggleConfirmPassword && confirmPasswordInput && toggleConfirmPasswordIcon) {
+            toggleConfirmPassword.addEventListener('click', function() {
+                const isPassword = confirmPasswordInput.type === 'password';
+                confirmPasswordInput.type = isPassword ? 'text' : 'password';
+                toggleConfirmPasswordIcon.classList.toggle('fa-eye');
+                toggleConfirmPasswordIcon.classList.toggle('fa-eye-slash');
+                toggleConfirmPassword.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            });
+        }
+    }
+    
+    // Password Strength Indicator
+    function initPasswordStrength() {
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+        
+        if (!passwordInput || !strengthBar || !strengthText) return;
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let score = 0;
+            let message = 'Weak';
+            let color = '#ef4444';
+            
+            // Calculate score
+            if (password.length >= 8) score += 25;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 25;
+            if (/\d/.test(password)) score += 25;
+            if (/[^A-Za-z0-9]/.test(password)) score += 25;
+            
+            // Update message and color
+            if (score >= 75) {
+                message = 'Strong';
+                color = '#10b981';
+            } else if (score >= 50) {
+                message = 'Good';
+                color = '#f59e0b';
+            } else if (score >= 25) {
+                message = 'Fair';
+                color = '#f97316';
+            } else {
+                message = 'Weak';
+                color = '#ef4444';
+            }
+            
+            // Update UI
+            strengthBar.style.width = score + '%';
+            strengthBar.style.backgroundColor = color;
+            strengthText.textContent = password.length > 0 ? `Password strength: ${message}` : 'Password strength';
+            strengthText.style.color = color;
+        });
+    }
+    
+    // Password Match Validation
+    function initPasswordMatch() {
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirmPassword');
+        const matchDiv = document.getElementById('passwordMatch');
+        
+        if (!passwordInput || !confirmInput || !matchDiv) return;
+        
+        function checkMatch() {
+            const password = passwordInput.value;
+            const confirm = confirmInput.value;
+            
+            if (!confirm) {
+                matchDiv.textContent = '';
+                matchDiv.className = 'password-match';
                 return;
             }
             
-            // Function to update UI based on selected account type
-            function updateAccountTypeUI() {
-                const isBusiness = businessRadio.checked;
+            if (password === confirm) {
+                matchDiv.textContent = '✓ Passwords match';
+                matchDiv.className = 'password-match match-success';
+            } else {
+                matchDiv.textContent = '✗ Passwords do not match';
+                matchDiv.className = 'password-match match-error';
+            }
+        }
+        
+        passwordInput.addEventListener('input', checkMatch);
+        confirmInput.addEventListener('input', checkMatch);
+    }
+    
+    // Form Validation & AJAX Submission
+    function initFormValidation() {
+        const form = document.getElementById('registerForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        
+        if (!form || !submitBtn) return;
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            clearErrors();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            
+            try {
+                // Prepare form data
+                const formData = new FormData(form);
                 
-                // Show/hide business fields with animation
-                if (isBusiness) {
-                    businessFields.classList.remove('d-none');
-                    setTimeout(() => {
-                        businessFields.style.opacity = '1';
-                        businessFields.style.transform = 'translateY(0)';
-                    }, 10);
+                // Send AJAX request
+                const response = await fetch("{{ route('register.store') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Success
+                    showToast(data.message || 'Registration successful! Redirecting...', 'success');
                     
-                    // Make business fields required
-                    document.getElementById('business_type')?.setAttribute('required', 'required');
-                    document.querySelector('[name="company_name"]')?.setAttribute('required', 'required');
-                } else {
-                    businessFields.style.opacity = '0';
-                    businessFields.style.transform = 'translateY(-10px)';
+                    // Redirect after delay
                     setTimeout(() => {
-                        businessFields.classList.add('d-none');
-                    }, 300);
-                    
-                    // Remove required from business fields
-                    document.getElementById('business_type')?.removeAttribute('required');
-                    document.querySelector('[name="company_name"]')?.removeAttribute('required');
-                }
-                
-                // Update card styles
-                if (personalCard) {
-                    personalCard.classList.toggle('active', !isBusiness);
-                }
-                if (businessCard) {
-                    businessCard.classList.toggle('active', isBusiness);
-                }
-                
-                console.log('Account type updated:', isBusiness ? 'Business' : 'Personal');
-            }
-            
-            // Add event listeners to radio buttons
-            businessRadio.addEventListener('change', updateAccountTypeUI);
-            personalRadio.addEventListener('change', updateAccountTypeUI);
-            
-            // Add event listeners to cards
-            if (personalCard) {
-                personalCard.addEventListener('click', function(e) {
-                    if (e.target.type !== 'radio') {
-                        personalRadio.checked = true;
-                        updateAccountTypeUI();
-                    }
-                });
-            }
-            
-            if (businessCard) {
-                businessCard.addEventListener('click', function(e) {
-                    if (e.target.type !== 'radio') {
-                        businessRadio.checked = true;
-                        updateAccountTypeUI();
-                    }
-                });
-            }
-            
-            // Initial update
-            updateAccountTypeUI();
-        }
-        
-        // Password Toggles
-        function initPasswordToggles() {
-            // Password toggle
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('password');
-            const togglePasswordIcon = document.getElementById('togglePasswordIcon');
-            
-            if (togglePassword && passwordInput && togglePasswordIcon) {
-                togglePassword.addEventListener('click', function() {
-                    const isPassword = passwordInput.type === 'password';
-                    passwordInput.type = isPassword ? 'text' : 'password';
-                    togglePasswordIcon.classList.toggle('fa-eye');
-                    togglePasswordIcon.classList.toggle('fa-eye-slash');
-                    togglePassword.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-                });
-            }
-            
-            // Confirm password toggle
-            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-            const confirmPasswordInput = document.getElementById('confirmPassword');
-            const toggleConfirmPasswordIcon = document.getElementById('toggleConfirmPasswordIcon');
-            
-            if (toggleConfirmPassword && confirmPasswordInput && toggleConfirmPasswordIcon) {
-                toggleConfirmPassword.addEventListener('click', function() {
-                    const isPassword = confirmPasswordInput.type === 'password';
-                    confirmPasswordInput.type = isPassword ? 'text' : 'password';
-                    toggleConfirmPasswordIcon.classList.toggle('fa-eye');
-                    toggleConfirmPasswordIcon.classList.toggle('fa-eye-slash');
-                    toggleConfirmPassword.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-                });
-            }
-        }
-        
-        // Password Strength Indicator
-        function initPasswordStrength() {
-            const passwordInput = document.getElementById('password');
-            const strengthBar = document.getElementById('strengthBar');
-            const strengthText = document.getElementById('strengthText');
-            
-            if (!passwordInput || !strengthBar || !strengthText) return;
-            
-            passwordInput.addEventListener('input', function() {
-                const password = this.value;
-                let score = 0;
-                let message = 'Weak';
-                let color = '#ef4444';
-                
-                // Calculate score
-                if (password.length >= 8) score += 25;
-                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 25;
-                if (/\d/.test(password)) score += 25;
-                if (/[^A-Za-z0-9]/.test(password)) score += 25;
-                
-                // Update message and color
-                if (score >= 75) {
-                    message = 'Strong';
-                    color = '#10b981';
-                } else if (score >= 50) {
-                    message = 'Good';
-                    color = '#f59e0b';
-                } else if (score >= 25) {
-                    message = 'Fair';
-                    color = '#f97316';
+                        window.location.href = data.redirect_to || "{{ route('login') }}";
+                    }, 1500);
                 } else {
-                    message = 'Weak';
-                    color = '#ef4444';
+                    // Show validation errors
+                    if (response.status === 422 && data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            showError(field, data.errors[field][0]);
+                        });
+                        showToast('Please fix the errors in the form', 'danger');
+                    } else {
+                        showToast(data.message || 'Registration failed. Please try again.', 'danger');
+                    }
                 }
-                
-                // Update UI
-                strengthBar.style.width = score + '%';
-                strengthBar.style.backgroundColor = color;
-                strengthText.textContent = password.length > 0 ? `Password strength: ${message}` : 'Password strength';
-                strengthText.style.color = color;
-            });
-        }
-        
-        // Password Match Validation
-        function initPasswordMatch() {
-            const passwordInput = document.getElementById('password');
-            const confirmInput = document.getElementById('confirmPassword');
-            const matchDiv = document.getElementById('passwordMatch');
-            
-            if (!passwordInput || !confirmInput || !matchDiv) return;
-            
-            function checkMatch() {
-                const password = passwordInput.value;
-                const confirm = confirmInput.value;
-                
-                if (!confirm) {
-                    matchDiv.textContent = '';
-                    matchDiv.className = 'password-match';
-                    return;
-                }
-                
-                if (password === confirm) {
-                    matchDiv.textContent = '✓ Passwords match';
-                    matchDiv.className = 'password-match match-success';
-                } else {
-                    matchDiv.textContent = '✗ Passwords do not match';
-                    matchDiv.className = 'password-match match-error';
-                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showToast('Network error. Please check your connection and try again.', 'danger');
+            } finally {
+                // Reset loading state
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
             }
-            
-            passwordInput.addEventListener('input', checkMatch);
-            confirmInput.addEventListener('input', checkMatch);
+        });
+    }
+    
+    function validateForm() {
+        let isValid = true;
+        
+        // Check required fields
+        // const requiredFields = form.querySelectorAll('[required]');
+        // requiredFields.forEach(field => {
+        //     if (!field.value.trim()) {
+        //         showError(field.name, 'This field is required');
+        //         isValid = false;
+        //     }
+        // });
+        
+        // Validate email format
+        const emailField = document.querySelector('input[name="email"]');
+        if (emailField && emailField.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailField.value)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
         }
         
-        // Form Validation
-        function initFormValidation() {
-            const form = document.getElementById('registerForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            if (!form || !submitBtn) return;
-            
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Remove previous invalid classes
-                form.querySelectorAll('.is-invalid').forEach(el => {
-                    el.classList.remove('is-invalid');
-                });
-                
-                let isValid = true;
-                
-                // Validate required fields
-                form.querySelectorAll('[required]').forEach(field => {
-                    if (!field.value.trim()) {
-                        field.classList.add('is-invalid');
-                        isValid = false;
-                    }
-                });
-                
-                // Validate email format
-                const emailField = form.querySelector('input[type="email"]');
-                if (emailField && emailField.value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(emailField.value)) {
-                        emailField.classList.add('is-invalid');
-                        isValid = false;
-                    }
-                }
-                
-                // Validate password match
-                const password = document.getElementById('password')?.value;
-                const confirmPassword = document.getElementById('confirmPassword')?.value;
-                if (password !== confirmPassword) {
-                    document.getElementById('confirmPassword').classList.add('is-invalid');
-                    isValid = false;
-                }
-                
-                // Validate terms
-                const termsCheckbox = document.getElementById('terms');
-                if (!termsCheckbox.checked) {
-                    termsCheckbox.classList.add('is-invalid');
-                    isValid = false;
-                }
-                
-                // If valid, submit the form
-                if (isValid) {
-                    // Show loading state
-                    submitBtn.classList.add('loading');
-                    submitBtn.disabled = true;
-                    
-                    // Submit form after a short delay
-                    setTimeout(() => {
-                        form.submit();
-                    }, 1000);
-                } else {
-                    // Scroll to first error
-                    const firstError = form.querySelector('.is-invalid');
-                    if (firstError) {
-                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        firstError.focus();
-                    }
-                }
-            });
+        // Validate password match
+        const password = document.getElementById('password')?.value;
+        const confirmPassword = document.getElementById('confirmPassword')?.value;
+        if (password && confirmPassword && password !== confirmPassword) {
+            showError('password_confirmation', 'Passwords do not match');
+            isValid = false;
         }
-    </script>
+        
+        // Validate terms
+        const termsCheckbox = document.getElementById('terms');
+        if (!termsCheckbox.checked) {
+            showError('terms', 'You must agree to the terms and conditions');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    function showError(fieldName, message) {
+        // Find the input element
+        let input;
+        if (fieldName === 'password_confirmation') {
+            input = document.getElementById('confirmPassword');
+        } else if (fieldName === 'terms') {
+            input = document.getElementById('terms');
+        } else {
+            input = document.querySelector(`[name="${fieldName}"]`);
+        }
+        
+        if (!input) return;
+        
+        // Add error class
+        input.classList.add('is-invalid');
+        
+        // Create or update error message
+        let errorDiv = input.parentElement.querySelector('.invalid-feedback');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback';
+            input.parentElement.appendChild(errorDiv);
+        }
+        errorDiv.textContent = message;
+        
+        // Scroll to first error
+        if (input.scrollIntoView) {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    
+    function clearErrors() {
+        // Remove all error classes
+        document.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+        
+        // Remove all error messages
+        document.querySelectorAll('.invalid-feedback').forEach(el => {
+            el.remove();
+        });
+    }
+</script>
+        
 </body>
 </html>

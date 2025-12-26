@@ -7,10 +7,11 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\payment\PaymentController;
 use App\Http\Controllers\user\UserdashboardController;
+use App\Http\Controllers\user\kyc\UserkycController;
 use App\Http\Controllers\admin\charges\ChargesController;
 use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
-
+use App\Http\Controllers\admin\payment\AdminPaymentController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -50,6 +51,8 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::post('/roles/{id}',  [RoleController::class, 'update'])->name('roles.update');
           Route::delete('/roles',     [RoleController::class, 'destroy'])->name('roles.destroy');
         //end
+        // Route BY AKRAM
+          Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
 
         //User Route
           Route::get('/users',           [UserController::class, 'index'])->name('users.index');
@@ -75,7 +78,14 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
           Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');
           Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
-          
+          // View Profile Route - By AMAN 
+          Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
+          // View KYC Route - By AMAN
+          Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
+          Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');
+          Route::post('/kyc-send-otp', [UserkycController::class, 'send_otp'])->name('kyc.sendOtp');
+          Route::post('/kyc-verify-otp', [UserkycController::class, 'verify_otp'])->name('kyc.verifyOtp');
+
       });
   });
 
