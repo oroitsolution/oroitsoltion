@@ -120,6 +120,7 @@ function alertdata() {
 }
 
 $(document).ready(function () {
+  
   // Initialize DataTable and store instance
   const chargesTable = $('#userchargesdata').DataTable({
     dom: 'f',

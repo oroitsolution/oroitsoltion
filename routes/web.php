@@ -62,6 +62,7 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
 
           Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
           Route::resource('charges',        ChargesController::class);
+         
 
       });
 

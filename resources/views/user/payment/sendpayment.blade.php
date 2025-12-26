@@ -6,7 +6,7 @@
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body text-end">
-            <a href="#" class="btn btn-primary"  data-bs-toggle="modal" id="addBeneficiaryBtn">Add Beneficiary</a>
+            <a href="#" class="btn btn-primary"  data-bs-toggle="modal" id="addBeneficiaryBtn">Send Payment</a>
             </p>
             <div class="table-responsive">
               <table class="table table-striped" >
@@ -17,7 +17,9 @@
                         <th><strong>IFSC Code</strong></th>
                         <th><strong>Bank Name</strong></th>
                         <th><strong>Account Number</strong></th>
-                        <th><strong>Actions</strong></th>
+                        <th><strong>UTR</strong></th>
+                        <th><strong>Status</strong></th>
+                        <th><strong>Date</strong></th>
                         
                         </tr>
                       </thead>
@@ -38,7 +40,7 @@
             <form class="modal-content" id="payoutForm">
                @csrf
                <div class="modal-header bg-primary text-white">
-                  <h5 class="modal-title" id="payAgainModalLabel">Add Beneficiary</h5>
+                  <h5 class="modal-title" id="payAgainModalLabel">Send Payment</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
 
@@ -142,6 +144,16 @@
          $.get('/user/payment-show', function(data) {
             let rows = '';
             $.each(data.data, function(i, payout) {
+               let statusSpan = '';
+            if (payout.status === 'pending') {
+                statusSpan = `<span class="text-danger fw-bold">Pending</span>`;
+            } else if (payout.status === 'success') {
+                statusSpan = `<span class="text-success fw-bold">Success</span>`;
+            } else {
+                statusSpan = `<span>${payout.status}</span>`;
+            }
+
+
                rows += `
                   <tr>
                      <td>${i + 1}</td>
@@ -149,8 +161,11 @@
                      <td>${(payout.ifsc_code || '').toUpperCase()}</td>
                      <td>${payout.bank_name}</td>
                      <td>${payout.account_number}</td>
-                     <td> <button class="btn btn-success" onclick="editPost(${payout.id}, '${payout.bank_name}', '${payout.ifsc_code}', '${payout.account_number}', '${payout.account_name}')">Edit</button></td>
-                     <td><button class="btn btn-danger" onclick="deletePost(${payout.id})">Delete</button></td>
+                    <td>${payout.utr ? payout.utr : ''}</td>
+
+                     <td>${statusSpan}</td>
+                     <td>${payout.created_at}</td>
+                    
                   </tr>`;
             });
             $('#postTable').html(rows);
@@ -211,30 +226,6 @@
      
        $(document).ready(fetchPosts);
 
-      function editPost(id, bankname, ifsc, accountnumber, accountname) {
-         $('#payout').val(id);
-         $('#exampleInputbankname').val(bankname).prop('readonly', true);
-         $('#exampleInputIfsc').val(ifsc).prop('readonly', true);
-         $('#exampleInputaccountnumber').val(accountnumber).prop('readonly', true);
-         $('#exampleInputaccountname').val(accountname).prop('readonly', true);
-         $('#payoutModal').modal('show');
-      }
 
-    
-
-   
-   function deletePost(id) {
-       
-        if (confirm("Delete this post?")) {
-            $.ajax({
-                url: `/payoutamount/${id}`,
-                method: 'DELETE',
-                success: function() {
-                    fetchPosts();
-                }
-            });
-        }
-    }
-    
 </script>
 @endpush

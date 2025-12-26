@@ -8,11 +8,28 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('superadmin.users.index') }}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Users</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('superadmin/charges') }}">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">User Fees & Charges</span>
         </a>
     </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('superadmin/payment') }}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Payment</span>
+        </a>
+    </li>
+
+
     
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
@@ -22,7 +39,7 @@
         </a>
         <div class="collapse" id="form-elements">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.users.index') }}">Users</a></li>
+               
                 <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.permissions.index') }}">Permissions</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.roles.index') }}">Roles</a></li>
             </ul>
