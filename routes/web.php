@@ -51,18 +51,18 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::post('/roles/{id}',  [RoleController::class, 'update'])->name('roles.update');
           Route::delete('/roles',     [RoleController::class, 'destroy'])->name('roles.destroy');
         //end
-        // Route BY AKRAM
-          Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
-
+        
+        
         //User Route
-          Route::get('/users',           [UserController::class, 'index'])->name('users.index');
-          Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-          Route::post('/users/{id}',     [UserController::class, 'update'])->name('users.update');
+        Route::get('/users',           [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::post('/users/{id}',     [UserController::class, 'update'])->name('users.update');
         // end
-
-          Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
-          Route::resource('charges',        ChargesController::class);
-         
+        
+        // Route BY AKRAM
+        Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
+        Route::resource('charges',        ChargesController::class);
+        Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
 
       });
 
