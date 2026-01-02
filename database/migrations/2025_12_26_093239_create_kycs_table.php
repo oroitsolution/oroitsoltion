@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('kycs', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('userid');
             $table->string('cin_number')->nullable();
             $table->string('account_type')->nullable();
-            $table->string('ifsc_code')->nullable();
-            $table->string('bank_name')->nullable();
             $table->string('account_number')->nullable();
             $table->string('account_name')->nullable();
             $table->string('gst')->nullable();
+            $table->string('ifsc_code')->nullable();
+            $table->string('bank_name')->nullable();
             $table->string('address')->nullable();
             $table->string('adhar_number')->nullable();
             $table->string('pan_number')->nullable();
-            $table->text('agentCode')->nullable();
-            $table->text('document');
+            $table->text('add_data')->nullable();
+            $table->text('document')->nullable();
             $table->timestamps();
         });
     }

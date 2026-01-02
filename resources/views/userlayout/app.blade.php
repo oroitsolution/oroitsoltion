@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset('admin/layout/assets/css/style.css')}}">
    
     <link rel="shortcut icon" href="{{asset('admin/layout/assets/images/favicon.png')}}" />
+     @stack('css')
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
@@ -35,7 +36,9 @@
             </div>
         </div>
     </div>
-   
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('admin/layout/assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <script src="{{asset('admin/layout/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
    
@@ -50,16 +53,15 @@
   
     <script src="{{asset('admin/layout/assets/js/jquery.cookie.js')}}" type="text/javascript"></script>
     <script src="{{asset('admin/layout/assets/js/dashboard.js')}}"></script>
-
-    <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <!-- DataTables -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> 
 
 
+
+    
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
      @stack('js')
+
     <!-- End custom js for this page-->
   </body>
 </html>

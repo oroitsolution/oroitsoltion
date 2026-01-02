@@ -10,10 +10,10 @@ class Kyc extends Model
      use HasFactory;
 
      protected $fillable = [
-        'user_id',
+        'userid',
+        'cin_number',
         'account_type',
         'account_number',
-        'cin_number',
         'account_name',
         'gst',
         'address',
@@ -22,6 +22,22 @@ class Kyc extends Model
         'adhar_number',
         'pan_number',
         'document',
+        'add_data',
     ];
+
+    protected $casts = [
+        'document' => 'array',
+        'add_data' => 'array',
+    ];
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'userid', 'id');
+    }
     
 }
