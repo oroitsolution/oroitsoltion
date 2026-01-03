@@ -4,10 +4,24 @@ namespace App\Http\Controllers\admin\Payout;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use DB;
 
-class PayoutController extends Controller
+class PayoutController extends Controller implements HasMiddleware
 {
+
+    public static function  middleware():array
+    {
+        return [
+            new Middleware('permission:view payout', only:['index']),
+            new Middleware('permission:refund payout payment', only:['refund']),
+            
+        ];
+    }
+
+
      public function index(Request $request){
         
         $query = DB::table('payout_payment')
@@ -41,6 +55,12 @@ class PayoutController extends Controller
     }
 
      public function refund(Request $request){
-        dd(123);
+        $query = DB::table('payout_payment')
+        ->leftJoin('users', 'users.id', '=', 'payout_payment.user_id')
+        ->whereIn('payout_payment.status', ['FAILED', 'Failure'])
+        ->select('payout_payment.*', 'users.name as merchantname');
+
+        $data = $query->orderBy('payout_payment.id', 'DESC')->get();
+         return view('admin.payout.refund',compact('data'));
      }
 }

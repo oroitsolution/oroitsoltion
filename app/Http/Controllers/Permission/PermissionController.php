@@ -40,9 +40,9 @@ class PermissionController extends Controller implements HasMiddleware
 
         if($validator->passes()){
             Permission::create(['name'=>$request->name]);
-            return redirect()->route('permissions.index')->with('success','Permission Added Successfully');
+            return redirect()->route('superadmin.permissions.index')->with('success','Permission Added Successfully');
         }else{
-            return redirect()->route('permissions.create')->withInput()->withErrors($validator);
+            return redirect()->route('superadmin.permissions.create')->withInput()->withErrors($validator);
         }
 
     }
@@ -64,9 +64,9 @@ class PermissionController extends Controller implements HasMiddleware
         if($validator->passes()){
             $permissions->name =$request->name;
             $permissions->save();
-            return redirect()->route('permissions.index')->with('success','Permission Updated Successfully');
+            return redirect()->route('superadmin.permissions.index')->with('success','Permission Updated Successfully');
         }else{
-            return redirect()->route('permissions.edit',$id)->withInput()->withErrors($validator);
+            return redirect()->route('superadmin.permissions.edit',$id)->withInput()->withErrors($validator);
         }
     }
 

@@ -13,25 +13,26 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->text('address');
-            $table->string('state');
-            $table->string('city');
-            $table->string('code');
+            $table->text('address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('code')->nullable();
             $table->string('company_name')->nullable();
             $table->unsignedBigInteger('role_id')->nullable();
-            $table->string('mobile_number');
-            $table->string('account_type');
+            $table->string('mobile_number')->nullable();
+            $table->string('account_type')->nullable();
             $table->string('business_type')->nullable();
             $table->tinyInteger('user_kyc')->default(0)->comment('0 => not verified, 1 => verified, 2 => rejected');
             $table->string('status')->default('active');
-            $table->string('paymentmethod')->nullable();
+            $table->string('payoutmethod')->nullable();
+            $table->string('payinmethod')->nullable();
             $table->double('wallet_amount', 15, 2)->default(0);
             $table->boolean('permit')->default(0);
             $table->string('session_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
