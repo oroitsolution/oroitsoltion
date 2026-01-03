@@ -34,10 +34,10 @@ class UserdashboardController extends Controller
 
 
     // ----------------Profile -----------------------/ # 
-
     public function view_profile(){
         $user = Auth::user();
-        return view('user.profile',compact( 'user'));
+        $kycdata = Kyc::where('userid', $user->id)->first();
+        return view('user.profile',compact( 'user','kycdata'));
     }
 
 }

@@ -51,7 +51,7 @@
                 @if(in_array($kycStatus, [0, 3]))
 
                     <div class="card-body">
-                        <form id="kycForm" method="POST" enctype="multipart/form-data">
+                        <form id="kycForm" method="POST" class = "kyc-form d-none" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="account_type" id = "account_type" value="{{ strtoupper($user->account_type) }}">
 
@@ -900,10 +900,12 @@
         // KYC STATUS MODEL
         document.addEventListener('DOMContentLoaded', function () {
 
+            const kycForm = document.getElementById('kycForm');
             if (!hasKycRecord) {
+                  kycForm.classList.remove('d-none');
                 return; // Show normal KYC form
             }
-
+            let dnon = 'd-none';
             let modalId = null;
 
             if (userKycStatus === 0) {
@@ -915,6 +917,12 @@
             else if (userKycStatus === 2) {
                 modalId = 'kycRejectedModal';
             }
+
+              if ([0, 1, 2].includes(userKycStatus)) {
+                    kycForm.classList.add('d-none');
+                } else {
+                    kycForm.classList.remove('d-none');
+                }
 
             if (modalId) {
                 const modal = new bootstrap.Modal(document.getElementById(modalId));

@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{asset('admin/layout/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- endinject -->
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{asset('admin/layout/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('admin/layout/assets/js/select.dataTables.min.css')}}">
     
