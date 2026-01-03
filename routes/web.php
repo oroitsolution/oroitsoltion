@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\charges\ChargesController;
 use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
 use App\Http\Controllers\admin\payment\AdminPaymentController;
+use App\Http\Controllers\admin\Payout\PayoutController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -64,11 +65,19 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
         Route::resource('charges',        ChargesController::class);
         Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
 
+        Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
+        Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
+
       });
 
 
 
       // ----------------------------------------------------------------//
+
+
+
+
+
 
 
 
