@@ -65,18 +65,8 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
         Route::resource('charges',        ChargesController::class);
         Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
 
-<<<<<<< Updated upstream
         Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
         Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
-=======
-          Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
-          Route::resource('charges',        ChargesController::class);
-
-
-          Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
-          Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
-         
->>>>>>> Stashed changes
 
       });
 
