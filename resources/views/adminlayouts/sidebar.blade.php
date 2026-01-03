@@ -30,6 +30,22 @@
     </li>
 
 
+     <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+        <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <span class="menu-title">Payout </span>
+        <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="form-elements">
+            <ul class="nav flex-column sub-menu">
+               
+                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.payout.index') }}">All Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('superadmin.payout.refund') }}">Refund</a></li>
+            </ul>
+        </div>
+    </li>
+
+
     
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
