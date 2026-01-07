@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h3 class="mb-1">ORO IT SOLUTION</h3>
-                                    <p class="mb-0 opacity-75">Your trusted technology partner</p>
+                                    <p class="mb-0 opacity-75">Your Trusted Technology Partner</p>
                                 </div>
                                 <div class="badge bg-white text-primary px-3 py-2 rounded-pill">
                                     <i class="bi bi-shield-check me-2"></i>Verified Account
@@ -270,9 +270,9 @@
                             <div class="input-group mb-2">
                                 <input type="text" 
                                        class="form-control"
-                                       id = "ip_address" 
-                                       name = "ip_address"
-                                       value="{{ $kycdata->ip_address ?? '' }}"
+                                       id = "ipaddress" 
+                                       name = "ipaddress"
+                                       value="{{ $clintdata->ipaddress ?? 'Not configured' }}"
                                        placeholder="Enter IP address"
                                        >
                                 <button class="btn btn-outline-info"  id = "ipupdate" type="button" data-uid = "{{ $user->id }}">
@@ -294,9 +294,9 @@
                                 <label class="form-label small text-muted mb-1">Pay-In Callback</label>
                                 <div class="input-group input-group-sm">
                                     <input type="text" 
-                                           class="form-control"   id = "payin_webhook" 
-                                       name = "payin_webhook"
-                                           value="{{ $kycdata->payin_webhook ?? 'Not configured' }}"
+                                           class="form-control"   id = "payin_url" 
+                                       name = "payin_url"
+                                           value="{{ $clintdata->payin_url ?? 'Not configured' }}"
                                            >
                                     <button class="btn btn-outline-success" id="payinupdate" type="button" data-uid="{{ $user->id }}">
                                         <i class="bi bi-pencil"></i>
@@ -308,9 +308,9 @@
                                 <label class="form-label small text-muted mb-1">Payout Callback</label>
                                 <div class="input-group input-group-sm">
                                     <input type="text" 
-                                           class="form-control"  id = "payout_webhook" 
-                                       name = "ip_address" 
-                                           value="{{ $kycdata->payout_webhook ?? 'Not configured' }}"
+                                           class="form-control"  id = "payout_url" 
+                                       name = "payout_url" 
+                                           value="{{ $clintdata->payout_url ?? 'Not configured' }}"
                                            >
                                     <button class="btn btn-outline-warning" id = "payoutupdate" type="button" data-uid = "{{ $user->id }}">
                                         <i class="bi bi-pencil"></i>
@@ -333,14 +333,14 @@
                             <div class="d-flex align-items-center">
                                 <span class="small text-muted">Client ID</span>
                                 <button class="btn btn-link btn-sm text-decoration-none ms-2 copy-btn" 
-                                        data-text="ASD998776**897"
+                                        data-text="{{ $clintdata->client_id ?? 'ASD998776**897' }}"
                                         data-bs-toggle="tooltip" 
                                         title="Copy Client ID">
                                     <i class="bi bi-copy small"></i>
                                 </button>
                             </div>
                             <div class="d-flex align-items-center">
-                                <code class="small me-2">ASD998776**897</code>
+                                <code class="small me-2">{{ $clintdata->client_id ?? 'ASD998776**897' }}</code>
                             </div>
                         </div>
                         
@@ -349,18 +349,18 @@
                             <div class="d-flex align-items-center">
                                 <span class="small text-muted">Secret Key</span>
                                 <button class="btn btn-link btn-sm text-decoration-none ms-2 copy-btn" 
-                                        data-text="ABCD7723****997"
+                                        data-text="{{ $clintdata->secret_id ?? 'OROIT-76***997' }}"
                                         data-bs-toggle="tooltip" 
                                         title="Copy Secret Key">
                                     <i class="bi bi-copy small"></i>
                                 </button>
                             </div>
                             <div class="d-flex align-items-center">
-                                <code class="small me-2">ABCD7723****997</code>
+                                <code class="small me-2">{{ $clintdata->secret_id ?? 'OROIT-76***997' }} </code>
                             </div>
                         </div>
                     </div>
-                                </div>
+                            </div>
                         </div>
 
                         <!-- Status & Actions -->
@@ -373,7 +373,7 @@
                             </div>
                             <div>
                                 <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-arrow-clockwise me-1"></i>UAT
+                                    <i class="bi bi-arrow-clockwise me-1"></i>Live
                                 </button>
 
                                

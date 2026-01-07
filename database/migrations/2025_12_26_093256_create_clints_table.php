@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('client_id')->nullable();
             $table->string('secret_id')->nullable();
-            $table->text('url')->nullable();
-            $table->text('payinurl')->nullable();
+            $table->text('payout_url')->nullable();
+            $table->text('payin_url')->nullable();
             $table->string('ipaddress')->nullable();
             $table->timestamps();
         });

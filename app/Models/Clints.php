@@ -12,7 +12,8 @@ class Clints extends Model
             'user_id',
             'client_id',
             'secret_id',
-            'url',
+            'payout_url',
+            'payin_url',
             'ipaddress',
         ];
 }

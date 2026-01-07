@@ -31,13 +31,15 @@ class UserdashboardController extends Controller
         return view('user.userdashboard',compact( 'user'));
     }
 
-
-
     // ----------------Profile -----------------------/ # 
     public function view_profile(){
         $user = Auth::user();
+        $clintdata = Clints::where('user_id', $user->id)->first();
         $kycdata = Kyc::where('userid', $user->id)->first();
-        return view('user.profile',compact( 'user','kycdata'));
+
+        
+
+        return view('user.profile',compact( 'user','kycdata' , 'clintdata'));
     }
 
 }
