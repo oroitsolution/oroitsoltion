@@ -13,8 +13,6 @@ use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
 use App\Http\Controllers\admin\payment\AdminPaymentController;
 use App\Http\Controllers\admin\Payout\PayoutController;
-
-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -26,7 +24,9 @@ use App\Http\Controllers\admin\Payout\PayoutController;
 Route::get('/', [FrontController::class, 'index'])->name('/');
 
 
-Route::middleware('auth')->group(function (){
+
+ Route::middleware('auth')->group(function () 
+  {
   
     Route::middleware('superadmin')->prefix('superadmin')->name('superadmin.')->group(function () {
 
@@ -68,27 +68,35 @@ Route::middleware('auth')->group(function (){
         Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
         Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
 
-    });
-
-      // --------------------------------------------User Side---------------------------------------------------//
-
-    Route::middleware('user')->prefix('user')->name('user.')->group(function (){
-        Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('dashboard');
-        Route::get('/payment-send',  [PaymentController::class, 'index'])->name('payment.send');
-        Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
-        Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');
-        Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
-        // View Profile Route - By AMAN 
-        Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
-        // View KYC Route - By AMAN
-        Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
-        Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');
-        Route::post('/kyc-send-otp', [UserkycController::class, 'send_otp'])->name('kyc.sendOtp');
-        Route::post('/kyc-verify-otp', [UserkycController::class, 'verify_otp'])->name('kyc.verifyOtp');
-        
-    });
+      });
 
 
+
+      // ----------------------------------------------------------------//
+
+
+
+
+
+
+
+
+      Route::middleware('user')->prefix('user')->name('user.')->group(function ()
+      {
+          Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('dashboard');
+          Route::get('/payment-send',  [PaymentController::class, 'index'])->name('payment.send');
+          Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
+          Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');
+          Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
+          // View Profile Route - By AMAN 
+          Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
+          // View KYC Route - By AMAN
+          Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
+          Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');
+          Route::post('/kyc-send-otp', [UserkycController::class, 'send_otp'])->name('kyc.sendOtp');
+          Route::post('/kyc-verify-otp', [UserkycController::class, 'verify_otp'])->name('kyc.verifyOtp');
+
+      });
   });
 
   require __DIR__.'/auth.php';
