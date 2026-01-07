@@ -9,6 +9,11 @@
             <!-- <a href="{{ route('superadmin.roles.create') }}" class="btn btn-primary">Create Roles</a> -->
             </p>
             <div class="table-responsive">
+               @if(Session::has('success'))
+									<div class="alert alert-primary" role="alert" id="success-alert">
+										{{ Session::get('success') }}
+									</div>
+								@endif
               <table class="table table-striped">
                   <thead>
                         <tr>
@@ -18,19 +23,21 @@
                           <th>Roles</th>
                           <th>Created</th>
                           <th>Action</th>
+                          <th>User Panel</th>
                         
                         </tr>
                       </thead>
                       <tbody>
                       @if($users->isNotEmpty())
-                      @foreach($users as $user)
+                      @foreach($users  as $key=> $user)
                         <tr class="align-middle">
-                          <td>{{$user->id}}</td>
+                          <td>{{$key + 1 }}</td>
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->roles->pluck('name')->implode(',')}}</td>
                           <td>{{\Carbon\Carbon::parse($user->created_at)->format('d M, Y')}}</td>
                           <td><a href="{{route('superadmin.users.edit',$user->id)}}" class="btn btn-bg btn-warning">Edit</a>
+                          <td> <a href="{{route('superadmin.users.enter',$user->id)}}" target="_blank"  class="btn btn-bg btn-success" >Login</a></td>
                           
                         </td>
                         </tr>
@@ -56,6 +63,19 @@
 @endsection
 @push('js')
 <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+    const alertBoxes = document.querySelectorAll("#success-alert, #danger-alert");
+
+		alertBoxes.forEach(function(alertBox) {
+			setTimeout(() => {
+				alertBox.classList.add("fade-out");
+				setTimeout(() => {
+					alertBox.remove();
+				}, 500);
+			}, 3000);
+		});
+	});
+
     function deleterole(id){
         if(confirm("Are you sure you want to delete?")){
             $.ajax({

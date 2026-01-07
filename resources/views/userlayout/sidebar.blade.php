@@ -1,5 +1,12 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
+         @if(session()->has('superadmin_id'))
+        <a class="nav-link" href="{{route('superadmin.back.to.admin')}}">
+            <a href="{{ route('superadmin.back.to.admin') }}" class="btn w-100 btn-warning">
+                <i class="bi bi-arrow-left-circle"></i> Back to Admin
+            </a>
+          </a>
+          @endif
         <li class="nav-item">
             <a class="nav-link" href="{{ route('user.dashboard') }}">
                 <i class="mdi mdi-grid-large menu-icon"></i>

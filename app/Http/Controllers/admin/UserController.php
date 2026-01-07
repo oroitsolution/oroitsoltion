@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Auth;
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -24,8 +25,31 @@ public static function  middleware():array
         ];
     }
 
+    public function enter($merchantId)
+    {
+       session(['superadmin_id' => Auth::id()]);
+
+        $merchant = User::findOrFail($merchantId);
+
+        Auth::login($merchant);
+        return redirect()->route('user.dashboard')->with('success', 'You are now logged in as merchant.');
+    }
+
+    public function backToAdmin()
+    {
+        $superadminId = session('superadmin_id');
+
+        if ($superadminId) {
+            Auth::loginUsingId($superadminId);
+            session()->forget('superadmin_id');
+            return redirect()->route('superadmin.users.index')->with('success', 'Back as super admin');
+        }
+
+        return redirect('/')->with('error', 'No impersonation session found.');
+    }
+
     public function index(){
-        $user=User::latest()->paginate(10);
+        $user=User::where('role_id','!=','1')->latest()->paginate(10);
         
         return view('admin.user.index',[
             'users' => $user

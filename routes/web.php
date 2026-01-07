@@ -13,6 +13,7 @@ use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
 use App\Http\Controllers\admin\payment\AdminPaymentController;
 use App\Http\Controllers\admin\Payout\PayoutController;
+use App\Http\Controllers\admin\Payin\PayinController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -58,17 +59,27 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
         Route::get('/users',           [UserController::class, 'index'])->name('users.index');
         Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/users/{id}',     [UserController::class, 'update'])->name('users.update');
+        Route::get('/usersenter/{id}', [UserController::class, 'enter'])->name('users.enter');
+        Route::get('/back-to-admin',   [UserController::class, 'backToAdmin'])->name('back.to.admin');
         // end
         
-        // Route BY AKRAM
+        
         Route::get('/charges/list/{id}', [ChargesController::class, 'getUserCharges']);
         Route::resource('charges',        ChargesController::class);
         Route::get('/payment',           [AdminPaymentController::class, 'index'])->name('payment');
 
+
         Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
         Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
 
+
+        Route::get('/payin',            [PayinController::class, 'payindata'])->name('payin.index');
+        Route::get('/settlement',       [PayinController::class, 'settlementdata'])->name('settlement.index');
+        Route::post('/settle/request/withdraw', [PayinController::class, 'settleapproved'])->name('settle.withdraw');
+        Route::get('/get-settlement-users', [PayinController::class, 'getUsersForSettlement']);
+
       });
+
 
 
 
@@ -90,7 +101,13 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
           // View Profile Route - By AMAN 
           Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
+<<<<<<< Updated upstream
           
+=======
+          Route::post('/regenerate-secret-key', [UserdashboardController::class, 'regenerateSecret'])->name('regenerate.secret');
+          Route::post('/change-password', [UserdashboardController::class, 'changePassword'])->name('change.password');
+          Route::post('/additional-bank-data', [UserdashboardController::class, 'additional_data'])->name('additional.bank.store');
+>>>>>>> Stashed changes
           // View KYC Route - By AMAN
           Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
           Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');
