@@ -1,0 +1,17 @@
+#toast-container > div {
+    color: #ffffff !important;   /* text visible */
+    opacity: 1 !important;
+    z-index: 999999 !important;
+}
+
+.toast-success {
+    background-color: #ed701b !important;
+}
+
+.toast-error {
+    background-color: #ed701b !important;
+}
+
+#toast-container {
+    z-index: 999999 !important;
+}

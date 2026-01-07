@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'address',
         'state',
@@ -32,11 +33,13 @@ class User extends Authenticatable
         'business_type',
         'user_kyc',
         'status',
-        'paymentmethod',
+        'payoutmethod',
+        'payinmethod',
         'wallet_amount',
         'permit',
         'session_id',
         'password',
+        'show_password',
     ];
 
     /**

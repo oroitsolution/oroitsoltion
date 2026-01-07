@@ -90,6 +90,7 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
           // View Profile Route - By AMAN 
           Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
+          
           // View KYC Route - By AMAN
           Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
           Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');

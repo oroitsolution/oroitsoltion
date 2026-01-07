@@ -17,11 +17,16 @@
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- endinject -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="{{asset('admin/layout/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('admin/layout/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}"> -->
     <link rel="stylesheet" type="text/css" href="{{asset('admin/layout/assets/js/select.dataTables.min.css')}}">
     
     <link rel="stylesheet" href="{{asset('admin/layout/assets/css/style.css')}}">
+
+    <link rel="stylesheet" href="{{asset('user/assets/css/userstyle.css')}}">
    
     <link rel="shortcut icon" href="{{asset('admin/layout/assets/images/favicon.png')}}" />
      @stack('css')
@@ -56,13 +61,24 @@
     <script src="{{asset('admin/layout/assets/js/dashboard.js')}}"></script>
 <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
-
+  <!-- toastr.success('Secret Key Updated Successfully!');
+      toastr.error('Something went wrong!');
+      toastr.info('Processing...');
+      toastr.warning('Warning message'); -->
     
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
      @stack('js')
-
+      <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "3000",
+        };
+        </script>
     <!-- End custom js for this page-->
   </body>
 </html>

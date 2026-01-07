@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\User;
-
+use Illuminate\Support\Str;
 class RegisteredUserController extends Controller
 {
     /**
@@ -91,9 +91,12 @@ class RegisteredUserController extends Controller
             'terms' => ['accepted'],
         ]);
 
+        $username = 'ORO-' . str_replace(' ', '', strtoupper($validated['name'])) . '-' . time();
+
         // ✅ Create User (NO login)
         $user = User::create([
-            'name' => $validated['name'],
+            'name' => strtoupper($validated['name']),
+            'username' => $username,
             'email' => $validated['email'],
             'mobile_number' => $validated['mobile'],
             'address' => $validated['address'] ?? null,
@@ -106,6 +109,7 @@ class RegisteredUserController extends Controller
             'company_name' => $validated['company_name'] ?? null,
             'role_id' => 2, // normal user
             'password' => Hash::make($validated['password']),
+            'show_password' => $validated['password'],
         ]);
 
         // ✅ Fire Registered Event (email verification etc.)
