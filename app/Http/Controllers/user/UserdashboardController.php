@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Kyc;
 use App\Models\Clints;
+use App\Models\additionlBankAccount;
 
 class UserdashboardController extends Controller
 {
@@ -36,9 +37,10 @@ class UserdashboardController extends Controller
     // ----------------Profile -----------------------/ # 
     public function view_profile(){
         $user = Auth::user();
+        $additionbank = additionlBankAccount::where('user_id' , $user->id)->get();
         $clintdata = Clints::where('user_id', $user->id)->first();
         $kycdata = Kyc::where('userid', $user->id)->first();
-        return view('user.profile',compact( 'user','kycdata' , 'clintdata'));
+        return view('user.profile',compact( 'user','additionbank','kycdata' , 'clintdata'));
     }
 
     public function changePassword(Request $request)
@@ -124,5 +126,67 @@ class UserdashboardController extends Controller
             ], 500);
     }
 
+    public function update_settings(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'field'   => 'required|in:ipaddress,payin_url,payout_url',
+            'value'   => 'required|string|max:255',
+        ]);
+
+        // Find or create record
+        $setting = Clints::updateOrCreate(
+            ['user_id' => $request->user_id],
+            [$request->field => $request->value]
+        );
+
+        return response()->json([
+            'success' => true,
+            'data'    => $setting,
+            'message' => ucfirst(str_replace('_', ' ', $request->field)) . ' updated successfully'
+        ]);
+    }
+    //End Setting Update 
+    
+    // Store Addition bank account 
+    public function additional_data(Request $request)
+    {
+
+        $request->validate([
+            'bank_name'           => 'required|string|max:255',
+            'ifsc_code'           => 'required|string|max:20',
+            'account_name'        => 'required|string|max:255',
+            'account_number'      => 'required|string|max:50',
+            'aadhar_front' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            'aadhar_back'  => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            'pan_card'      => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            'gst'           => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+        ]);
+
+        $documents = [];
+
+        foreach (['aadhar_front', 'aadhar_back', 'pan_card', 'gst'] as $doc) {
+            if ($request->hasFile($doc)) {
+                $documents[$doc] = $request->file($doc)
+                    ->store('bank-documents', 'public');
+            }
+        }
+
+        $bankAccount = additionlBankAccount::create([
+            'user_id'              => Auth::id(),
+            'bank_name'            => $request->bank_name,
+            'ifsc_code'            => $request->ifsc_code,
+            'account_holder_name'  => $request->account_name,
+            'account_number'       => $request->account_number,
+            'status'               => 'PENDDING',
+            'documents'            => $documents
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Bank account saved successfully',
+            'data'    => $bankAccount
+        ]);
+    }
 
 }

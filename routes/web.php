@@ -103,6 +103,7 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
           Route::post('/regenerate-secret-key', [UserdashboardController::class, 'regenerateSecret'])->name('regenerate.secret');
           Route::post('/change-password', [UserdashboardController::class, 'changePassword'])->name('change.password');
+          Route::post('/update-settings', [UserdashboardController::class, 'update_settings'])->name('client.settings.update');
           Route::post('/additional-bank-data', [UserdashboardController::class, 'additional_data'])->name('additional.bank.store');
           // View KYC Route - By AMAN
           Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
