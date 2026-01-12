@@ -14,6 +14,8 @@ use App\Http\Controllers\Permission\RoleController;
 use App\Http\Controllers\admin\payment\AdminPaymentController;
 use App\Http\Controllers\admin\Payout\PayoutController;
 use App\Http\Controllers\admin\Payin\PayinController;
+use App\Http\Controllers\admin\Kyc\KycdataController;
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -77,8 +79,12 @@ Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact
         Route::get('/payin',            [PayinController::class, 'payindata'])->name('payin.index');
         Route::get('/settlement',       [PayinController::class, 'settlementdata'])->name('settlement.index');
         Route::post('/settle/request/withdraw', [PayinController::class, 'settleapproved'])->name('settle.withdraw');
-        Route::get('/get-settlement-users', [PayinController::class, 'getUsersForSettlement']);
+        Route::get('/get-settlement-users', [PayinController::class, 'getUsersForSettlement'])->name('get.settelmentdata');
 
+        Route::get('/get-kyc-users', [KycdataController::class, 'getkycdata'])->name('kyc.data');
+        Route::get('/kyc/view/{id}', [KycdataController::class, 'view'])->name('kyc.view');
+        Route::get('/kyc/status/{id}/{status}', [KycdataController::class, 'updateStatus'])
+        ->name('kyc.status');
       });
 
 

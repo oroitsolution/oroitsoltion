@@ -6,11 +6,11 @@
             </button>
         </div>
         <div>
-            <a class="navbar-brand brand-logo" href="index.html">
+            <a class="navbar-brand brand-logo" href="{{ route('superadmin.dashboard') }}">
                 <img style="height:140px !important" src="{{asset('admin/layout/assets/images/logo.svg')}}"
                     alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
+            <a class="navbar-brand brand-logo-mini" href="{{ route('superadmin.dashboard') }}">
                 <img height="140px" src="{{asset('admin/layout/assets/images/minilogo.jpeg')}}" alt="logo" />
             </a>
         </div>

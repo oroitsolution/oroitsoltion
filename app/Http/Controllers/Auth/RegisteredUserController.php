@@ -92,7 +92,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $username = 'ORO-' . str_replace(' ', '', strtoupper($validated['name'])) . '-' . time();
-
+        
         // ✅ Create User (NO login)
         $user = User::create([
             'name' => strtoupper($validated['name']),

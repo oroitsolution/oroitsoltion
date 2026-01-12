@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/layout/assets/js/select.dataTables.min.css') }}">
 
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/7.4.47/css/materialdesignicons.min.css">
+
+
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/css/style.css') }}">
 
