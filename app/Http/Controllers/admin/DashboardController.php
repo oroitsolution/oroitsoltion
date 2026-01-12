@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class DashboardController extends Controller
     }
 
     public function contact(Request $request){
+         $user = Auth::user();
         $contact=DB::table('contacts') ->orderBy('id', 'desc')->paginate(10);
-        return view('admin.contact.index',compact('contact'));
+        return view('admin.contact.index',compact('contact','user'));
     }
 }
