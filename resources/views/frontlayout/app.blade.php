@@ -94,7 +94,33 @@
             width: 900,
             autoplayVideos: true,
         });
+
+            document.addEventListener("DOMContentLoaded", function () {
+
+        // agar success message exist karta hai
+        const successBox = document.getElementById('contact-success');
+
+        if (successBox) {
+
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            // ⏳ 5 seconds baad message hide
+            setTimeout(function () {
+                successBox.style.transition = "opacity 0.5s ease";
+                successBox.style.opacity = "0";
+
+                setTimeout(() => {
+                    successBox.remove();
+                }, 500);
+
+            }, 5000);
+        }
+    });
     </script>
+    
 
 </body>
 

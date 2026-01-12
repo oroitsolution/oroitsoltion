@@ -29,6 +29,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('superadmin/contact') }}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Contact</span>
+        </a>
+    </li>
+
 
      <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">

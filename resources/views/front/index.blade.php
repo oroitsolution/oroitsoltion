@@ -520,8 +520,8 @@
                   </div>
                   <div class="contact-content">
                     <h4>Contact</h4>
-                    <p>0984537278623</p>
-                    <p>yourmail@gmail.com</p>
+                    <p>6377404459</p>
+                    <p>oroitsolution@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -532,8 +532,8 @@
                   </div>
                   <div class="contact-content">
                     <h4>Address</h4>
-                    <p>175 5th Ave, New York, NY 10010</p>
-                    <p>United States</p>
+                    <p>Near Railway Station Kota</p>
+                    <p>Kota</p>
                   </div>
                 </div>
               </div>
@@ -545,7 +545,7 @@
                   <div class="contact-content">
                     <h4>Schedule</h4>
                     <p>24 Hours / 7 Days Open</p>
-                    <p>Office time: 10 AM - 5:30 PM</p>
+                    <p>Office time: 10 AM - 6:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -568,7 +568,14 @@
                 </div>
               </div>
             </div>
-            <form action="#" class="contact-form">
+           @if (session('success'))
+              <div id="contact-success" class="alert alert-success">
+                  {{ session('success') }}
+              </div>
+          @endif
+
+            <form action="{{route('contact.store')}}" method="post" class="contact-form">
+              @csrf
               <div class="row">
                 <div class="col-md-6">
                   <input type="text" name="name" id="name" placeholder="Name" required />
@@ -619,13 +626,4 @@
     
 
 @endsection
-@push('js')
 
-
-<script>
-
-
-
-</script>
-
-@endpush

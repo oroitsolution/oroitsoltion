@@ -23,7 +23,7 @@ use App\Http\Controllers\admin\Payin\PayinController;
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', [FrontController::class, 'index'])->name('/');
-
+Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
 
 
  Route::middleware('auth')->group(function () 
@@ -35,6 +35,7 @@ Route::get('/', [FrontController::class, 'index'])->name('/');
           Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
           Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
           Route::get('/dashboard',  [DashboardController::class, 'index'])->name('dashboard');
+          Route::get('/contact',    [DashboardController::class, 'contact'])->name('contact');
           
         //Permission Route
           Route::get('/permissions',           [PermissionController::class, 'index'])->name('permissions.index');

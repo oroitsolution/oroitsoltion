@@ -4,29 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache; 
-use Illuminate\Support\Facades\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Encoders\JpegEncoder;
-use Intervention\Image\Encoders\PngEncoder;
-use Intervention\Image\Encoders\WebpEncoder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
-use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 
 class FrontController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         return view('front.index');
+    }
+
+
+    public function contactstore(Request $request)
+    {
+         $validated = $request->validate([
+            'name'    => 'required|string|max:255',
+            'phone'  => 'required|numeric',
+            'email'   => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        // Insert data and get inserted ID
+        $contactId = DB::table('contacts')->insertGetId([
+            'name'    => $validated['name'],
+            'phone'  => $validated['phone'],
+            'email'   => $validated['email'],
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+            'created_at' => Carbon::now('Asia/Kolkata'),
+            'updated_at' => Carbon::now('Asia/Kolkata'),
+        ]);
+
+        return back()->with('success', 'Contact sent successfully!');
     }
 }
