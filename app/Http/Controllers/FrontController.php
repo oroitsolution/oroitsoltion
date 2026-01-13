@@ -21,7 +21,6 @@ class FrontController extends Controller
         return view('front.software');
     }
 
-
     public function contactstore(Request $request)
     {
          $validated = $request->validate([
