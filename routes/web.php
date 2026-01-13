@@ -25,6 +25,8 @@ use App\Http\Controllers\admin\Kyc\KycdataController;
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', [FrontController::class, 'index'])->name('/');
+
+Route::get('/software', [FrontController::class, 'software'])->name('front.software');
 Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
 
 

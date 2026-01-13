@@ -18,7 +18,20 @@
     <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
             <li class="nav-item fw-semibold d-none d-lg-block ms-0">
-                <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">{{ $user->name }}</span></h1>
+                @php
+                $hour = now()->hour;
+
+                if ($hour < 12) {
+                    $greeting = 'Good Morning';
+                } elseif ($hour < 17) {
+                    $greeting = 'Good Afternoon';
+                } elseif ($hour < 21) {
+                    $greeting = 'Good Evening';
+                } else {
+                    $greeting = 'Good Night';
+                }
+            @endphp
+                <h1 class="welcome-text"> {{ $greeting }}, <span class="text-black fw-bold">{{ Auth::user()->name }}</span></h1>
                 <h3 class="welcome-sub-text">Welcome To Our Business Dashboard </h3>
             </li>
         </ul>
@@ -132,9 +145,9 @@
                         <img class="img-md rounded-circle mb-2" src="{{ asset('admin/layout/assets/images/logo.svg') }}"
                             alt="Profile image" style="width: 90px; height: 60px;">
 
-                        <p class="mb-1 fw-semibold">{{ $user->name }}</p>
-                        <p class="fw-light text-muted mb-0">{{ $user->email }}</p>
-                        <p class="fw-light text-muted mb-0">{{ $user->username }}</p>
+                        <p class="mb-1 fw-semibold">{{ Auth::user()->name }}</p>
+                        <p class="fw-light text-muted mb-0">{{ Auth::user()->email }}</p>
+                        <p class="fw-light text-muted mb-0">{{ Auth::user()->username }}</p>
                     </div>
 
                     <div class="dropdown-divider"></div>

@@ -20,9 +20,10 @@
             <div class="collapse navbar-collapse" id="navbarNine">
                 <!-- Main Navigation -->
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#hero-area">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="{{ route('front.software') }}">Softwatre</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
 

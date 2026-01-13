@@ -13,14 +13,15 @@
 
     <!-- ====== Favicon ====== -->
     <link rel="shortcut icon" href="{{ asset('front/images/favicon.png') }}" type="image/svg">
-
     <!-- ====== CSS Files ====== -->
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('front/css/lineicons.css') }}">
+    
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('front/css/tiny-slider.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/glightbox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     @stack('styles')
 </head>
 
 <body id="bg-oro">

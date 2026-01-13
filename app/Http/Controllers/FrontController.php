@@ -16,6 +16,11 @@ class FrontController extends Controller
         return view('front.index');
     }
 
+    public function software(Request $request)
+    {
+        return view('front.software');
+    }
+
 
     public function contactstore(Request $request)
     {

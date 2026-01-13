@@ -31,13 +31,13 @@ use App\Models\additionlBankAccount;
 class DashboardController extends Controller
 {
    public function index(){
-         $user = Auth::user();
-        return view('admin.dashboards' , compact( 'user'));
+
+        return view('admin.dashboards');
     }
 
     public function contact(Request $request){
-         $user = Auth::user();
+       
         $contact=DB::table('contacts') ->orderBy('id', 'desc')->paginate(10);
-        return view('admin.contact.index',compact('contact','user'));
+        return view('admin.contact.index',compact('contact'));
     }
 }
