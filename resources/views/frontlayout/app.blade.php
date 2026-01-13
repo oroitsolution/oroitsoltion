@@ -5,22 +5,48 @@
     <!-- ====== Meta Tags ====== -->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
 
     <!-- ====== Title ====== -->
-    <title>Oro IT Solution</title>
+    <title>Oro IT Solution | Software & Fintech Development Company in Rajasthan, India</title>
+    <meta name="description" content="Oro IT Solution is a leading software development and fintech solution company in Rajasthan, India providing web, mobile, ERP, CRM, fintech & payment solutions.">
+    <meta name="keywords" content="Software Company in Rajasthan, Fintech Company in India, Software Development India, Payment Gateway Integration, ERP CRM Software, Web Development Jaipur">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Oro IT Solution">
+
+    <!-- Location -->
+    <meta name="geo.region" content="IN-RJ">
+    <meta name="geo.placename" content="Rajasthan, India">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Oro IT Solution | Software & Fintech Company in Rajasthan">
+    <meta property="og:description" content="Trusted software and fintech development company in Rajasthan, India.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:image" content="{{ asset('front/images/og-image.jpg') }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+
 
     <!-- ====== Favicon ====== -->
     <link rel="shortcut icon" href="{{ asset('front/images/favicon.png') }}" type="image/svg">
     <!-- ====== CSS Files ====== -->
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
-    
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('front/css/lineicons.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/tiny-slider.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/glightbox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
      @stack('styles')
 </head>
 

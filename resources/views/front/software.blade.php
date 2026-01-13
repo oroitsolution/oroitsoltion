@@ -97,8 +97,11 @@
 }
 
 .software-cta p {
-   
     color: #fff;
+}
+
+.software-cta:hover a {
+    color: #993023;
 }
 
 
