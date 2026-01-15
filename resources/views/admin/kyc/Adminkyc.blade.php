@@ -150,7 +150,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="kycModal{{ $kyc->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="kycModal{{ isset($kyc->id) ? $kyc->id : 'N/A' }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
 
