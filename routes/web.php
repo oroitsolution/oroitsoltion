@@ -84,9 +84,10 @@ Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact
         Route::get('/get-settlement-users', [PayinController::class, 'getUsersForSettlement'])->name('get.settelmentdata');
 
         Route::get('/get-kyc-users', [KycdataController::class, 'getkycdata'])->name('kyc.data');
-        Route::get('/kyc/view/{id}', [KycdataController::class, 'view'])->name('kyc.view');
-        Route::get('/kyc/status/{id}/{status}', [KycdataController::class, 'updateStatus'])
-        ->name('kyc.status');
+        
+        Route::post('/kyc/status/{id}', [KycdataController::class, 'updateStatus'])->name('kyc.status');
+
+
       });
 
 
