@@ -27,7 +27,15 @@ use App\Http\Controllers\admin\Kyc\KycdataController;
 Route::get('/', [FrontController::class, 'index'])->name('/');
 
 Route::get('/software', [FrontController::class, 'software'])->name('front.software');
+
+Route::get('/privacy-policy', [FrontController::class, 'ppc'])->name('front.ppc');
+Route::get('/about-us', [FrontController::class, 'aboutus'])->name('front.aboutus');
+Route::get('/terms-condition', [FrontController::class, 'term_condition'])->name('front.tnc');
+Route::get('/cancellation-refund-policy', [FrontController::class, 'cancel_refundpolicy'])->name('front.crp');
+Route::get('/contact-us', [FrontController::class, 'contact_us'])->name('front.contactus');
+
 Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
+
 
 
  Route::middleware('auth')->group(function () 

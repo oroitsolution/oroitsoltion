@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('adhar_number')->nullable();
             $table->string('pan_number')->nullable();
             $table->text('add_data')->nullable();
-            $table->text('kyc_status')->nullable()->default('PENDING');
+            $table->text('kyc_status')->nullable()->default('0');
             $table->text('document')->nullable();
             $table->timestamps();
         });

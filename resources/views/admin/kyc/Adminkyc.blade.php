@@ -67,11 +67,11 @@
 
                                     {{-- Status --}}
                                     <td class="text-center">
-                                        @if(isset($kyc->kyc_status) && $kyc->kyc_status === 'PENDING')
+                                        @if(isset($kyc->kyc_status) && $kyc->kyc_status === '0')
                                         <span class="badge bg-warning">PENDING</span>
-                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === 'APPROVED')
+                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === '1')
                                         <span class="badge bg-success">APPROVED</span>
-                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === 'REJECTED')
+                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === '2')
                                         <span class="badge bg-danger">REJECTED</span>
                                         @else
                                         <span class="badge bg-secondary">N/A</span>
@@ -86,11 +86,14 @@
                                             <i class="mdi mdi-eye"></i>
                                         </button>
 
-                                           @if(isset($kyc) && $kyc->kyc_status == 'APPROVED')
-                                                {{-- Displayed when KYC is already verified --}}
-                                                <span class="badge badge-pill badge-light-success">
-                                                    <i class="mdi mdi-verified"></i> Verified
-                                                </span>
+                                           @if(isset($kyc) && $kyc->kyc_status == '1')                                               
+                                                <button type="button"
+                                                        class="btn btn-sm btn-outline-success"
+                                                        data-kyc-id="{{ $kyc->id }}"          {{-- required for JS --}}
+                                                        data-kyc-uid="{{ $kyc->user_id }}">
+                                                    <i class="mdi mdi-verified me-1"></i>Verified
+                                                </button>
+
                                             @elseif(isset($kyc))
                                                 {{-- Action Buttons for Pending/Rejected KYC --}}
                                                 <div class="btn-group" role="group">
@@ -246,7 +249,7 @@
 <script>
 $(document).ready(function () {
 
-    $(document).on('click', '.kyc-approve-btn, .kyc-reject-btn', function () {
+    $(document).on('click', '.kyc-approve-btn, .kyc-reject-btn', async function () {
 
         let button = $(this);
         let kycId  = button.data('kyc-id');
@@ -255,9 +258,17 @@ $(document).ready(function () {
 
         let url = "{{ route('superadmin.kyc.status', ':id') }}".replace(':id', kycId);
 
-        if (!confirm(`Are you sure you want to ${status} this KYC?`)) {
-            return;
-        }
+        const result = await Swal.fire({
+            title: `Are you sure you want to ${status} this KYC?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (!result.isConfirmed) return;
 
         $.ajax({
             url: url,
@@ -265,26 +276,36 @@ $(document).ready(function () {
             data: {
                 _token: "{{ csrf_token() }}",
                 status: status,
-                user_id: userId
+                user_id: userId,
+                kyc_id: kycId
             },
             beforeSend: function () {
-                button.prop('disabled', true);
+                // Disable both buttons in the same row
+                button.closest('tr').find('button').prop('disabled', true);
             },
             success: function (response) {
 
-                if (response.success) {
-                    alert(response.message);
+                if (response.success === true) {
+                    toastr.success(response.message || 'KYC updated successfully');
 
-                    // Optional UI update instead of reload
-                    location.reload();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
                 } else {
-                    alert(response.message);
-                    button.prop('disabled', false);
+                    toastr.error(response.message || 'KYC update failed');
+                    setTimeout(() => location.reload(), 1500);
+                    button.closest('tr').find('button').prop('disabled', false);
                 }
             },
             error: function (xhr) {
-                alert(xhr.responseJSON?.message || 'Something went wrong');
-                button.prop('disabled', false);
+
+                let message = 'Something went wrong';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                toastr.error(message);
+                button.closest('tr').find('button').prop('disabled', false);
             }
         });
     });

@@ -43,8 +43,10 @@
     <link rel="stylesheet" href="{{ asset('front/css/tiny-slider.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/glightbox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <link href="https://cdn.materialdesignicons.com/7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
 
 
      @stack('styles')
