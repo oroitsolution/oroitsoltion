@@ -53,6 +53,7 @@
             <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link {{ request()->is('superadmin/payout') ? 'active' : '' }}"  href="{{ route('superadmin.payout.index') }}">All Data</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('superadmin/payout/refund') ? 'active' : '' }}" href="{{ route('superadmin.payout.refund') }}">Refund</a></li>
+                 <li class="nav-item"><a class="nav-link {{ request()->is('superadmin/freeze-amount') ? 'active' : '' }}"  href="{{ route('superadmin.freeze.index') }}">Freeze</a></li>
             </ul>
         </div>
     </li>

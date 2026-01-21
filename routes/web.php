@@ -82,6 +82,14 @@ Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact
         Route::get('/settlement',       [PayinController::class, 'settlementdata'])->name('settlement.index');
         Route::post('/settle/request/withdraw', [PayinController::class, 'settleapproved'])->name('settle.withdraw');
         Route::get('/get-settlement-users', [PayinController::class, 'getUsersForSettlement'])->name('get.settelmentdata');
+        Route::get('/freeze-amount',    [AdminPaymentController::class, 'freezeamount'])->name('freeze.index');
+        Route::post('/freeze-store',    [AdminPaymentController::class, 'store'])->name('freeze.store');
+        Route::put('/freeze-update/{id}', [AdminPaymentController::class, 'update'])->name('freezeamount.update');
+
+        Route::delete('/freeze-store/{id}', [AdminPaymentController::class, 'destroy'])->name('freezeamount.destroy');
+
+
+        
 
         Route::get('/get-kyc-users', [KycdataController::class, 'getkycdata'])->name('kyc.data');
         Route::get('/kyc/view/{id}', [KycdataController::class, 'view'])->name('kyc.view');

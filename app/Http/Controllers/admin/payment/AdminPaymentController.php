@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin\payment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Charge;
+use App\Models\Freeze;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -55,6 +55,43 @@ class AdminPaymentController extends Controller
         return view('admin.payment.payment', compact('data'));
     }
 
+    public function freezeamount(Request $request){
+        $user=User::where('role_id',2)->get();
+        $freezeamount=Freeze::leftJoin('users', 'users.id', '=', 'freezes.user_id')
+       ->select('freezes.*', 'users.name as user_name')->paginate(20);
+        return view('admin.freeze.index',compact('user','freezeamount'));
+    }
+
+    public function store(Request $request)
+    {
+       
+        $check = Freeze::where('user_id', $request->user_id)->exists();
+            if ($check) {
+                return redirect('superadmin/freeze-amount')->with('success', 'Freeze amount already exists.');
+            } else {
+                Freeze::create([
+                    'user_id' => $request->user_id,
+                    'amount'  => $request->freeze_amount,
+                ]);
+            }
+        return redirect('superadmin/freeze-amount')->with('success', 'Freeze amount Added Successfully.');
+    }
+
+    public function update(Request $request)
+    {
+        $data = Freeze::find($request->id);
+        $data->amount = $request->amount;
+        $data->save();
+        return redirect()->back()->with('success', 'Freeze amount updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $data = Freeze::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back()->with('success', 'Freeze amount deleted successfully!');
+    }
 
     
 }
