@@ -21,6 +21,31 @@ class FrontController extends Controller
         return view('front.software');
     }
 
+    //---------------------------------------------------------------//
+
+     public function ppc(Request $request)
+    {
+        return view('front.privacypolicy');
+    }
+     public function aboutus(Request $request)
+    {
+        return view('front.aboutus');
+    }
+     public function term_condition(Request $request)
+    {
+        return view('front.termscondition');
+    }
+     public function cancel_refundpolicy(Request $request)
+    {
+        return view('front.cancel_refund');
+    }
+     public function contact_us(Request $request)
+    {
+        return view('front.contact_us');
+    }
+
+
+
     public function contactstore(Request $request)
     {
          $validated = $request->validate([

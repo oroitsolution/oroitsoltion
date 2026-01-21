@@ -27,7 +27,15 @@ use App\Http\Controllers\admin\Kyc\KycdataController;
 Route::get('/', [FrontController::class, 'index'])->name('/');
 
 Route::get('/software', [FrontController::class, 'software'])->name('front.software');
+
+Route::get('/privacy-policy', [FrontController::class, 'ppc'])->name('front.ppc');
+Route::get('/about-us', [FrontController::class, 'aboutus'])->name('front.aboutus');
+Route::get('/terms-condition', [FrontController::class, 'term_condition'])->name('front.tnc');
+Route::get('/cancellation-refund-policy', [FrontController::class, 'cancel_refundpolicy'])->name('front.crp');
+Route::get('/contact-us', [FrontController::class, 'contact_us'])->name('front.contactus');
+
 Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
+
 
 
  Route::middleware('auth')->group(function () 
@@ -92,9 +100,10 @@ Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact
         
 
         Route::get('/get-kyc-users', [KycdataController::class, 'getkycdata'])->name('kyc.data');
-        Route::get('/kyc/view/{id}', [KycdataController::class, 'view'])->name('kyc.view');
-        Route::get('/kyc/status/{id}/{status}', [KycdataController::class, 'updateStatus'])
-        ->name('kyc.status');
+        
+        Route::post('/kyc/status/{id}', [KycdataController::class, 'updateStatus'])->name('kyc.status');
+
+
       });
 
 

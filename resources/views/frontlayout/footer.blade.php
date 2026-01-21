@@ -166,10 +166,10 @@
               <div class="footer-widget f-link">
                 <h5>Solutions</h5>
                 <ul>
-                  <li><a href="javascript:void(0)">Marketing</a></li>
-                  <li><a href="javascript:void(0)">Analytics</a></li>
-                  <li><a href="javascript:void(0)">Commerce</a></li>
-                  <li><a href="javascript:void(0)">Insights</a></li>
+                  <li><a href="javascript:void(0)">Mobile APP</a></li>
+                  <li><a href="javascript:void(0)">Web Application</a></li>
+                  <li><a href="javascript:void(0)">AI/ML</a></li>
+                  <li><a href="javascript:void(0)">CRM / HRM</a></li>
                 </ul>
               </div>
               <!-- End Single Widget -->
@@ -179,10 +179,14 @@
               <div class="footer-widget f-link">
                 <h5>Support</h5>
                 <ul>
-                  <li><a href="javascript:void(0)">Pricing</a></li>
+
+                  <li><a href="{{ route('front.aboutus') }}">About Us</a></li>
+                  <li><a href="{{ route('front.contactus') }}">Contact Us</a></li>
+                  <li><a href="{{ route('front.ppc') }}">Privacy Policy</a></li>
                   <li><a href="javascript:void(0)">Documentation</a></li>
-                  <li><a href="javascript:void(0)">Guides</a></li>
-                  <li><a href="javascript:void(0)">API Status</a></li>
+                  <li><a href="{{ route('front.tnc') }}">Terms Condition</a></li>
+                  <li><a href="{{ route('front.crp') }}">Cancellation & Refund Policy</a></li>
+
                 </ul>
               </div>
               <!-- End Single Widget -->

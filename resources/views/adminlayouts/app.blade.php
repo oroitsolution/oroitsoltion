@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('admin/layout/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
@@ -31,6 +31,41 @@
 
     {{-- ✅ CSS STACK (CORRECT) --}}
     @stack('styles')
+
+    <style>
+    /* Success */
+    .toast-success {
+        background-color: #28a745 !important;
+        color: #ffffff !important;
+    }
+
+    /* Error */
+    .toast-error {
+        background-color: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+    /* Warning */
+    .toast-warning {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
+
+    /* Info */
+    .toast-info {
+        background-color: #17a2b8 !important;
+        color: #ffffff !important;
+    }
+
+    /* Toast body text */
+    #toast-container > .toast {
+        opacity: 1 !important;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+        border-radius: 6px;
+    }
+</style>
+
+
 </head>
 
 <body class="with-welcome-text">
@@ -65,12 +100,24 @@
 
 <script src="{{ asset('admin/layout/assets/js/jquery.cookie.js') }}"></script>
 <script src="{{ asset('admin/layout/assets/js/dashboard.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {{-- ✅ JS STACK (CORRECT) --}}
 @stack('js')
 
+      <script>
+       
+
+        toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        timeOut: 3000,
+        preventDuplicates: true,
+    };
+
+        </script>
 </body>
 </html>

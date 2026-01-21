@@ -30,7 +30,7 @@ class UserdashboardController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        return view('user.userdashboard',compact( 'user' , 'greeting'));
+        return view('user.userdashboard',compact( 'user'));
     }
 
     // ----------------Profile -----------------------/ # 

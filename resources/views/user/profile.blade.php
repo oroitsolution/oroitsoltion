@@ -910,8 +910,14 @@ $(document).on('click', '#regenSecretBtn', function() {
         success: function(res) {
             if (res.success) {
                 toastr.success(res.message || 'Updated successfully');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             } else {
                 toastr.error(res.message || 'Something went wrong');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             }
         },
         error: function() {

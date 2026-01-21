@@ -105,7 +105,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                            <img src="#" alt="image" class="img-sm profile-pic">
                         </div>
                         <div class="preview-item-content flex-grow py-2">
                             <p class="preview-subject ellipsis fw-medium text-dark">Marian Garner </p>
@@ -114,7 +114,7 @@
                     </a>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            <img src="assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                            <img src="#" alt="image" class="img-sm profile-pic">
                         </div>
                         <div class="preview-item-content flex-grow py-2">
                             <p class="preview-subject ellipsis fw-medium text-dark">David Grey </p>
@@ -123,7 +123,7 @@
                     </a>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            <img src="assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                            <img src="#" alt="image" class="img-sm profile-pic">
                         </div>
                         <div class="preview-item-content flex-grow py-2">
                             <p class="preview-subject ellipsis fw-medium text-dark">Travis Jenkins </p>
