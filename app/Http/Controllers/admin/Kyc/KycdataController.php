@@ -66,12 +66,12 @@ class KycdataController extends Controller
                 $client = Clints::where('user_id', $request->user_id)->first();
 
                     if (!$client) {
-                            Clints::create([
-                                'user_id'   => $request->user_id,
-                                'client_id' => $this->generateClientId(),
-                                'secret_id' => $secret,
-                                'ipaddress' => request()->ip(),
-                            ]);
+                        Clints::create([
+                            'user_id'   => $request->user_id,
+                            'client_id' => $this->generateClientId(),
+                            'secret_id' => $secret,
+                            'ipaddress' => request()->ip(),
+                        ]);
                     }
 
                     Clints::where('user_id', $request->user_id)->update([

@@ -18,11 +18,9 @@
                 @if($kycStatus == 0)
                 <span class="badge bg-warning">Unverified</span>
                 @elseif($kycStatus == 1)
-                <span class="badge bg-primary">Pending</span>
+                <span class="badge bg-primary">Verified</span>
                 @elseif($kycStatus == 2)
-                <span class="badge bg-success">Verified</span>
-                @elseif($kycStatus == 3)
-                <span class="badge bg-danger">Rejected</span>
+                <span class="badge bg-success">Rejected</span>
                 @endif
 
                 <p class="mt-2">
@@ -45,7 +43,7 @@
 
 
             {{-- ================= SHOW FORM ONLY IF UNVERIFIED / REJECTED ================= --}}
-            @if(in_array($kycStatus, [0, 3]))
+            @if(in_array($kycStatus, [0, 2]))
 
             <div class="card-body">
                 <form id="kycForm" method="POST" class="kyc-form d-none" enctype="multipart/form-data">
@@ -475,16 +473,8 @@
 
 @push('js')
 <script>
-const userKycStatus = {
-    {
-        auth() - > user() - > user_kyc ?? 'null'
-    }
-};
-const hasKycRecord = {
-    {
-        $kycdata ? 'true' : 'false'
-    }
-};
+
+
 
 const PDF_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq1aZw8V35IO876xr_qje7N-8QqCxXRdWOSw&s";
 
@@ -869,36 +859,43 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// KYC STATUS MODEL
-document.addEventListener('DOMContentLoaded', function() {
 
-    const kycForm = document.getElementById('kycForm');
-    if (!hasKycRecord) {
-        kycForm.classList.remove('d-none');
-        return; // Show normal KYC form
-    }
-    let dnon = 'd-none';
+// KYC STATUS MODAL
+document.addEventListener('DOMContentLoaded', function () {
+
+    const userKycStatus = Number(@json($kycStatus));
+    const hasKycRecord  = @json(!is_null($kycStatus));
+
     let modalId = null;
 
-    if (userKycStatus === 0) {
-        modalId = 'kycPendingModal';
-    } else if (userKycStatus === 1) {
-        modalId = 'kycVerifiedModal';
-    } else if (userKycStatus === 2) {
-        modalId = 'kycRejectedModal';
+    switch (userKycStatus) {
+        case 0:
+            modalId = 'kycPendingModal';
+            break;
+        case 1:
+            modalId = 'kycVerifiedModal';
+            break;
+        case 2:
+            modalId = 'kycRejectedModal';
+            break;
     }
 
-    if ([0, 1, 2].includes(userKycStatus)) {
+    // Hide form only if it exists
+    const kycForm = document.getElementById('kycForm');
+    if (kycForm && hasKycRecord) {
         kycForm.classList.add('d-none');
-    } else {
-        kycForm.classList.remove('d-none');
     }
 
+    // Show modal
     if (modalId) {
-        const modal = new bootstrap.Modal(document.getElementById(modalId));
-        modal.show();
+        const modalEl = document.getElementById(modalId);
+        if (modalEl) {
+            new bootstrap.Modal(modalEl).show();
+        }
     }
 });
+
+
 </script>
 @endpush
 

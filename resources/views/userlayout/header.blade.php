@@ -101,7 +101,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                    <img src="#" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis fw-medium text-dark">Marian Garner </p>
@@ -110,7 +110,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                    <img src="#" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis fw-medium text-dark">David Grey </p>
@@ -119,7 +119,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                    <img src="#" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis fw-medium text-dark">Travis Jenkins </p>
@@ -141,14 +141,16 @@
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
                 
-                
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i><form method="POST" action="{{ route('logout') }}" id="logout-form">
-                  @csrf
-                      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-                          <i class="mdi mdi-grid-large menu-icon"></i>
-                          <span class="ms-2">Sign Out</span>
-                      </a>
-                  </form></a>
+                <div class="dropdown-divider"></div>
+
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                        <i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
+                        <span>Sign Out</span>
+                    </button>
+                </form>
+
               </div>
             </li>
           </ul>
