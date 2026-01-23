@@ -92,7 +92,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $username = 'ORO-' . str_replace(' ', '', strtoupper($validated['name'])) . '-' . time();
-        
+        // dd($request->all());
         // ✅ Create User (NO login)
         $user = User::create([
             'name' => strtoupper($validated['name']),
@@ -104,7 +104,7 @@ class RegisteredUserController extends Controller
             'city' => $validated['city'] ?? null,
             'code' => $validated['pincode'] ?? null,
 
-            'account_type' => $validated['account_type'],
+            'account_type' => $validated['account_type']?? null,
             'business_type' => $validated['business_type'] ?? null,
             'company_name' => $validated['company_name'] ?? null,
             'role_id' => 2, // normal user

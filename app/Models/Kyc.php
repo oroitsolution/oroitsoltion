@@ -20,6 +20,7 @@ class Kyc extends Model
         'bank_name',
         'ifsc_code',
         'adhar_number',
+        'kyc_status',
         'pan_number',
         'document',
         'add_data',
@@ -28,6 +29,7 @@ class Kyc extends Model
     protected $casts = [
         'document' => 'array',
         'add_data' => 'array',
+        'kyc_status' => 'integer',
     ];
 
     // public function user()

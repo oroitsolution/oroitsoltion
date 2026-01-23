@@ -2,293 +2,347 @@
 @section('title', 'KYC Verification || ORO IT SOLUTION')
 @section('content')
 
+@push('css')
+<style>
+.section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.form-section {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.image-preview {
+    min-height: 100px;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.image-preview:hover {
+    border-color: #0d6efd;
+    background: #f0f7ff;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 90px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+}
+
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.form-control:read-only {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+}
+</style>
+@endpush
+
 <div class="container-fluid">
     <section class="section dashboard">
-        <div class="card mb-3">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12">
+                <div class="card mb-3">
 
-            {{-- ================= KYC STATUS HEADER ================= --}}
-            @php
-            $kycStatus = Auth::user()->user_kyc;
-            $user = Auth::user();
-            @endphp
+                    {{-- ================= KYC STATUS HEADER ================= --}}
+                    @php
+                    $kycStatus = Auth::user()->user_kyc;
+                    $user = Auth::user();
+                    @endphp
 
-            <div class="card-header">
-                <h5>KYC Verification</h5>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">KYC Verification</h5>
+                        
+                        <div class="d-flex align-items-center gap-2 mt-2">
+                            @if($kycStatus == 0)
+                            <span class="badge bg-warning">Unverified</span>
+                            @elseif($kycStatus == 1)
+                            <span class="badge bg-primary">Verified</span>
+                            @elseif($kycStatus == 2)
+                            <span class="badge bg-success">Rejected</span>
+                            @endif
+                            
+                            <span class="text-muted">|</span>
+                            <span>Account Type: 
+                                <b class="text-success">{{ strtoupper($user->account_type) }}</b> || 
 
-                @if($kycStatus == 0)
-                <span class="badge bg-warning">Unverified</span>
-                @elseif($kycStatus == 1)
-                <span class="badge bg-primary">Verified</span>
-                @elseif($kycStatus == 2)
-                <span class="badge bg-success">Rejected</span>
-                @endif
-
-                <p class="mt-2">
-                    Account Type:
-                    <b class="text-success">{{ strtoupper($user->account_type) }}</b>
-                </p>
-                <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    <strong>Important:</strong> Maximum file size allowed is <strong>2MB</strong> per file.
-                    Supported formats: <strong>JPG, JPEG, PNG, PDF</strong>.
-                    <br>
-                    <strong>Note:</strong> Please verify Aadhaar number first.
-
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
-                </div>
-
-            </div>
-
-
-
-            {{-- ================= SHOW FORM ONLY IF UNVERIFIED / REJECTED ================= --}}
-            @if(in_array($kycStatus, [0, 2]))
-
-            <div class="card-body">
-                <form id="kycForm" method="POST" class="kyc-form d-none" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="account_type" id="account_type"
-                        value="{{ strtoupper($user->account_type) }}">
-
-                    {{-- ================= BASIC DETAILS ================= --}}
-                    <h6 class="mb-3 text-primary">Basic Details</h6>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label>Name</label>
-                            <input type="text" class="form-control" value="{{ $user->name }}" readonly>
+                                <b class="{{ !empty($user->business_type) ? 'text-success' : 'text-info' }}">
+                                    {{ !empty($user->business_type) ? strtoupper($user->business_type) : 'PERSONAL ACCOUNT' }}
+                                </b>
+                            </span>
                         </div>
 
-                        <div class="col-md-4 mb-3">
-                            <label>Email</label>
-                            <input type="email" class="form-control" value="{{ $user->email }}" readonly>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label>Mobile Number</label>
-                            <input type="text" class="form-control" value="{{ $user->mobile_number }}" readonly>
+                        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>Important:</strong> Maximum file size allowed is <strong>2MB</strong> per file.
+                            Supported formats: <strong>JPG, JPEG, PNG, PDF</strong>.
+                            <br>
+                            <strong>Note:</strong> Please verify Aadhaar number first.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
 
-                    <hr>
+                    {{-- ================= SHOW FORM ONLY IF UNVERIFIED / REJECTED ================= --}}
+                    @if(in_array($kycStatus, [0, 3]))
+                    <div class="card-body">
+                        <form id="kycForm" method="POST" class="kyc-form" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="account_type" id="account_type" value="{{ strtoupper($user->account_type) }}">
 
-                    {{-- ================= BANK DETAILS ================= --}}
-                    <h6 class="mb-3 text-primary">Bank Details</h6>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label>IFSC Code</label>
-                            <input type="text" name="ifsc_code" id="ifsc_code" class="form-control" required>
-                            <small id="ifsc_error" class="text-danger"></small>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label>Bank Name</label>
-                            <input type="text" name="bank_name" id="bank_name" class="form-control" readonly>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label>Account Number</label>
-                            <input type="text" name="account_number" id="account_number" class="form-control" required>
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            <label>Account Holder Name</label>
-                            <input type="text" name="account_name" id="account_name" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    {{-- ================= AADHAAR DETAILS ================= --}}
-                    <h6 class="mb-3 text-primary">Aadhaar Details</h6>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label>Aadhaar Front</label>
-                            <input type="file" name="adhar_front" id="adhar_front" class="form-control"
-                                accept=".jpg,.jpeg,.png" required>
-                            <div class="image-preview mt-2" id="adhar_front_preview">
-                                <small class="text-muted">No image selected</small>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label>Aadhaar Back</label>
-                            <input type="file" name="adhar_back" id="adhar_back" class="form-control"
-                                accept=".jpg,.jpeg,.png" required>
-                            <div class="image-preview mt-2" id="adhar_back_preview">
-                                <small class="text-muted">No image selected</small>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label for="adhar_number">Aadhaar Number</label>
-                            <div class="input-group">
-                                <input type="text" name="adhar_number" id="adhar_number" class="form-control"
-                                    placeholder="Enter 12 digit Aadhaar" maxlength="12"
-                                    value="{{ $kycdata->adhar_number ?? '' }}"
-                                    {{ !empty($kycdata->adhar_number) ? 'readonly' : '' }}>
-
-                                @if(empty($kycdata->adhar_number))
-                                <button type="button" id="sendOtpBtn" class="btn btn-sm btn-outline-primary">
-                                    Send OTP
-                                </button>
-                                @endif
+                            {{-- ================= BASIC DETAILS ================= --}}
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-person-circle me-2"></i>Basic Details
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" value="{{ $user->name }}" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="{{ $user->email }}" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Mobile Number</label>
+                                        <input type="text" class="form-control" value="{{ $user->mobile_number }}" readonly>
+                                    </div>
+                                </div>
                             </div>
 
-
-                        </div>
-                        <small id="aadhaar_error" class="text-danger"></small>
-
-                        <!-- OTP Section -->
-                        <!-- OTP Section -->
-                        <div class="otp-section mt-2 d-none" id="otpSection">
-                            <div class="input-group">
-                                <input type="text" name="otp" id="otpInput" class="form-control" placeholder="Enter OTP"
-                                    maxlength="6">
-                                <button type="button" id="verifyOtpBtn" class="btn btn-sm btn-success">
-                                    Verify
-                                </button>
+                            {{-- ================= BANK DETAILS ================= --}}
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-bank me-2"></i>Bank Details
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">IFSC Code</label>
+                                        <input type="text" name="ifsc_code" id="ifsc_code" class="form-control" required>
+                                        <small id="ifsc_error" class="text-danger"></small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Bank Name</label>
+                                        <input type="text" name="bank_name" id="bank_name" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Account Number</label>
+                                        <input type="text" name="account_number" id="account_number" class="form-control" required>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label">Account Holder Name</label>
+                                        <input type="text" name="account_name" id="account_name" class="form-control" required>
+                                    </div>
+                                </div>
                             </div>
 
-                            <input type="hidden" name="request_id" id="request_id">
-                            <input type="hidden" name="aadharno" id="aadharno">
+                            {{-- ================= AADHAAR DETAILS ================= --}}
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-card-text me-2"></i>Aadhaar Details
+                                </h6>
+                               <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Aadhaar Front</label>
+                                        <input type="file" name="adhar_front" id="adhar_front" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                        <div class="image-preview mt-2" id="adhar_front_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
 
-                            <small id="otp_error" class="text-danger"></small>
-                        </div>
-                    </div>
-            </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Aadhaar Back</label>
+                                        <input type="file" name="adhar_back" id="adhar_back" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                        <div class="image-preview mt-2" id="adhar_back_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
 
-            <hr>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Aadhaar Number</label>
+                                        <div class="input-group">
+                                            <input type="text" name="adhar_number" id="adhar_number" class="form-control" 
+                                                   placeholder="Enter 12 digit Aadhaar" maxlength="12"
+                                                   value="{{ $kycdata->adhar_number ?? '' }}"
+                                                   {{ !empty($kycdata->adhar_number) ? 'readonly' : '' }}>
+                                            
+                                            @if(empty($kycdata->adhar_number))
+                                            <button type="button" id="sendOtpBtn" class="btn btn-outline-primary">
+                                                Send OTP
+                                            </button>
+                                            @endif
+                                        </div>
+                                        <small id="aadhaar_error" class="text-danger"></small>
+                                    </div>
+                                </div>
 
-            {{-- ================= PAN DETAILS ================= --}}
-            <h6 class="mb-3 text-primary">PAN Details</h6>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label>PAN Number</label>
-                    <input type="text" name="pan_number" id="pan_number" class="form-control" required
-                        value="{{ $kycdata->pan_number ?? '' }}" {{ !empty($kycdata->pan_number) ? 'readonly' : '' }}>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label>PAN Card</label>
-                    <input type="file" name="pan_card" id="pan_card" class="form-control" accept=".jpg,.jpeg,.png"
-                        required>
-                    <div class="image-preview mt-2" id="pan_card_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label>Cancelled Cheque</label>
-                    <input type="file" name="chaque" id="chaque" class="form-control" accept=".jpg,.jpeg,.png" required>
-                    <div class="image-preview mt-2" id="chaque_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            {{-- ================= BUSINESS DETAILS ================= --}}
-            @if($user->account_type == 'business')
-            <h6 class="mb-3 text-primary">Business Details</h6>
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <label>GST Number</label>
-                    <input type="text" name="gst" id="gst" class="form-control" required>
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <label>CIN Number</label>
-                    <input type="text" name="cin_number" id="cin_number" class="form-control" required>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>GST Certificate (PDF)</label>
-                    <input type="file" id="gst_img" name="gst_img" class="form-control" accept=".jpg,.jpeg,.png,.pdf"
-                        required>
-                    <div class="file-preview mt-2" id="gst_img_preview">
-                        <small class="text-muted">No file selected</small>
-                    </div>
-                </div>
-
-                @if($user->business_type != 'soleproprietorship')
-                <div class="col-md-6 mb-3">
-                    <label>Company PAN</label>
-                    <input type="file" name="company_pan_card" id="company_pan_card" class="form-control"
-                        accept=".jpg,.jpeg,.png, .pdf">
-                    <div class="image-preview mt-2" id="company_pan_card_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-                @endif
-
-                <div class="col-md-6 mb-3">
-                    <label>Company Address Proof</label>
-                    <input type="file" name="address_proof" id="address_proof" class="form-control"
-                        accept=".jpg,.jpeg,.png, .pdf" required>
-                    <div class="image-preview mt-2" id="address_proof_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <hr>
-
-            {{-- ================= SHOP & ELECTRICITY ================= --}}
-            <h6 class="mb-3 text-primary">Shop & Address Proof</h6>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Shop Photo</label>
-                    <input type="file" name="shopphoto" id="shopphoto" class="form-control"
-                        accept=".jpg,.jpeg,.png, .pdf" required>
-                    <div class="image-preview mt-2" id="shopphoto_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Electricity Bill</label>
-                    <input type="file" name="electricbill" id="electricbill" class="form-control"
-                        accept=".jpg,.jpeg,.png, .pdf" required>
-                    <div class="image-preview mt-2" id="electricbill_preview">
-                        <small class="text-muted">No image selected</small>
-                    </div>
-                </div>
-            </div>
-
-            {{-- ================= TERMS & SUBMIT ================= --}}
-            <div class="row mt-4">
-                <div class="col-md-12 mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            I declare that all information provided is true and correct to the best of my
-                            knowledge
-                        </label>
-                        <div class="invalid-feedback">
-                            You must accept the declaration
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="text-end">
-                        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">
-                            <span id="btnText">Submit KYC</span>
-                            <div id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status">
+                                <!-- OTP Section - Yeh Aadhaar section ke baad alag row me hona chahiye -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="otp-section mt-2 d-none" id="otpSection">
+                                            <div class="input-group" style="max-width: 300px;">
+                                                <input type="text" name="otp" id="otpInput" class="form-control" 
+                                                       placeholder="Enter OTP" maxlength="6">
+                                                <button type="button" id="verifyOtpBtn" class="btn btn-success">
+                                                    Verify
+                                                </button>
+                                            </div>
+                                            <input type="hidden" name="request_id" id="request_id">
+                                            <input type="hidden" name="aadharno" id="aadharno">
+                                            <small id="otp_error" class="text-danger"></small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </button>
+
+                            {{-- ================= PAN DETAILS ================= --}}
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-credit-card me-2"></i>PAN Details
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">PAN Number</label>
+                                        <input type="text" name="pan_number" id="pan_number" class="form-control" required value="{{ $kycdata->pan_number ?? '' }}" {{ !empty($kycdata->pan_number) ? 'readonly' : '' }}>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">PAN Card</label>
+                                        <input type="file" name="pan_card" id="pan_card" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                        <div class="image-preview mt-2" id="pan_card_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Cancelled Cheque</label>
+                                        <input type="file" name="chaque" id="chaque" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                        <div class="image-preview mt-2" id="chaque_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- ================= BUSINESS DETAILS ================= --}}
+                            @if($user->account_type == 'business' || $user->account_type == 'personal')
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-building me-2"></i>Business Details
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">GST Number</label>
+                                        <input type="text" name="gst" id="gst" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">CIN Number</label>
+                                        <input type="text" name="cin_number" id="cin_number" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">GST Certificate (PDF)</label>
+                                        <input type="file" id="gst_img" name="gst_img" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <div class="file-preview mt-2" id="gst_img_preview">
+                                            <small class="text-muted">No file selected</small>
+                                        </div>
+                                    </div>
+                                    @if($user->business_type != 'soleproprietorship')
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Company PAN</label>
+                                        <input type="file" name="company_pan_card" id="company_pan_card" class="form-control" accept=".jpg,.jpeg,.png, .pdf">
+                                        <div class="image-preview mt-2" id="company_pan_card_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Company Address Proof</label>
+                                        <input type="file" name="address_proof" id="address_proof" class="form-control" accept=".jpg,.jpeg,.png, .pdf" required>
+                                        <div class="image-preview mt-2" id="address_proof_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
+                            {{-- ================= SHOP & ELECTRICITY ================= --}}
+                            <div class="form-section mb-4">
+                                <h6 class="section-title text-primary mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-shop me-2"></i>Shop & Address Proof
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Shop Photo</label>
+                                        <input type="file" name="shopphoto" id="shopphoto" class="form-control" accept=".jpg,.jpeg,.png, .pdf" required>
+                                        <div class="image-preview mt-2" id="shopphoto_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Electricity Bill</label>
+                                        <input type="file" name="electricbill" id="electricbill" class="form-control" accept=".jpg,.jpeg,.png, .pdf" required>
+                                        <div class="image-preview mt-2" id="electricbill_preview">
+                                            <small class="text-muted">No image selected</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- ================= TERMS & SUBMIT ================= --}}
+                            <div class="form-section mt-5">
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="terms" required>
+                                            <label class="form-check-label" for="terms">
+                                                I declare that all information provided is true and correct to the best of my knowledge
+                                            </label>
+                                            <div class="invalid-feedback">
+                                                You must accept the declaration
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-end">
+                                            <button type="submit" id="submitBtn" class="btn btn-primary btn-lg px-5">
+                                                <span id="btnText">Submit KYC</span>
+                                                <div id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    @endif
                 </div>
             </div>
-            </form>
         </div>
-        @endif
+    </section>
 </div>
-</section>
-</div>
+
 
 <!-- Accept Modal -->
 <div class="modal fade acceptModal-box" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel"
@@ -475,11 +529,309 @@
 <script>
 
 
+const userKycStatus = {{ auth()->user()->user_kyc ?? 'null' }};
+const hasKycRecord = {{ isset($kycdata) ? 'true' : 'false' }};
+
+   document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Loaded - Aadhaar OTP Script');
+
+    // Elements select karein
+    const aadhaarInput = document.getElementById('adhar_number');
+    const aadhaarError = document.getElementById('aadhaar_error');
+    const otpInput = document.getElementById('otpInput');
+    const otpError = document.getElementById('otp_error');
+    const otpSection = document.getElementById('otpSection');
+    const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+    const requestIdInput = document.getElementById('request_id');
+    const hiddenAadhaar = document.getElementById('aadharno');
+
+    // Debug: Check all elements
+    console.log('Elements:', {
+        aadhaarInput,
+        aadhaarError,
+        otpSection,
+        verifyOtpBtn,
+        requestIdInput,
+        hiddenAadhaar
+    });
+
+    /* ================= EVENT DELEGATION FOR SEND OTP ================= */
+    // Document pe event listener lagayein
+    document.addEventListener('click', function(event) {
+        // Check if clicked element is sendOtpBtn or its child
+        const sendOtpBtn = event.target.closest('#sendOtpBtn');
+        
+        if (sendOtpBtn) {
+            event.preventDefault();
+            console.log('Send OTP button clicked via delegation');
+            handleSendOtp();
+        }
+    });
+
+    /* ================= CLEAR ERRORS ON INPUT ================= */
+    if (aadhaarInput) {
+        aadhaarInput.addEventListener('input', () => {
+            if (aadhaarError) aadhaarError.textContent = '';
+        });
+    }
+
+    if (otpInput) {
+        otpInput.addEventListener('input', () => {
+            if (otpError) otpError.textContent = '';
+        });
+    }
+
+    /* ================= SEND OTP FUNCTION ================= */
+    function handleSendOtp() {
+        console.log('handleSendOtp called');
+        
+        if (!aadhaarInput) {
+            console.error('Aadhaar input not found');
+            return;
+        }
+
+        const aadhaar = aadhaarInput.value.trim();
+        console.log('Aadhaar:', aadhaar);
+        
+        // Remove alert in production
+        // alert(aadhaar);
+        
+        // ✅ DO NOTHING IF EMPTY
+        if (aadhaar === '') {
+            if (aadhaarError) aadhaarError.textContent = 'Please enter Aadhaar number';
+            return;
+        }
+
+        // ✅ INVALID FORMAT
+        if (!/^\d{12}$/.test(aadhaar)) {
+            if (aadhaarError) aadhaarError.textContent = 'Please enter a valid 12-digit Aadhaar number';
+            return;
+        }
+
+        // Find the button again for UI updates
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        if (!sendOtpBtn) {
+            console.error('Send OTP button not found');
+            return;
+        }
+
+        // UI loading
+        const originalText = sendOtpBtn.innerHTML;
+        sendOtpBtn.disabled = true;
+        sendOtpBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+        
+        if (aadhaarError) aadhaarError.textContent = '';
+
+        fetch("{{ route('user.kyc.sendOtp') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                adhar_number: aadhaar
+            })
+        })
+        .then(res => {
+            console.log('Response status:', res.status);
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            
+            if (data.success === true) {
+                if (otpSection) {
+                    otpSection.classList.remove('d-none');
+                    console.log('OTP section shown');
+                }
+                
+                if (requestIdInput) {
+                    requestIdInput.value = data.data?.request_id || '';
+                    console.log('Request ID:', requestIdInput.value);
+                }
+                
+                if (hiddenAadhaar) {
+                    hiddenAadhaar.value = data.aadharno || aadhaar;
+                    console.log('Hidden Aadhaar:', hiddenAadhaar.value);
+                }
+                
+                if (aadhaarInput) {
+                    aadhaarInput.readOnly = true;
+                }
+                
+                // Success message
+                if (aadhaarError) {
+                    aadhaarError.innerHTML = '<span class="text-success">✓ OTP sent to your registered mobile</span>';
+                    showToast( 'OTP sent to your registered mobile!', 'success');
+                }
+                
+            } else {
+                console.error('API error response:', data);
+                if (aadhaarError) {
+                    aadhaarError.textContent = data.message || 'Failed to send OTP. Please try again.';
+                }
+            }
+        })
+        .catch((error) => {
+            console.error('Fetch error:', error);
+            if (aadhaarError) {
+                aadhaarError.textContent = 'Network error. Please check your connection.';
+            }
+        })
+        .finally(() => {
+            if (sendOtpBtn) {
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.innerHTML = originalText;
+            }
+        });
+    }
+
+    /* ================= VERIFY OTP ================= */
+    if (verifyOtpBtn) {
+        verifyOtpBtn.addEventListener('click', function() {
+            console.log('Verify OTP button clicked');
+            
+            if (!otpInput) {
+                console.error('OTP input not found');
+                return;
+            }
+
+            const otp = otpInput.value.trim();
+            console.log('OTP:', otp);
+            
+            // ✅ DO NOTHING IF EMPTY
+            if (otp === '') {
+                if (otpError) otpError.textContent = 'Please enter OTP';
+                return;
+            }
+
+            // ✅ INVALID FORMAT
+            if (!/^\d{6}$/.test(otp)) {
+                if (otpError) otpError.textContent = 'Please enter valid 6-digit OTP';
+                return;
+            }
+
+            // UI loading
+            const originalText = verifyOtpBtn.innerHTML;
+            verifyOtpBtn.disabled = true;
+            verifyOtpBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+            
+            if (otpError) otpError.textContent = '';
+
+            fetch("{{ route('user.kyc.verifyOtp') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    otp: otp,
+                    requestid: requestIdInput ? requestIdInput.value : '',
+                    aadharno: hiddenAadhaar ? hiddenAadhaar.value : ''
+                })
+            })
+            .then(res => {
+                console.log('Verify response status:', res.status);
+                return res.json();
+            })
+            .then(data => {
+                console.log('Verify response:', data);
+                
+                if (data.status === 'success') {
+                    if (otpSection) {
+                        otpSection.classList.add('d-none');
+                    }
+                    
+                    if (aadhaarInput) {
+                        aadhaarInput.readOnly = true;
+                    }
+                    
+                    // Disable send OTP button
+                    const sendOtpBtn = document.getElementById('sendOtpBtn');
+                    if (sendOtpBtn) {
+                        sendOtpBtn.disabled = true;
+                    }
+                    
+                    // Remove existing badge
+                    const existingBadge = document.querySelector('.aadhaar-verified-badge');
+                    if (existingBadge) {
+                        existingBadge.remove();
+                    }
+                    
+                    // Add verification badge
+                    if (aadhaarInput && aadhaarInput.parentElement) {
+                        aadhaarInput.parentElement.insertAdjacentHTML('afterend', `
+                            <div class="aadhaar-verified-badge mt-2">
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Aadhaar Verified
+                                </span>
+                            </div>
+                        `);
+                    }
+                    
+                    // Clear errors
+                    if (aadhaarError) aadhaarError.textContent = '';
+                    // if (otpError) otpError.innerHTML = '<span class="text-success">✓ Aadhaar verified successfully!</span>';
+                    showToast('✓ Aadhaar verified successfully!', 'success');
+                    
+                } else {
+                    if (otpError) {
+                        otpError.textContent = data.message || 'Invalid OTP';
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Verify error:', error);
+                if (otpError) {
+                    otpError.textContent = 'Network error. Please try again.';
+                }
+            })
+            .finally(() => {
+                verifyOtpBtn.disabled = false;
+                verifyOtpBtn.innerHTML = originalText;
+            });
+        });
+    } else {
+        console.log('Verify OTP button not found (will be available after OTP sent)');
+    }
+
+    // Alternative: Mutation Observer for dynamically added buttons
+    if (!document.getElementById('sendOtpBtn')) {
+        console.log('Send OTP button not found initially, setting up mutation observer');
+        
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    const sendOtpBtn = document.getElementById('sendOtpBtn');
+                    if (sendOtpBtn) {
+                        console.log('Send OTP button dynamically added');
+                        sendOtpBtn.addEventListener('click', handleSendOtp);
+                        observer.disconnect(); // Stop observing once found
+                    }
+                }
+            });
+        });
+        
+        // Start observing the document body
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+});
+
 
 const PDF_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq1aZw8V35IO876xr_qje7N-8QqCxXRdWOSw&s";
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize toast
+        // Initialize toast
     const toastEl = document.getElementById('toast');
     const toast = toastEl ? new bootstrap.Toast(toastEl, {
         delay: 3000
@@ -618,156 +970,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Aadhaar OTP functionality (using vanilla JS)
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const aadhaarInput = document.getElementById('adhar_number');
-        const aadhaarError = document.getElementById('aadhaar_error');
-        const sendOtpBtn = document.getElementById('sendOtpBtn');
-
-        const otpInput = document.getElementById('otpInput');
-        const otpError = document.getElementById('otp_error');
-        const otpSection = document.getElementById('otpSection');
-        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-
-        const requestIdInput = document.getElementById('request_id');
-        const hiddenAadhaar = document.getElementById('aadharno');
-
-        /* ================= CLEAR ERRORS ON INPUT ================= */
-        aadhaarInput?.addEventListener('input', () => {
-            aadhaarError.textContent = '';
-        });
-
-        otpInput?.addEventListener('input', () => {
-            otpError.textContent = '';
-        });
-
-        /* ================= SEND OTP ================= */
-        sendOtpBtn?.addEventListener('click', function() {
-
-            const aadhaar = aadhaarInput.value.trim();
-
-            // ✅ DO NOTHING IF EMPTY
-            if (aadhaar === '') {
-                aadhaarError.textContent = '';
-                return;
-            }
-
-            // ✅ INVALID FORMAT
-            if (!/^\d{12}$/.test(aadhaar)) {
-                aadhaarError.textContent = 'Please enter a valid 12-digit Aadhaar number';
-                return;
-            }
-
-            // UI loading
-            sendOtpBtn.disabled = true;
-            sendOtpBtn.innerHTML = 'Sending...';
-            aadhaarError.textContent = '';
-
-            fetch("{{ route('user.kyc.sendOtp') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        adhar_number: aadhaar
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-
-                    if (data.success === true) {
-
-                        otpSection.classList.remove('d-none');
-
-                        requestIdInput.value = data.data?.request_id || '';
-                        hiddenAadhaar.value = data.aadharno || aadhaar;
-
-                        aadhaarInput.readOnly = true;
-
-                    } else {
-                        aadhaarError.textContent = data.message || 'Failed to send OTP';
-                    }
-                })
-                .catch(() => {
-                    aadhaarError.textContent = 'Network error. Please try again.';
-                })
-                .finally(() => {
-                    sendOtpBtn.disabled = false;
-                    sendOtpBtn.innerHTML = 'Send OTP';
-                });
-        });
-
-        /* ================= VERIFY OTP ================= */
-        verifyOtpBtn?.addEventListener('click', function() {
-
-            const otp = otpInput.value.trim();
-
-            // ✅ DO NOTHING IF EMPTY
-            if (otp === '') {
-                otpError.textContent = '';
-                return;
-            }
-
-            // ✅ INVALID FORMAT
-            if (!/^\d{6}$/.test(otp)) {
-                otpError.textContent = 'Please enter valid 6-digit OTP';
-                return;
-            }
-
-            verifyOtpBtn.disabled = true;
-            verifyOtpBtn.innerHTML = 'Verifying...';
-            otpError.textContent = '';
-
-            fetch("{{ route('user.kyc.verifyOtp') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        otp: otp,
-                        requestid: requestIdInput.value,
-                        aadharno: hiddenAadhaar.value
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-
-                    if (data.status === 'success') {
-
-                        otpSection.classList.add('d-none');
-                        aadhaarInput.readOnly = true;
-                        sendOtpBtn && (sendOtpBtn.disabled = true);
-
-                        aadhaarError.textContent = '';
-                        otpError.textContent = '';
-
-                        // Verified badge
-                        aadhaarInput.parentElement.insertAdjacentHTML('afterend', `
-                    <span class="badge bg-success mt-1">
-                        <i class="bi bi-check-circle-fill"></i> Aadhaar Verified
-                    </span>
-                `);
-
-                    } else {
-                        otpError.textContent = data.message || 'Invalid OTP';
-                    }
-                })
-                .catch(() => {
-                    otpError.textContent = 'Network error. Please try again.';
-                })
-                .finally(() => {
-                    verifyOtpBtn.disabled = false;
-                    verifyOtpBtn.innerHTML = 'Verify';
-                });
-        });
-
-    });
-
     // Form submission (using vanilla JS)
     const kycForm = document.getElementById('kycForm');
     if (kycForm) {
@@ -859,42 +1061,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-// KYC STATUS MODAL
+// KYC STATUS MODEL
 document.addEventListener('DOMContentLoaded', function () {
 
-    const userKycStatus = Number(@json($kycStatus));
-    const hasKycRecord  = @json(!is_null($kycStatus));
+    const kycForm = document.getElementById('kycForm');
+    if (!kycForm) return;
 
     let modalId = null;
 
-    switch (userKycStatus) {
-        case 0:
-            modalId = 'kycPendingModal';
-            break;
-        case 1:
-            modalId = 'kycVerifiedModal';
-            break;
-        case 2:
-            modalId = 'kycRejectedModal';
-            break;
+    if (!hasKycRecord) {
+        kycForm.classList.remove('d-none');
+        return;
     }
 
-    // Hide form only if it exists
-    const kycForm = document.getElementById('kycForm');
-    if (kycForm && hasKycRecord) {
-        kycForm.classList.add('d-none');
+    if (userKycStatus === 0) {
+        modalId = 'kycPendingModal';
+    } else if (userKycStatus === 1) {
+        modalId = 'kycVerifiedModal';
+    } else if (userKycStatus === 2) {
+        modalId = 'kycRejectedModal';
     }
 
-    // Show modal
     if (modalId) {
-        const modalEl = document.getElementById(modalId);
-        if (modalEl) {
-            new bootstrap.Modal(modalEl).show();
-        }
+        kycForm.classList.add('d-none');
+        const modal = new bootstrap.Modal(document.getElementById(modalId));
+        modal.show();
+    } else {
+        kycForm.classList.remove('d-none');
     }
 });
-
 
 </script>
 @endpush

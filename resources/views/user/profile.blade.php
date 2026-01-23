@@ -690,15 +690,30 @@
 
     <hr>
 
-    <p>
+       <p>
+        @if(!empty($kycdata->account_number))
         <strong>Bank Account No:</strong>
-        XXXXXX{{ substr($kycdata->account_number ?? '', -4) }}
+        XXXXXX{{ substr($kycdata->account_number, -4) }}
+        <br>
+        @endif
 
-        <strong>IFSC code :</strong>
-        {{ $kycdata->ifsc_code }} - {{$kycdata->bank_name}}
-        <strong>Bank name :</strong>
+        @if(!empty($kycdata->ifsc_code))
+        <strong>IFSC code:</strong>
+        {{ $kycdata->ifsc_code }}
+        @if(!empty($kycdata->bank_name)) - {{$kycdata->bank_name}} @endif
+        <br>
+        @endif
+
+        @if(!empty($kycdata->account_name))
+        <strong>Account Holder Name:</strong>
         {{ $kycdata->account_name }}
+        @endif
+        
+        @if(empty($kycdata->account_number) && empty($kycdata->ifsc_code) && empty($kycdata->account_name))
+        <span class="text-muted">Bank details not provided</span>
+        @endif
     </p>
+
 </div>
 
 @endsection

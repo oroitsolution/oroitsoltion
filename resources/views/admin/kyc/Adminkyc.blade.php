@@ -67,11 +67,11 @@
 
                                     {{-- Status --}}
                                     <td class="text-center">
-                                        @if(isset($kyc->kyc_status) && $kyc->kyc_status === '0')
+                                        @if(isset($kyc->kyc_status) && $kyc->kyc_status === 0)
                                         <span class="badge bg-warning">PENDING</span>
-                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === '1')
+                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === 1)
                                         <span class="badge bg-success">APPROVED</span>
-                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === '2')
+                                        @elseif(isset($kyc->kyc_status) && $kyc->kyc_status === 2)
                                         <span class="badge bg-danger">REJECTED</span>
                                         @else
                                         <span class="badge bg-secondary">N/A</span>
