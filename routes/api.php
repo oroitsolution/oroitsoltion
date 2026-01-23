@@ -2,14 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+use App\Http\Controllers\Api\Payin\PayinController;
 
 
 
-// For Test 
-// Route::get('/test', function () {
-//     return response()->json(['message' => 'API Working']);
-// });
+
+Route::middleware('header_auth')->group(function () {
+    
+Route::get('/payin/data', [PayinController::class, 'payindata']);
+
+});

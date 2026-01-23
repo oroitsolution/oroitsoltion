@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\admin\kyc;
+namespace App\Http\Controllers\admin\Kyc;
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('payout_url')->nullable();
             $table->text('payin_url')->nullable();
             $table->string('ipaddress')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

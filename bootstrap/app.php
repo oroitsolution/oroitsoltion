@@ -7,6 +7,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
+use App\Http\Middleware\UserHeaderAuth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'superadmin' => AdminMiddleware::class,
             'user'  => UserMiddleware::class,
+            'header_auth' => UserHeaderAuth::class,
         ]);
        
     })
