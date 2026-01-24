@@ -9,6 +9,6 @@ use App\Http\Controllers\Api\Payin\PayinController;
 
 Route::middleware('header_auth')->group(function () {
     
-Route::get('/payin/data', [PayinController::class, 'payindata']);
+Route::post('/payin/data', [PayinController::class, 'payindata']);
 
 });

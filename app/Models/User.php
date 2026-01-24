@@ -36,6 +36,7 @@ class User extends Authenticatable
         'status',
         'payoutmethod',
         'payinmethod',
+        'payintype',
         'wallet_amount',
         'permit',
         'session_id',

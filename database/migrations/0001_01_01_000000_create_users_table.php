@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('status')->default('active');
             $table->string('payoutmethod')->nullable();
             $table->string('payinmethod')->nullable();
+            $table->string('payintype')->nullable();
             $table->double('wallet_amount', 15, 2)->default(0);
             $table->boolean('permit')->default(0);
             $table->string('session_id')->nullable();

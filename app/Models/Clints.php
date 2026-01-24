@@ -15,5 +15,6 @@ class Clints extends Model
             'payout_url',
             'payin_url',
             'ipaddress',
+            'status',
         ];
 }
