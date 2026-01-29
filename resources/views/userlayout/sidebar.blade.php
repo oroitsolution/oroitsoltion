@@ -30,6 +30,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('user.payin.data') }}">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Payin</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('user.view.kyc.form') }}">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Kyc</span>

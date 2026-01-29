@@ -116,7 +116,7 @@ class PaymentController extends Controller
         }
 
         $finalAmount = $amount + $appliedCharge;
-
+dd($finalAmount);
         // ✅ Wallet balance check
         if ((float) $user->wallet_amount < $finalAmount) {
             return response()->json([

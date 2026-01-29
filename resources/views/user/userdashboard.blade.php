@@ -23,8 +23,8 @@
                             <div class="col-sm-12">
                                 <div class="statistics-details d-flex align-items-center justify-content-between">
                                     <div>
-                                        <p class="statistics-title">Total Wallet Balance</p>
-                                        <h3 class="rate-percentage">320.53</h3>
+                                        <p class="statistics-title">Total Payib Balance</p>
+                                        <h3 class="rate-percentage">{{ $totalpayinbalance ?? '0' }}</h3>
 
                                     </div>
                                     <div>

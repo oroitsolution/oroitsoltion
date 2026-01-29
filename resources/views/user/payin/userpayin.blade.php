@@ -1,17 +1,18 @@
-@extends('adminlayouts.app')
+@extends('userlayout.app')
+@section('title', 'User Payin')
 @section('content')
 <div class="content-wrapper">
    <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
          <div class="card">
-            <form method="GET" action="{{ route('superadmin.payin.index') }}" >
+            <form method="GET" action="{{ route('user.payin.data') }}" >
                <div class="card-body">
                   <div class="row align-items-end">
                      <div class="col-md-3">
                         <label for="statusToggle" class="form-label">Key</label>
                         <select name="key" class="form-control" id="keySelect">
                            <option value="">Select</option>
-                           <option value="systemgenerateid" {{ request('key') == 'systemgenerateid' ? 'selected' : '' }}>NPCI ID</option>
+                           <option value="systemgenerateid" {{ request('key') == 'systemgenerateid' ? 'selected' : '' }}>Systemid</option>
                            <option value="utr" {{ request('key') == 'utr' ? 'selected' : '' }}>UTR</option>
                            <option value="order_id" {{ request('key') == 'account_number' ? 'selected' : '' }}>Order Id</option>
                         </select>
@@ -43,7 +44,7 @@
                <div class="card-footer">
                   <div class="d-flex">
                      <button type="submit" class="btn btn-primary me-2">Submit</button>
-                     <a href="{{url('superadmin/payin')}}" class="btn btn-danger me-2">Date Reset</a>
+                     <a href="{{url('user/payin/data')}}" class="btn btn-danger me-2">Date Reset</a>
                   </div>
                </div>
             </form>
@@ -53,54 +54,54 @@
                      <thead>
                         <tr>
                            <th>ID</th>
-                           <th>Merchant NAME</th>
-                           <th>System Id</th>
-                           <th>date</th>
-                           <th>Order Id</th>
-                           <th>UTR</th>
-                           <th>Amount</th>
-                           <th>View</th>
-                           <th>Refund</th>
+                            <th>Name</th>
+                            <th>System Generate Id</th>
+                            <th>Order Id</th>
+                            <th>UTR</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>View</th>
                         </tr>
                      </thead>
                      <tbody>
                         @foreach($data as $value)
                         <?php
-                           $datarow = json_decode($value->data_request);
-                           
-                           ?>
+                           $datarow = json_decode($value->data_request);   
+                        ?>
+
                         <tr>
-                           <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
-                           <td>{{$value->merchantname}}</td>
-                           <td>{{ $value->systemgenerateid }}</td>
-                           <td>{{ date('d-M-Y h:i A', strtotime($value->created_at)) }}</td>
-                           <td>{{$value->order_id}}</td>
-                           <td>{{$value->utr}}</td>
-                           <td>{{$value->amount}}</td>
-                           <td><span class="badge 
-                              @if($value->status == 'rejected') text-bg-warning 
-                              @elseif(in_array($value->status, ['success', 'SUCCESS']))text-bg-success                        
-                              @elseif(in_array($value->status, ['failed', 'FAILED']))text-bg-danger
-                              @elseif(in_array($value->status, ['pending', 'PENDING']))text-bg-primary 
-                              @endif">
-                              {{ $value->status }}
-                              </span>
-                           </td>
-                           <td>
-                              <button class="btn btn-sm btn-info view-btn"
-                                 data-merchant-name="{{ $value->merchantname }}"
-                                 data-account-name="{{ $datarow->name }}"
-                                 data-amount="{{ $value->amount }}"
-                                 data-orderid="{{ $value->order_id }}"
-                                 data-date="{{ $value->created_at }}"
-                                 data-status="{{ $value->status }}"
-                                 data-utr="{{$value->utr}}"
-                                 data-transaction="{{ $value->systemgenerateid }}"
-                                 data-type="{{ $value->type }}">
-                              <i class="bi bi-eye"></i> View
-                              </button>
-                           </td>
-                        </tr>
+                              <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
+                              <td>{{$datarow->name}}</td>
+                              <td>{{$value->systemgenerateid }}</td>
+                              <td>{{$value->order_id}}</td>
+                               <td>{{$value->utr}}</td>
+                              <td>{{$value->amount}}</td>
+                              <td><span class="badge 
+                                     @if($value->status == 'rejected') text-bg-warning 
+                                     @elseif(in_array($value->status, ['success', 'SUCCESS']))text-bg-success                        
+                                     @elseif(in_array($value->status, ['failed', 'FAILED']))text-bg-danger
+                                     @elseif(in_array($value->status, ['pending', 'PENDING']))text-bg-primary 
+                                     @endif">
+                                     {{ $value->status }}
+                                 </span>
+                              </td>
+                    
+                              <td>{{ date('d-M-Y h:i A', strtotime($value->created_at)) }}</td>
+                              <td>
+                                <button class="btn btn-sm btn-info view-btn"
+                                      data-account-name="{{ $datarow->name }}"
+                                      data-amount="{{ $value->amount }}"
+                                      data-orderid="{{ $value->order_id }}"
+                                      data-date="{{ $value->created_at }}"
+                                      data-status="{{ $value->status }}"
+                                      data-utr="{{ $value->utr }}"
+                                      data-transaction="{{ $value->systemgenerateid }}"
+                                      data-type="{{ $value->type }}">
+                                   <i class="bi bi-eye"></i> View
+                                </button>
+                              </td>
+                           </tr>
                         @endforeach
                      </tbody>
                   </table>
@@ -127,7 +128,7 @@
                            <table class="table table-bordered mb-0">
                               <tr>
                                  <th>Merchant Name</th>
-                                 <td id="modalmerchantName"></td>
+                                 <td id="modalmerchantName">{{Auth::user()->name}}</td>
                               </tr>
                               <tr>
                                  <th>Name</th>
@@ -211,7 +212,7 @@
            
      
               $.ajax({
-                url: "{{ route('payin.status') }}",
+                 url: "{{ route('payin.status') }}",
                 type: "POST",
                 data: {
                    orderId: orderId,
@@ -235,7 +236,7 @@
                   if (res) {
                       $('#modalstatus').text(res.data.resultStatus); // <-- yaha status print hoga
                   } else {
-                      $('#modalstatus').text('fail');
+                      $('#modalstatus').text('PENDING');
                   }
                    
                 }

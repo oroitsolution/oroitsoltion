@@ -10,6 +10,70 @@ use DB;
 
 class PayinController extends Controller
 {
+    public function payinstatus(Request $request)
+    {
+        $transactionId = $request->transactionid;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://moneydashtechsol.in/api/v1/payin/status',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode([
+                'txn_id' => $transactionId
+            ]),
+            CURLOPT_HTTPHEADER => [
+                'X-API-KEY: api_qXspRnNqHzOARWWBLLbRw8IOY25xlEPXpqmuRZtb',
+                'Content-Type: application/json'
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+
+        if ($response === false) {
+            curl_close($curl);
+            return response()->json([
+                'success' => false,
+                'message' => 'Curl Error: ' . curl_error($curl)
+            ], 500);
+        }
+
+        curl_close($curl);
+
+        // Decode JSON response
+        $data = json_decode($response, true);
+      dd($data);
+        if (!isset($data['data'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid API response',
+                'response' => $data
+            ], 400);
+        }
+
+        DB::table('payins')
+            ->where('systemgenerateid', $transactionId)
+            ->update([
+                'status' => $data['data']['gateway_response']['status'] ?? null,
+                'amount' => (int) ($data['data']['gateway_response']['amount'] ?? 0),
+                'utr'    => $data['data']['gateway_response']['rrn'] ?? ''
+
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payin status updated successfully',
+            'utr'     => $data['data']['gateway_response']['rrn'],
+            'txnStatus' => $data['data']['gateway_response']['status']
+        ]);
+    }
+
 
     public function payindata(Request $request)
     {
@@ -17,7 +81,6 @@ class PayinController extends Controller
         $query = DB::table('payins')
             ->leftJoin('users', 'users.id', '=', 'payins.user_id')
             ->select('payins.*','users.name as merchantname');
-        // Filter by start_date
         
          if ($request->key && $request->search_data) {
 
@@ -30,12 +93,10 @@ class PayinController extends Controller
         $query->where('payins.created_at', '>=', $request->start_date . ' 00:00:00');
         }
     
-        // Filter by end_date
         if ($request->filled('end_date')) {
             $query->where('payins.created_at', '<=', $request->end_date . ' 23:59:59');
         }
     
-        // Filter by status
         if (
             $request->filled('status') &&
             in_array($request->status, ['success', 'pending', 'failed','rejected'])
@@ -43,7 +104,6 @@ class PayinController extends Controller
             $query->where('payins.status', $request->status);
         }
         
-    
         $data = $query->orderBy('payins.id', 'DESC')->paginate(100);
        
         return view('admin.payin.payindata',compact('data'));

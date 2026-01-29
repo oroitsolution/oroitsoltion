@@ -25,7 +25,7 @@ class PayoutController extends Controller implements HasMiddleware
      public function index(Request $request){
         
         $query = DB::table('payout_payment')
-            ->leftJoin('users', 'users.id', '=', 'payout_payment.user_id')
+            ->leftJoin('users', 'users.id', '=', 'payout_payment.merchant_id')
             ->select('payout_payment.*', 'users.name as merchantname');
 
         // 🔍 Key Based Search

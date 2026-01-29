@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\payment\PaymentController;
 use App\Http\Controllers\user\UserdashboardController;
 use App\Http\Controllers\user\kyc\UserkycController;
+use App\Http\Controllers\user\Payin\UserPayinController;
 use App\Http\Controllers\admin\charges\ChargesController;
 use App\Http\Controllers\Permission\PermissionController;
 use App\Http\Controllers\Permission\RoleController;
@@ -35,7 +36,7 @@ Route::get('/cancellation-refund-policy', [FrontController::class, 'cancel_refun
 Route::get('/contact-us', [FrontController::class, 'contact_us'])->name('front.contactus');
 
 Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
-
+Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('payin.status');
 
 
  Route::middleware('auth')->group(function () 
@@ -137,7 +138,12 @@ Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact
           Route::post('/kyc-send-otp', [UserkycController::class, 'send_otp'])->name('kyc.sendOtp');
           Route::post('/kyc-verify-otp', [UserkycController::class, 'verify_otp'])->name('kyc.verifyOtp');
 
+          Route::get('/payin/data', [UserPayinController::class, 'userpayindata'])->name('payin.data');
+          
+
+
       });
   });
 
   require __DIR__.'/auth.php';
+

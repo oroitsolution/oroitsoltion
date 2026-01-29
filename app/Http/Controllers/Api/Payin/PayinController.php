@@ -37,7 +37,7 @@ class PayinController extends Controller
         // ✅ Validation
         $rules = [
             'name'          => 'required|string|max:255',
-            'amount'        => 'required|numeric|max:3000',
+            'amount'        => 'required|numeric|min:300|max:3000',
             'mobile_number' => 'required|string|max:15',
             'order_id'      => 'required|string|unique:payins,order_id',
         ];
@@ -87,7 +87,7 @@ class PayinController extends Controller
                     }
 
                     $responseData = json_decode($response, true);
-
+                   
                     if (!isset($responseData['data']['txn_id'])) {
                         return response()->json([
                             'status'  => 'error',

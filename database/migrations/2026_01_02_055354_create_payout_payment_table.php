@@ -14,30 +14,27 @@ return new class extends Migration
         Schema::create('payout_payment', function (Blueprint $table) {
             $table->id();
             $table->string('payout_id')->nullable();
-            $table->string('ftxID')->nullable();
+            $table->string('systemid')->nullable();
             $table->string('trx_id')->nullable();
-            $table->string('api_ref_id')->nullable();
-            $table->string('cust_ref_id')->nullable();
+            $table->string('cus_trx_id')->nullable();
             $table->text('utr')->nullable();
             $table->string('txnRcvdTimeStamp')->nullable();
             $table->string('txnUpdTimeStamp')->nullable();
-            $table->string('txn_type')->nullable();
-            $table->string('pymt_type')->nullable();
-            $table->string('pymt_method')->nullable();
+            $table->string('txn_type')->default('PAY');
+            $table->string('pymt_type')->default('IMPS');
             $table->string('status')->nullable();
             $table->string('name')->nullable();
             $table->string('ifsc')->nullable();
             $table->string('account_number')->nullable();
-            $table->string('actholdername')->nullable();
-            $table->string('creditConfirmRcvd')->nullable();
-            $table->string('user_id')->nullable();
             $table->string('amount')->nullable();
             $table->string('charges')->nullable();
             $table->string('usercharges')->nullable();
             $table->string('refund_amount')->nullable();
             $table->string('lastwallet_balance')->nullable();
             $table->string('payment_source')->nullable();
+            $table->string('merchant_id')->nullable();
             $table->string('payouttype')->nullable();
+            $table->text('response_data')->nullable();
             $table->timestamps();
         });
     }

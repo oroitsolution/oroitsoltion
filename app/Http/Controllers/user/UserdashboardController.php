@@ -30,7 +30,8 @@ class UserdashboardController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        return view('user.userdashboard',compact( 'user'));
+        $totalpayinbalance = DB::table('payins')->where('status','success')->sum('amount');
+        return view('user.userdashboard',compact( 'user','totalpayinbalance'));
     }
 
     // ----------------Profile -----------------------/ # 
