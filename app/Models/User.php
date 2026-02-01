@@ -42,6 +42,8 @@ class User extends Authenticatable
         'session_id',
         'password',
         'show_password',
+        'otp',
+        'otp_expires_at',
     ];
 
     /**

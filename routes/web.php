@@ -25,6 +25,15 @@ use App\Http\Controllers\admin\Kyc\KycdataController;
   //  return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
+// For Test MAIL OTP IS SENDING OR NOT
+// Route::get('/test-mail', function () {
+//     Mail::raw('Hello from 121 Laravel Gmail', function ($message) {
+//         $message->to('amanmalviya7701@gmail.com')
+//                 ->subject('Test Mail');
+//     });
+// });
+
+
 Route::get('/', [FrontController::class, 'index'])->name('/');
 
 Route::get('/software', [FrontController::class, 'software'])->name('front.software');
@@ -34,8 +43,9 @@ Route::get('/about-us', [FrontController::class, 'aboutus'])->name('front.aboutu
 Route::get('/terms-condition', [FrontController::class, 'term_condition'])->name('front.tnc');
 Route::get('/cancellation-refund-policy', [FrontController::class, 'cancel_refundpolicy'])->name('front.crp');
 Route::get('/contact-us', [FrontController::class, 'contact_us'])->name('front.contactus');
-
 Route::post('/contact', [FrontController::class, 'contactstore'])->name('contact.store');
+
+
 Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('payin.status');
 
 

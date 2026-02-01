@@ -19,7 +19,6 @@
             <li class="nav-item fw-semibold d-none d-lg-block ms-0">
               @php
                   $hour = now()->hour;
-
                   if ($hour < 12) {
                       $greeting = 'Good Morning';
                   } elseif ($hour > 17) {
@@ -128,7 +127,7 @@
                 </a>
               </div>
             </li>
-            <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+            <!-- <li class="nav-item dropdown d-none d-lg-block user-dropdown">
               <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="img-xs rounded-circle" src="{{asset('admin/layout/assets/images/faces/face8.jpg')}}" alt="Profile image"> </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -152,7 +151,63 @@
                 </form>
 
               </div>
-            </li>
+            </li> -->
+            <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+    <a class="nav-link dropdown-toggle"
+     href="javascript:void(0)"
+     id="UserDropdown"
+     role="button"
+     data-bs-toggle="dropdown"
+     aria-expanded="false">
+
+        <img class="img-xs rounded-circle"
+             src="{{ asset('admin/layout/assets/images/faces/face8.jpg') }}"
+             alt="Profile image">
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end navbar-dropdown"
+        aria-labelledby="UserDropdown">
+
+        <li class="dropdown-header text-center">
+            <img class="img-md rounded-circle mb-2"
+                 src="{{ asset('admin/layout/assets/images/faces/face8.jpg') }}"
+                 alt="Profile image">
+
+            <p class="mb-1 fw-semibold">{{ Auth::user()->name }}</p>
+            <p class="fw-light text-muted mb-0">{{ Auth::user()->email }}</p>
+            <p class="fw-light text-muted mb-0">{{ Auth::user()->username }}</p>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <li>
+            <a class="dropdown-item" href="#">
+                <i class="mdi mdi-account-outline text-primary me-2"></i>
+                My Profile
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item" href="#">
+                <i class="mdi mdi-message-text-outline text-primary me-2"></i>
+                Messages
+            </a>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <li>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="dropdown-item d-flex align-items-center">
+                    <i class="mdi mdi-power text-primary me-2"></i>
+                    Sign Out
+                </button>
+            </form>
+        </li>
+    </ul>
+</li>
+
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>

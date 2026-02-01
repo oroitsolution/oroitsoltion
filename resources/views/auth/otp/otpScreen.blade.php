@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ORO IT SOLUTION</title>
+    <title>Login OTP VERIFY- ORO IT SOLUTION</title>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,8 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('admin/layout/assets/images/favicon.png') }}"/>
+    
+    <!-- YOUR EXISTING STYLES - KEEPING AS IS -->
     <style>
         :root {
             --primary: #667eea;
@@ -265,88 +267,6 @@
             background: white;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            z-index: 2;
-            transition: var(--transition);
-        }
-
-        .password-toggle:hover {
-            color: var(--primary);
-        }
-
-        /* Remember Me & Forgot Password */
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1.5rem 0;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-check-input {
-            width: 1.1em;
-            height: 1.1em;
-            margin-top: 0;
-            border: 2px solid var(--gray-light);
-        }
-
-        .form-check-input:checked {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .form-check-label {
-            color: var(--dark);
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        /* Terms Checkbox */
-        .terms-check {
-            margin: 2rem 0;
-        }
-
-        .form-check-label {
-            color: var(--dark);
-            font-size: 0.95rem;
-        }
-
-        .terms-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .terms-link:hover {
-            text-decoration: underline;
-        }
-
         /* Submit Button */
         .submit-btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
@@ -395,75 +315,7 @@
             display: inline-block;
         }
 
-        /* Divider */
-        .divider {
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .divider:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 1px;
-            background: var(--gray-light);
-        }
-
-        .divider-text {
-            display: inline-block;
-            background: white;
-            padding: 0 1rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Social Login */
-        .social-login {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-light);
-            border-radius: 10px;
-            background: white;
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .social-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .social-btn-google {
-            color: #db4437;
-        }
-
-        .social-btn-facebook {
-            color: #4267B2;
-        }
-
-        .social-btn-twitter {
-            color: #1DA1F2;
-        }
-
-        /* Login Link */
+        /* Register Link */
         .register-link {
             text-align: center;
             margin-top: 2rem;
@@ -538,10 +390,6 @@
             .auth-form-section {
                 padding: 2rem 1.5rem;
             }
-
-            .social-login {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 768px) {
@@ -565,12 +413,6 @@
 
             .stat-item {
                 margin-bottom: 0.5rem;
-            }
-
-            .form-options {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
             }
         }
 
@@ -599,12 +441,9 @@
 
         /* Loading Animation */
         @keyframes pulse {
-
-            0%,
-            100% {
+            0%, 100% {
                 opacity: 1;
             }
-
             50% {
                 opacity: 0.5;
             }
@@ -675,8 +514,8 @@
                             </div>
 
                             <div class="form-header">
-                                <h2>Welcome Back</h2>
-                                <p>Sign in to your ORO IT Solution account</p>
+                                <h2>Verify OTP</h2>
+                                <p>Enter the 6-digit code sent to your email</p>
                             </div>
 
                             <!-- Alerts -->
@@ -690,89 +529,52 @@
                                 <span id="loginSuccessText"></span>
                             </div>
 
-                            <form id="loginForm">
+                            <form id="otpForm">
                                 @csrf
-                                <!-- Email Field -->
+                                <!-- OTP Field -->
+                                <input type="hidden" id="otpExpiryTime">
                                 <div class="form-group">
-                                    <label class="form-label">Email Address <span class="required">*</span></label>
+                                    <label class="form-label">OTP Code <span class="required">*</span></label>
                                     <div class="input-with-icon">
-                                        <i class="fas fa-envelope input-icon"></i>
-                                        <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                            class="form-control @error('email') is-invalid @enderror"
-                                            placeholder="Enter your email address" required autofocus>
-                                        @error('email')
+                                        <i class="fas fa-key input-icon"></i>
+                                        <input type="text" 
+                                               name="otp" 
+                                               id="otp" 
+                                               class="form-control @error('otp') is-invalid @enderror"
+                                               placeholder="Enter 6-digit OTP" 
+                                               maxlength="6"
+                                               pattern="[0-9]{6}"
+                                               required 
+                                               autofocus>
+                                        @error('otp')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                        <div class="text-center mb-3">
+                                            <span class="text-muted small">
+                                                OTP expires in 
+                                                <strong id="otpTimer" class="text-danger">05:00</strong>
+                                            </span>
+                                        </div>
                                 </div>
 
-                                <!-- Password Field -->
-                                <div class="form-group">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <label class="form-label">Password <span class="required">*</span></label>
-                                        @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}" class="forgot-password">
-                                                Forgot Password?
-                                            </a>
-                                        @endif
-                                    </div>
-                                    <div class="input-with-icon">
-                                        <i class="fas fa-lock input-icon"></i>
-                                        <input type="password" name="password" id="password"
-                                            class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="Enter your password" required>
-                                        <button type="button" class="password-toggle" id="togglePassword">
-                                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
-                                        </button>
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Remember Me & Options -->
-                                <div class="form-options">
-                                    <div class="remember-me">
-                                        <input class="form-check-input" type="checkbox" id="remember_me"
-                                            name="remember">
-                                        <label class="form-check-label" for="remember_me">
-                                            Remember me
-                                        </label>
-                                    </div>
+                                <!-- Resend OTP Link -->
+                                <div class="text-end mb-3">
+                                    <a href="#" id="resendOtpLink" class="text-primary text-decoration-none small">
+                                        <i class="fas fa-redo-alt me-1"></i> Resend OTP
+                                    </a>
                                 </div>
 
                                 <!-- Submit Button -->
-                                <button type="submit" class="submit-btn" id="loginBtn">
+                                <button type="submit" class="submit-btn" id="otpverfyBtn">
                                     <div class="btn-content">
-                                        <span class="btn-text">Sign In</span>
+                                        <span class="btn-text">Verify OTP</span>
                                         <div class="spinner-border spinner-border-sm btn-spinner" role="status"></div>
                                     </div>
                                 </button>
 
-                                <!-- Divider -->
-                                <div class="divider">
-                                    <span class="divider-text">Or continue with</span>
-                                </div>
-
-                                <!-- Social Login -->
-                                <div class="social-login">
-                                    <a href="#" class="social-btn social-btn-google">
-                                        <i class="fab fa-google"></i>
-                                        <span>Google</span>
-                                    </a>
-                                    <a href="#" class="social-btn social-btn-facebook">
-                                        <i class="fab fa-facebook-f"></i>
-                                        <span>Facebook</span>
-                                    </a>
-                                    <a href="#" class="social-btn social-btn-twitter">
-                                        <i class="fab fa-twitter"></i>
-                                        <span>Twitter</span>
-                                    </a>
-                                </div>
-
                                 <!-- Register Link -->
                                 <div class="register-link">
-                                    <p>Don't have an account? <a href="{{ route('register') }}">Create Account</a></p>
                                     <a href="{{ url('/') }}" class="text-decoration-none small text-muted mt-2 d-block">
                                         <i class="fas fa-arrow-left me-1"></i> Back to Home
                                     </a>
@@ -785,6 +587,7 @@
         </div>
     </div>
 
+    <!-- Toast Container -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="authToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
             <div class="d-flex">
@@ -798,138 +601,170 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    initPasswordToggle();
-    initFormValidation();
+        // ✅ IMPORTANT: Initialize the form when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initFormValidation();
+            console.log('Form validation initialized'); // Debug log
 
-    const emailField = document.getElementById('email');
-    if (emailField && !emailField.value) {
-        setTimeout(() => emailField.focus(), 300);
-    }
-});
+                const expiryTimestamp = sessionStorage.getItem('otp_expiry_time');
 
-/* ---------------- PASSWORD TOGGLE ---------------- */
-function initPasswordToggle() {
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
-
-    if (!togglePassword || !passwordInput) return;
-
-    togglePassword.addEventListener('click', () => {
-        const isPassword = passwordInput.type === 'password';
-        passwordInput.type = isPassword ? 'text' : 'password';
-        togglePasswordIcon.classList.toggle('fa-eye');
-        togglePasswordIcon.classList.toggle('fa-eye-slash');
-    });
-}
-
-/* ---------------- FORM + AJAX ---------------- */
-function initFormValidation() {
-    const form = document.getElementById('loginForm');
-    const submitBtn = document.getElementById('loginBtn');
-
-    if (!form) return;
-
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        clearErrors();
-        toggleLoading(true);
-
-        try {
-            const response = await fetch("{{ route('login') }}", {
-                method: "POST",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "application/json"
-                },
-                body: new FormData(form),
-                credentials: "same-origin" // 🔥 REQUIRED
-            });
-
-            const data = await response.json();
-           
-                if (response.ok) {
-
-                    if (data.otp_required) {
-                        showToast('OTP sent to your email. Redirecting...', 'success');
-                    } else {
-                        showToast('Admin login successful. Redirecting...', 'success');
-                    }
-                     if (data.success && data.otp_required) {
-                        sessionStorage.setItem('otp_expiry_time', data.expired_time);
-                        // window.location.href = data.redirect_to;
-                    }
-
-                   
-                    setTimeout(() => {
-                        window.location.href = data.redirect_to;
-                        }, 1200);
-
-                } else {
-                    handleErrors(response.status, data);
+                if (!expiryTimestamp) {
+                    console.warn('OTP expiry time missing');
+                    return;
                 }
 
-            } catch (err) {
-                showToast('Network error. Please try again.', 'danger');
-            } finally {
-                toggleLoading(false);
+                const timerEl = document.getElementById('otpTimer');
+                const verifyBtn = document.getElementById('otpverfyBtn');
+
+                let remaining = expiryTimestamp - Math.floor(Date.now() / 1000);
+
+                const interval = setInterval(() => {
+
+                    if (remaining <= 0) {
+                        clearInterval(interval);
+                        timerEl.innerText = '00:00';
+                        verifyBtn.disabled = true;
+                        showToast('OTP expired. Please resend OTP', 'danger');
+                        return;
+                    }
+
+                    let minutes = Math.floor(remaining / 60);
+                    let seconds = remaining % 60;
+
+                    timerEl.innerText =
+                        String(minutes).padStart(2, '0') + ':' +
+                        String(seconds).padStart(2, '0');
+
+                    remaining--;
+
+                }, 1000);
+             
+        });
+
+            
+
+
+        /* ---------------- FORM + AJAX ---------------- */
+        function initFormValidation() {
+            const form = document.getElementById('otpForm');
+            const submitBtn = document.getElementById('otpverfyBtn');
+
+            if (!form) {
+                console.error('Form not found!');
+                return;
             }
-    });
 
-    function handleErrors(status, data) {
-        if (status === 422 && data.errors) {
-            Object.keys(data.errors).forEach(field => {
-                showFieldError(field, data.errors[field][0]);
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                clearErrors();
+                toggleLoading(true);
+
+                console.log('Form submitted'); // Debug log
+
+                try {
+                    const formData = new FormData(form);
+                    console.log('OTP Value:', formData.get('otp')); // Debug log
+
+                    const response = await fetch("{{ route('otp.verify') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest",
+                            "Accept": "application/json"
+                        },
+                        body: formData,
+                        credentials: "same-origin"
+                    });
+
+                    const data = await response.json();
+                    console.log('Response:', data); // Debug log
+
+                    if (response.ok && data.success) {
+                        showToast('OTP verified! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = data.redirect_to || "{{ url('/dashboard') }}";
+                        }, 1200);
+                    } else {
+                        handleErrors(response.status, data);
+                    }
+
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                    showToast('Network error. Please try again.', 'danger');
+                } finally {
+                    toggleLoading(false);
+                }
             });
-            showToast('Please fix the highlighted errors', 'danger');
-        } 
-        else if (status === 401) {
-            showToast(data.message || 'Invalid email or password', 'danger');
-        } 
-        else {
-            showToast('Something went wrong. Please try again.', 'danger');
+
+            function handleErrors(status, data) {
+                if (status === 422 && data.errors) {
+                    // Validation errors
+                    Object.keys(data.errors).forEach(field => {
+                        showFieldError(field, data.errors[field][0]);
+                    });
+                    showToast(data.message || 'Please fix the highlighted errors', 'danger');
+                } 
+                else if (status === 401) {
+                    // Unauthorized
+                    showToast(data.message || 'Session expired. Please login again.', 'danger');
+                    setTimeout(() => {
+                        window.location.href = "{{ route('login') }}";
+                    }, 2000);
+                } 
+                else {
+                    // Other errors
+                    showToast(data.message || 'Something went wrong. Please try again.', 'danger');
+                }
+            }
+
+            function showFieldError(field, message) {
+                const input = document.querySelector(`[name="${field}"]`);
+                if (!input) return;
+
+                input.classList.add('is-invalid');
+
+                let feedback = input.parentElement.querySelector('.invalid-feedback');
+                if (!feedback) {
+                    feedback = document.createElement('div');
+                    feedback.className = 'invalid-feedback';
+                    input.parentElement.appendChild(feedback);
+                }
+                feedback.textContent = message;
+            }
+
+            function clearErrors() {
+                document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+                document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+            }
+
+            function toggleLoading(state) {
+                submitBtn.disabled = state;
+                submitBtn.classList.toggle('loading', state);
+            }
         }
-    }
 
-    function showFieldError(field, message) {
-        const input = document.querySelector(`[name="${field}"]`);
-        if (!input) return;
+        /* ---------------- TOAST ---------------- */
+        function showToast(message, type = 'danger') {
+            const toastEl = document.getElementById('authToast');
+            const toastMsg = document.getElementById('authToastMessage');
 
-        input.classList.add('is-invalid');
+            toastEl.className = `toast align-items-center text-white bg-${type} border-0`;
+            toastMsg.textContent = message;
 
-        let feedback = input.parentElement.querySelector('.invalid-feedback');
-        if (!feedback) {
-            feedback = document.createElement('div');
-            feedback.className = 'invalid-feedback';
-            input.parentElement.appendChild(feedback);
+            new bootstrap.Toast(toastEl, { delay: 4000 }).show();
         }
-        feedback.textContent = message;
-    }
 
-    function clearErrors() {
-        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-        document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
-    }
-
-    function toggleLoading(state) {
-        submitBtn.disabled = state;
-        submitBtn.classList.toggle('loading', state);
-    }
-}
-
-/* ---------------- TOAST ---------------- */
-function showToast(message, type = 'danger') {
-    const toastEl = document.getElementById('authToast');
-    const toastMsg = document.getElementById('authToastMessage');
-
-    toastEl.className = `toast align-items-center text-white bg-${type} border-0`;
-    toastMsg.textContent = message;
-
-    new bootstrap.Toast(toastEl, { delay: 4000 }).show();
-}
-</script>
+        /* ---------------- RESEND OTP (Optional) ---------------- */
+        document.addEventListener('DOMContentLoaded', function() {
+            const resendLink = document.getElementById('resendOtpLink');
+            if (resendLink) {
+                resendLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Add your resend OTP logic here
+                    showToast('OTP resent successfully!', 'success');
+                });
+            }
+        });
+    </script>
 
 </body>
-
 </html>
