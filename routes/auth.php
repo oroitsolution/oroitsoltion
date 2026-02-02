@@ -25,7 +25,7 @@ Route::middleware('guest')->group(function () {
     
     Route::post('/verify-otp-pocced', [AuthenticatedSessionController::class, 'verifyOtp'])->name('otp.verify');
 
-    Route::post('/resend-otp', [OtpController::class, 'resend'])->name('otp.resend');
+    Route::post('/resend-otp', [AuthenticatedSessionController::class, 'resend'])->name('otp.resend');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
 

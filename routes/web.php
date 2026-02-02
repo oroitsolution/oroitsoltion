@@ -25,13 +25,33 @@ use App\Http\Controllers\admin\Kyc\KycdataController;
   //  return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
+
 // For Test MAIL OTP IS SENDING OR NOT
 // Route::get('/test-mail', function () {
-//     Mail::raw('Hello from 121 Laravel Gmail', function ($message) {
-//         $message->to('amanmalviya7701@gmail.com')
-//                 ->subject('Test Mail');
-//     });
+//     try {
+
+//         $otp = rand(100000, 999999);
+
+//         Mail::raw("Your OTP is: $otp", function ($message) {
+//             $message->to('amanmalviya7701@gmail.com')
+//                     ->subject('Your OTP Verification Code');
+//         });
+
+//         return response()->json([
+//             'status' => true,
+//             'message' => 'OTP sent successfully!'
+//         ]);
+
+//     } catch (\Exception $e) {
+
+//         return response()->json([
+//             'status' => false,
+//             'message' => 'Failed to send OTP',
+//             'error' => $e->getMessage() // remove in production
+//         ], 500);
+//     }
 // });
+
 
 
 Route::get('/', [FrontController::class, 'index'])->name('/');
