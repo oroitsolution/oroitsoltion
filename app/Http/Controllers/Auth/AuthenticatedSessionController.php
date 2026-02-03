@@ -210,64 +210,6 @@ class AuthenticatedSessionController extends Controller
     // }
 
 
-    // public function verifyOtp(Request $request)
-    // {
-    //    $request->validate([
-    //         'otp' => 'required|digits:6'
-    //     ]);
-
-    //     $userId = User::find(session('otp_user_id'));
-
-    //     if (!$userId) {
-    //         return response()->json([
-    //             'message' => 'Session expired. Please login again.'
-    //         ], 401);
-    //     }
-
-    //     $user = User::find($userId);
-
-    //     if (!$user) {
-    //         return response()->json([
-    //             'message' => 'User not found.'
-    //         ], 401);
-    //     }
-
-
-    //     // ❌ OTP mismatch
-    //     if ( $user->otp !== $request->otp) {
-    //         return response()->json([
-    //             'message' => 'Invalid OTP'
-    //         ], 422);
-    //     }
-    //     // ❌ OTP expired
-    //     if (now()->gt($user->otp_expires_at)) {
-    //         return response()->json([
-    //             'errors' => [
-    //                 'otp' => ['OTP has expired']
-    //             ]
-    //         ], 422);
-    //     }
-
-
-    //     // Clear OTP
-    //     $user->update([
-    //         'otp' => null,
-    //         'otp_expires_at' => null
-    //     ]);
-
-    //     // FINAL LOGIN
-    //     Auth::login($user);
-    //     session()->forget('otp_user_id');
-    //     $request->session()->regenerate();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'OTP verified successfully',
-    //         'redirect_to' => route('user.dashboard'),
-    //         'user' => $user,
-    //     ]);
-    // }
-
     public function verifyOtp(Request $request)
 {
     $request->validate([
