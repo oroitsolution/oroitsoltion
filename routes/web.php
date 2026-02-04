@@ -115,6 +115,8 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
 
         Route::get('/payout',           [PayoutController::class, 'index'])->name('payout.index');
         Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
+        // Add by AMAN 
+        Route::post('/payout/check-status', [PayoutController::class, 'payoutcheck'])->name('check.status');
 
 
         Route::get('/payin',            [PayinController::class, 'payindata'])->name('payin.index');
@@ -137,9 +139,6 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
 
       });
 
-
-
-
       // ----------------------------------------------------------------//
 
 
@@ -152,16 +151,20 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
       Route::middleware('user')->prefix('user')->name('user.')->group(function ()
       {
           Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('dashboard');
+
           Route::get('/payment-send',  [PaymentController::class, 'index'])->name('payment.send');
           Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
           Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');
           Route::get('/payment-show', [PaymentController::class, 'show'])->name('payment.show');
+
+
           // View Profile Route - By AMAN 
           Route::get('/profile-show', [UserdashboardController::class, 'view_profile'])->name('view.profile');
           Route::post('/regenerate-secret-key', [UserdashboardController::class, 'regenerateSecret'])->name('regenerate.secret');
           Route::post('/change-password', [UserdashboardController::class, 'changePassword'])->name('change.password');
           Route::post('/update-settings', [UserdashboardController::class, 'update_settings'])->name('client.settings.update');
           Route::post('/additional-bank-data', [UserdashboardController::class, 'additional_data'])->name('additional.bank.store');
+
           // View KYC Route - By AMAN
           Route::get('/kyc/user/form', [UserkycController::class, 'view_kycForm'])->name('view.kyc.form');
           Route::post('/kyc-request-send', [UserkycController::class, 'store_kyc'])->name('kyc.store');

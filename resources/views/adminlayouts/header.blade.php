@@ -25,12 +25,17 @@
                         $greeting = 'Good Morning';
                     } elseif ($hour < 17) {
                         $greeting = 'Good Afternoon';
-                    } elseif ($hour < 21) {
-                        $greeting = 'Good Evening';
-                    } else {
-                        $greeting = 'Good Night';
                     }
-                                @endphp
+
+                    // New way (PHP 8 match)
+                    $greeting = match(true) {
+                        $hour < 12 => 'Good Morning',
+                        $hour < 17 => 'Good Afternoon',
+                        $hour < 21 => 'Good Evening',
+                        default => 'Good Night'
+                    };
+                    
+                @endphp
                 <h1 class="welcome-text"> {{ $greeting }}, <span class="text-black fw-bold">{{ Auth::user()->name }}</span></h1>
                 <h3 class="welcome-sub-text">Welcome To Our Business Dashboard </h3>
             </li>

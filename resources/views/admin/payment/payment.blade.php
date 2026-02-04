@@ -105,10 +105,16 @@
                                 data-status="{{ $user->status }}"
                                 data-account="{{ $user->account_number }}"
                                 data-ifsc="{{ $user->ifsc_code }}"
-                                data-date="{{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}"
-                            >
+                data-date="{{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}">
                                 View
                             </button>
+                            
+                            <!-- <button
+                                class="btn btn-sm btn-info checkStatus"
+                                data-trxid="{{ $user->trxid ?? '-' }}">
+                                Check Status
+                            </button> -->
+
                         </td>
 
                           

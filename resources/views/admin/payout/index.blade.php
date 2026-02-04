@@ -107,6 +107,16 @@
                                 data-date="{{ \Carbon\Carbon::parse($user->txnRcvdTimeStamp)->format('d M Y, h:i A') }}">
                                 View
                             </button>
+                            <button
+                                class="btn btn-sm btn-info checkStatus"
+                                data-name="{{ $user->merchantname }}"
+                                data-trxid="{{ $user->trx_id ?? '-' }}"
+                                data-status="{{ $user->status }}"
+                                data-account="{{ $user->account_number }}"
+                                data-ifsc="{{ $user->ifsc }}">
+                                Check Status
+                            </button>
+
                         </td>
 
                           
@@ -210,6 +220,99 @@ document.getElementById('keySelect').addEventListener('change', function () {
         startDate.disabled = false;
         endDate.disabled = false;
     }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // SweetAlert Toast Config
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+    });
+
+    document.querySelectorAll('.checkStatus').forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            const btn = this;
+
+            const data = {
+                name: btn.dataset.name,
+                trxid: btn.dataset.trxid,
+                status: btn.dataset.status,
+                account: btn.dataset.account,
+                ifsc: btn.dataset.ifsc,
+                _token: "{{ csrf_token() }}"
+            };
+
+            // Confirmation Alert
+            Swal.fire({
+                title: 'Check Status?',
+                text: 'Do you want to check this transaction status?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Check',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                // Loading
+                Swal.fire({
+                    title: 'Checking...',
+                    text: 'Please wait',
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch("{{ route('superadmin.check.status') }}", {
+                    method: "POST",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    Swal.close();
+
+                    if (response.success) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message || 'Status updated'
+                        });
+
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: response.message || 'Something went wrong'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.close();
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Server error, try again'
+                    });
+                });
+
+            });
+        });
+
+    });
+
 });
 </script>
 @endpush

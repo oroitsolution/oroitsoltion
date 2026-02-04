@@ -63,4 +63,24 @@ class PayoutController extends Controller implements HasMiddleware
         $data = $query->orderBy('payout_payment.id', 'DESC')->get();
          return view('admin.payout.refund',compact('data'));
      }
+
+     // Add by AMAN 
+     public function payoutcheck(Request $request)
+    {
+        $request->validate([
+            'trxid' => 'required'
+        ]);
+
+        // Example logic (API / DB / Status update)
+        // $status = call external API here
+
+        // Update DB if needed
+        // Transaction::where('trx_id', $request->trxid)->update([...]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaction status checked successfully'
+        ]);
+    }
+
 }

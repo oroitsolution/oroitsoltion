@@ -1,13 +1,29 @@
-<footer class="footer">
-  <div class="d-flex justify-content-center">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-      Copyright © {{ date('Y') }} <strong>ORO IT SOLUTION PVT. LTD.</strong>. All Rights Reserved. <br>
-      Design and Developed by ORO IT SOLUTION PVT LTD
-    </span>
+<footer class="footer py-3">
+    <div class="container-fluid">
+        <div class="row align-items-center text-center text-sm-start">
 
-    <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
-            Crafted with ❤️ in India
-      </span>
-  </div>
+            <!-- Left Side -->
+            <div class="col-sm-8 mb-2 mb-sm-0">
+                <span class="text-muted small d-block">
+                    © {{ date('Y') }}
+                    <strong>ORO IT Solution Private Limited</strong>.
+                    All Rights Reserved.
+                </span>
+                <span class="text-muted small d-block">
+                    Designed & Developed by
+                    <strong>ORO IT Solution Private Limited</strong>
+                </span>
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-sm-4 text-sm-end">
+                <span class="text-muted small">
+                    Made with ❤️ in India
+                </span>
+            </div>
+
+        </div>
+    </div>
 </footer>
+
 

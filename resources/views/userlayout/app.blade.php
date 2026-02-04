@@ -47,6 +47,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('admin/layout/assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <script src="{{asset('admin/layout/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    <!-- Latest add  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
    
     <script src="{{asset('admin/layout/assets/vendors/chart.js/chart.umd.js')}}"></script>
     <script src="{{asset('admin/layout/assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
@@ -63,7 +69,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
   <!-- toastr.success('Secret Key Updated Successfully!');
       toastr.error('Something went wrong!');
       toastr.info('Processing...');

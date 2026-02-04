@@ -6,7 +6,7 @@
         </span>
 
         <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
-            Crafted with ❤️ in India
+            Design with ❤️ in India
         </span>
     </div>
 </footer>
