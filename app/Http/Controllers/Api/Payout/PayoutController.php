@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Freeze;
 use App\Models\Charge;
-use App\Jobs\MoneyDashpayoutJob;
+use App\Jobs\ShreepayoutJob;
 
 class PayoutController extends Controller
 {
@@ -154,7 +154,7 @@ class PayoutController extends Controller
 
 
                     $update = DB::table('payout_payment')->where('id', $payoutPaymentId)->update([ 'trx_id' => $clientRefno]);
-                     MoneyDashpayoutJob::dispatch(
+                     ShreepayoutJob::dispatch(
                         $payoutPaymentId,
                         $payload,
                         $user->id,

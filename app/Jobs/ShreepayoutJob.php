@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class MoneyDashPayoutJob implements ShouldQueue
+class ShreepayoutJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -52,11 +52,11 @@ class MoneyDashPayoutJob implements ShouldQueue
             $response = Http::timeout(90)->post($url, $this->payload);
 
             if (!$response->successful()) {
-                throw new \Exception('MoneyDash API failed');
+                throw new \Exception('ORO API failed');
             }
 
             $responseData = $response->json();
-            Log::info('MoneyDash Response', $responseData);
+           
 
             // ✅ Wallet insufficient case
             if (data_get($responseData, 'message') == 'Insufficient payout wallet balance') {
