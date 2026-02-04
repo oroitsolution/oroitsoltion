@@ -59,7 +59,7 @@ class PayoutController extends Controller
             try {
                 $ifscApiResponse = file_get_contents("https://ifsc.razorpay.com/{$ifsc}");
                 $ifscData = json_decode($ifscApiResponse, true);
-        
+                   
                 if (!isset($ifscData['BANK'])) {
                     return response()->json([
                         'status' => 'error',
@@ -67,6 +67,7 @@ class PayoutController extends Controller
                     ], Response::HTTP_BAD_REQUEST);
                 }
                 $bankName = $ifscData['BANK'];
+                $branch = $ifscData['BRANCH'];
             } catch (\Throwable $e) {
                 return response()->json([
                     'status' => 'error',
@@ -138,13 +139,19 @@ class PayoutController extends Controller
 
                      $clientRefno = "OROPAPUOT" . now()->format("ymdHis") . rand(1000, 9999999);
                      $payload = [
-                        "apiToken"        => 'f062d2a0c3580ea3f52b0aad4919906c',
-                        "associateId"     => '5116',
-                        "paymentMode"     => 'IMPS',
-                        "latitude"        => '27.802',
-                        "longitude"       => '75.036',
-                        "agentTransactionId" => $clientRefno,
+                        "token"       => "79Jk2BHqojrpGKTTpWpnFNJR5Mq5dU",
+                        "request_id"  => $validated["trxid"],
+                        "bene_account"=> $validated["account_number"],
+                        "bene_ifsc"   => strtoupper($validated["ifsc_code"]),
+                        "bene_name"   => $validated["account_name"],
+                        "amount"      => $amount,
+                        "currency"=> "INR",
+                        "narration"=> "Vendor Payment",
+                        "payment_mode"=> "IMPS",
+                        "bank_name"=> $bankName,
+                        "bank_branch"=> $branch
                     ];
+
 
                     $update = DB::table('payout_payment')->where('id', $payoutPaymentId)->update([ 'trx_id' => $clientRefno]);
                      MoneyDashpayoutJob::dispatch(
