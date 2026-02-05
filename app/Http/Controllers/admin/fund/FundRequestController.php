@@ -5,8 +5,12 @@ namespace App\Http\Controllers\admin\fund;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FundRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use DB;
+
 
 class FundRequestController extends Controller
 {
@@ -34,5 +38,55 @@ class FundRequestController extends Controller
 
             return redirect()->back()->with('success', 'Fund request processed successfully.');
     }
+
+    // -----------------------------------------------------------------//
+    // ------------------User Fund Request ----------------------------//
+
+    public function fundadd_show(Request $request){
+       $fundRequests = FundRequest::where('user_id', auth()->id())
+                        ->latest()
+                        ->paginate(10);
+      return view('user.fundrequest.index',compact('fundRequests'));
+    }
+
+    public function addfund_proceed(Request $request){
+        
+        $validator = Validator::make($request->all(), [
+            'pamount'      => 'required|numeric|min:1',
+            'paymntmode'  => 'required',
+            'paymntdate'  => 'required|date',
+            'ifsc'       => 'required',
+            'bankname'    => 'required|not_in:0',
+            'acnumber'    => 'required|not_in:0',
+            'utr'         => 'nullable|string',
+            'remark'      => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+         $user = Auth::user();
+
+        FundRequest::create([
+            'user_id'         => auth()->id(),   
+            'deposit_amount'  => $request->pamount,
+            'payment_method'  => $request->paymntmode,
+            'paymentdate'    => $request->paymntdate,
+            'ifsc'           => $request->ifsc,
+            'bank_name'      => $request->bankname,
+            'account_detail' => $request->acnumber,
+            'utr'            => $request->utr,
+            'remark'         => $request->remark,
+            'oldamount'      => $user->wallet_amount,
+            'status'         => 'PENDING',
+        ]);
+
+        return response()->json([
+            'message' => 'Fund request submitted successfully'
+        ]);
+    }
+
     
 }

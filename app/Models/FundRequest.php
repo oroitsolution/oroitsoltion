@@ -14,6 +14,7 @@ class FundRequest extends Model
     'bank_name',
     'account_detail',
     'utr',
+    'ifsc',
     'remark',
     'oldamount',
     'status',

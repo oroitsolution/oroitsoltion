@@ -159,6 +159,9 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
       {
           Route::get('/dashboard',  [UserdashboardController::class, 'index'])->name('dashboard');
 
+          Route::get('/fund-add-show', [FundRequestController::class, 'fundadd_show'])->name('fund.request');
+          Route::post('/fund-add-request-processed', [FundRequestController::class, 'addfund_proceed'])->name('fund.request.send');
+
           Route::get('/payment-send',  [PaymentController::class, 'index'])->name('payment.send');
           Route::get('/get-bank-details', [PaymentController::class, 'getbankdata'])->name('get.bankdetail');
           Route::post('/payment-request-send', [PaymentController::class, 'sendpayment'])->name('payment.request.send');

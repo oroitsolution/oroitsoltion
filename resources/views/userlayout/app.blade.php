@@ -88,6 +88,24 @@
             "positionClass": "toast-top-right",
             "timeOut": "3000",
         };
+
+        function showToast(message, type = 'success') {
+
+            let toastEl = document.getElementById('toast');
+            let toastMsg = document.getElementById('toastMessage');
+
+            // reset classes
+            toastEl.className = 'toast align-items-center border-0 toast-' + type;
+
+            toastMsg.innerText = message;
+
+            let toast = new bootstrap.Toast(toastEl, {
+                delay: 3000
+            });
+
+            toast.show();
+        }
+
         </script>
     <!-- End custom js for this page-->
   </body>

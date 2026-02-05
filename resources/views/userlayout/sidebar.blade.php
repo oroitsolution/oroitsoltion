@@ -49,19 +49,19 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link d-flex align-items-center
-            {{ request()->routeIs('user.payin.*') ? 'active' : '' }}"
-            href="{{ route('user.payin.data') }}">
-                <i class="mdi mdi-cash-plus menu-icon"></i>
-                <span class="menu-title">Pay-In</span>
+            <a class="nav-link d-flex align-items-center"
+               href="{{ route('user.payin.data') }}">
+                 <i class="mdi mdi-cash-plus menu-icon"></i>
+                <span class="menu-title ms-2">Pay-In</span>
             </a>
         </li>
-    
+        
+
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center"
                href="{{ route('user.fund.request') }}">
-                <i class="mdi mdi-bank-transfer menu-icon"></i>
-                <span class="menu-title ms-2">Add Fund</span>
+                <i class="mdi mdi-credit-card-plus menu-icon"></i>
+                <span class="menu-title ms-2">Add Fund Request</span>
             </a>
         </li>
 

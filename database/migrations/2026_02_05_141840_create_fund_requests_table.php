@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('paymentdate');
             $table->string('bank_name');
             $table->string('account_detail');
+            $table->string('ifsc');
             $table->string('utr');
             $table->string('remark');
             $table->string('oldamount');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('PENDING');
             $table->timestamps();
         });
     }

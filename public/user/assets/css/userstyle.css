@@ -16,6 +16,10 @@
     z-index: 999999 !important;
 }
 
+.pagination {
+    margin-bottom: 0;
+}
+
 /* - SIDRE BAR SETUP  */
 
 
