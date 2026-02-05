@@ -99,7 +99,7 @@
                                                     <i class="bi bi-clipboard"></i>
                                                 </button>
                                             @else
-                                                <span class="text-muted">-</span>
+                                                <span class="text-muted">N/A</span>
                                             @endif
                                         </td>
                                         <td>
@@ -216,7 +216,7 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 <style>
     .badge {
         font-size: 0.75em;
@@ -269,7 +269,7 @@
 @endpush
 
 @push('js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     // Copy to clipboard function
     function copyToClipboard(text) {
@@ -396,7 +396,9 @@
                 ${payout.utr ? `
                 <div class="row mb-3">
                     <div class="col-6"><strong>UTR:</strong></div>
-                    <div class="col-6 text-end font-monospace">${payout.utr}</div>
+                    <div class="col-6 text-end font-monospace">
+                        ${payout.utr ?? 'N/A'}
+                    </div>
                 </div>
                 ` : ''}
             </div>

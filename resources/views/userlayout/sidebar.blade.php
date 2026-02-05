@@ -28,7 +28,8 @@
                 <span class="menu-title ms-2">Profile</span>
             </a>
         </li>
-
+        <li class="nav-divider my-3"></li>
+        
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center"
                href="{{ route('user.payment.send') }}">
@@ -38,22 +39,33 @@
         </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link d-flex align-items-center"
-               href="{{ route('user.payout.data') }}">
+       <li class="nav-item">
+            <a class="nav-link d-flex align-items-center
+            {{ request()->routeIs('user.payout.*') ? 'active' : '' }}"
+            href="{{ route('user.payout.data') }}">
                 <i class="mdi mdi-cash-multiple menu-icon"></i>
                 <span class="menu-title ms-2">Payout</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link d-flex align-items-center "
+            <a class="nav-link d-flex align-items-center
+            {{ request()->routeIs('user.payin.*') ? 'active' : '' }}"
             href="{{ route('user.payin.data') }}">
                 <i class="mdi mdi-cash-plus menu-icon"></i>
                 <span class="menu-title">Pay-In</span>
             </a>
         </li>
+    
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center"
+               href="{{ route('user.fund.request') }}">
+                <i class="mdi mdi-bank-transfer menu-icon"></i>
+                <span class="menu-title ms-2">Add Fund</span>
+            </a>
+        </li>
 
+    <li class="nav-divider my-3"></li>
 
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center"

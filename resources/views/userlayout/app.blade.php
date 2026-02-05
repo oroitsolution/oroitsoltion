@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{asset('admin/layout/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- endinject -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -66,6 +67,7 @@
   
     <script src="{{asset('admin/layout/assets/js/jquery.cookie.js')}}" type="text/javascript"></script>
     <script src="{{asset('admin/layout/assets/js/dashboard.js')}}"></script>
+    
 <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
