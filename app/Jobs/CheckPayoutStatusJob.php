@@ -24,72 +24,83 @@ class CheckPayoutStatusJob implements ShouldQueue
 
     public function handle()
     {
-        dd(123);
+        // Get payout record
         $payout = DB::table('payout_payment')
             ->where('id', $this->payout->id)
-            ->where('status', 'PENDING')
+            ->where('status', 'pending')
             ->first();
 
         if (!$payout) {
-            return; // already updated
-        }
-
-        /* ================= STATUS API HIT ================= */
-        $payload = [
-            "apiToken"  => "f062d2a0c3580ea3f52b0aad4919906c",
-            "apiUserId" => "5116",
-            "orderId"   => $payout->apiRefNum,
-            "service"   => "payout"
-        ];
-
-        $response = Http::post(
-            'https://payzones.in/apipartner/apiservice/check/checkStatus',
-            $payload
-        )->json();
-        /* ================================================== */
-
-        if (empty($response['data']['status'])) {
             return;
         }
 
-        $finalStatus = $response['data']['status'] === 'SUCCESS'
-            ? 'COMPLETED'
-            : $response['data']['status'];
+        // API request data
+        $postData = [
+            "token"          => "79Jk2BHqojrpGKTTpWpnFNJR5Mq5dU",
+            "transaction_id" => $payout->cus_trx_id,
+            "external_ref"   => $payout->systemid
+        ];
 
-        // 🔹 update payout
-        DB::table('indiplexpayout')
-            ->where('id', $payout->id)
+        // CURL call
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://dashboard.shreefintechsolutions.com/api/payout/v2/get-report-status',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            Log::error('Payout Status API Error: ' . curl_error($curl));
+            curl_close($curl);
+            return;
+        }
+
+        curl_close($curl);
+
+        // Decode response
+        $responseData = json_decode($response, true);
+
+        // Update payout status
+        DB::table('payout_payment')
+            ->where('systemid', $payout->systemid)
+            ->where('cus_trx_id', $payout->cus_trx_id)
             ->update([
-                'txnStatus'        => $finalStatus,
-                'bankRefId'        => $response['data']['tranref'] ?? null,
-                'responsedata'     => json_encode($response),
-                'txnUpdTimeStamp'  => now()->format('d-m-Y H:i:s.v'),
+                'utr'           => $responseData['utr_no'] ?? null,
+                'status'        => $responseData['status_text'] ?? 'pending',
+                'response_data' => json_encode($responseData),
+                'updated_at'    => now(),
             ]);
 
-        /* ================= CALLBACK ================= */
-        $client = DB::table('clients')
+        // Get client callback URL
+        $client = DB::table('clints')
             ->where('user_id', $payout->merchant_id)
             ->first();
-            
-        $senddata = DB::table('indiplexpayout')
-                ->where('apiRefNum', $this->payout->apiRefNum)
-                ->first();
-                
-        unset($senddata->responsedata);
 
-        if ($client && !empty($client->url)) {
+        // Prepare callback data
+        $senddata = DB::table('payout_payment')
+            ->where('systemid', $payout->systemid)
+            ->where('cus_trx_id', $payout->cus_trx_id)
+            ->select('systemid','trx_id','cus_trx_id','utr','txn_type','pymt_type','status','account_number','amount')
+            ->first();
+
+        // Send callback
+        if ($client && !empty($client->payout_url) && $senddata) {
             try {
-                Http::timeout(10)->post($client->url, (array) $senddata);
-
-                //  Log::info('PAYOUT CALLBACK SENT', (array) $senddata);
-
+                Http::timeout(10)->post($client->payout_url, (array) $senddata);
+                // Log::info('PAYOUT CALLBACK SENT', (array) $senddata);
             } catch (\Exception $e) {
                 Log::error('PAYOUT CALLBACK FAILED', [
-                    'order_id' => $payout->apiRefNum,
-                    'error'    => $e->getMessage()
+                    'systemid' => $payout->systemid,
+                    'error' => $e->getMessage()
                 ]);
             }
         }
-        /* ============================================== */
     }
 }

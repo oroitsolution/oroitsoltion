@@ -126,7 +126,7 @@ class PayoutController extends Controller
                             "account_number"     => $validated["account_number"],
                             "amount"             => $amount,
                             "ifsc"               => strtoupper($validated["ifsc_code"]),
-                            "status"             => 'PENDING',
+                            "status"             => 'pending',
                             "usercharges"       => $appliedCharge,
                             "merchant_id"       => $lockedUser->id,
                             "payment_source"     => "Api",

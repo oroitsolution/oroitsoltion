@@ -41,7 +41,8 @@
                   <option value="">All</option>
                   <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Success</option>
                   <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                  <option value="fail" {{ request('status') == 'fail' ? 'selected' : '' }}>Fail</option>
+                  <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>failed</option>
+                  <option value="Refunded" {{ request('status') == 'Refunded' ? 'selected' : '' }}>Refunded</option>
                 </select>
               </div>
             </div>
@@ -64,10 +65,12 @@
                         <tr>
                           <th style="width: 10px">id</th>
                           <th>Name</th>
+                          <th>Trx id</th>
                           <th>Account Number</th>
                           <th>IFSC Code</th>
                           <th>UTR</th>
                           <th>Account Name</th>
+                          <th>Amount</th>
                           <th>Status</th>
                           <th>date</th>
                           <th>View</th>
@@ -80,18 +83,28 @@
                         <tr class="align-middle">
                           <td>{{$key+1}}</td>
                           <td>{{$user->merchantname}}</td>
+                          <td>{{$user->trx_id}}</td>
                           <td>{{$user->account_number}}</td>
                           <td>{{$user->ifsc}}</td>
                           <td>{{$user->utr}}</td>
                           <td>{{$user->name}}</td>
+                          <td>{{$user->amount}}</td>
                           <td>
-                            <span class="badge 
-                                @if($user->status == 'success') text-bg-success 
-                                @elseif($user->status == 'failed') text-bg-danger 
-                                @elseif($user->status == 'pending') text-bg-primary 
-                                @endif">
-                                {{ $user->status }}
-                            </span>
+                           <span class="badge 
+                            @if($user->status == 'success') text-bg-success
+                            @elseif($user->status == 'failed') text-bg-danger
+                            @elseif($user->status == 'pending') text-bg-primary
+                            @elseif($user->status == 'Refunded') text-bg-info
+                            @else text-bg-secondary
+                            @endif
+                        ">
+                            {{ $user->status }}
+
+                            @if($user->status == 'Refunded')
+                                (₹{{ $user->refund_amount }})
+                            @endif
+                        </span>
+
                             </td>
                           
                           <td>{{\Carbon\Carbon::parse($user->txnRcvdTimeStamp)->format('d-m-y h:i:s')}}</td>
@@ -108,7 +121,7 @@
                                 View
                             </button>
                             <button
-                                class="btn btn-sm btn-info checkStatus"
+                                class="btn btn-sm btn-warning checkStatus"
                                 data-systemid="{{ $user->systemid ?? '-' }}"
                                 data-trxid="{{ $user->cus_trx_id ?? '-' }}">
                                 Check Status

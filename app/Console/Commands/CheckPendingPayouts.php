@@ -16,7 +16,7 @@ class CheckPendingPayouts extends Command
       
             
         $payouts = DB::table('payout_payment')
-            ->where('status', 'PENDING')
+            ->where('status', 'pending')
              ->whereRaw(
             "DATE(STR_TO_DATE(txnRcvdTimeStamp, '%d-%m-%Y %H:%i:%s.%f')) = ?",
             [now()->toDateString()]

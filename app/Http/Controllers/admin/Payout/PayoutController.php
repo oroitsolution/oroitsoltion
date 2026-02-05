@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin\Payout;
-
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -46,7 +46,7 @@ class PayoutController extends Controller implements HasMiddleware
         }
 
         // Status Filter
-        if ($request->status && in_array($request->status, ['success', 'pending', 'fail'])) {
+        if ($request->status && in_array($request->status, ['success', 'pending', 'failed','Refunded'])) {
             $query->where('payout_payment.status', $request->status);
         }
 
@@ -56,8 +56,8 @@ class PayoutController extends Controller implements HasMiddleware
 
      public function refund(Request $request){
         $query = DB::table('payout_payment')
-        ->leftJoin('users', 'users.id', '=', 'payout_payment.user_id')
-        ->whereIn('payout_payment.status', ['FAILED', 'Failure'])
+        ->leftJoin('users', 'users.id', '=', 'payout_payment.merchant_id')
+        ->whereIn('payout_payment.status', ['FAILED', 'failed'])
         ->select('payout_payment.*', 'users.name as merchantname');
 
         $data = $query->orderBy('payout_payment.id', 'DESC')->get();
@@ -116,9 +116,11 @@ class PayoutController extends Controller implements HasMiddleware
         DB::table('payout_payment')
             ->where('systemid', $request->systemid)
             ->where('cus_trx_id', $request->trxid)
+            ->where('status','!=','refunded')
             ->update([
                 'utr'    => $responseData['utr_no'] ?? null,
                 'status' => $responseData['status_text'] ?? 'pending',
+                'response_data' => $responseData,
             ]);
 
         return response()->json([
@@ -126,6 +128,67 @@ class PayoutController extends Controller implements HasMiddleware
             'message' => 'Updated successfully',
             'api_response' => $responseData
         ]);
+    }
+
+
+    public function refundSelected(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer'
+        ]);
+
+        
+        // Transaction start
+        DB::beginTransaction();
+
+        try {
+            // Get all selected payout records
+            $payouts = DB::table('payout_payment')
+                ->whereIn('id', $request->ids)
+                ->get();
+
+            foreach ($payouts as $payout) {
+                $refundAmount = $payout->amount + $payout->usercharges;
+               
+                
+                DB::table('payout_payment')
+                    ->where('id', $payout->id)
+                    ->update([
+                        'status' => 'Refunded',
+                        'refund_amount' => $refundAmount
+                    ]);
+
+
+                DB::table('users')->where('id', $payout->merchant_id)->increment('wallet_amount', $refundAmount);
+                    
+                    
+                $callbackurl = DB::table("clints")->where('user_id', $payout->merchant_id)->first();
+                   
+                $updatedPayout= DB::table('payout_payment')->where('id', $payout->id)
+                ->select('systemid','trx_id','cus_trx_id','utr','txn_type','pymt_type','status','account_number','amount','refund_amount')->first();
+                
+                 try {
+                        Http::post($callbackurl->payout_url, (array) $updatedPayout);
+                    } catch (\Exception $e) {
+                        // Log error but don't break response
+                        \Log::error('Callback failed: ' . $e->getMessage());
+                    }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Selected payments refunded successfully.'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => 'Refund failed: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 

@@ -30,42 +30,29 @@
                                 <div class="statistics-details d-flex align-items-center justify-content-between">
                                     <!-- Bounce Rate -->
                                     <div>
-                                        <p class="statistics-title">Bounce Rate</p>
-                                        <h3 class="rate-percentage">45.12%</h3>
-                                        <p class="text-danger d-flex">
-                                            <i class="mdi mdi-menu-down"></i>
-                                            <span>-1.2%</span>
-                                        </p>
+                                        <p class="statistics-title">Merchant Wallet Balance</p>
+                                        <h3 class="rate-percentage">{{$merchantWalletAmount}}</h3>
                                     </div>
 
                                     <!-- Page Views -->
                                     <div>
-                                        <p class="statistics-title">Page Views</p>
+                                        <p class="statistics-title">Today Add Money</p>
                                         <h3 class="rate-percentage">12,450</h3>
-                                        <p class="text-success d-flex">
-                                            <i class="mdi mdi-menu-up"></i>
-                                            <span>+2.3%</span>
-                                        </p>
+                                        
                                     </div>
 
                                     <!-- New Sessions -->
                                     <div>
-                                        <p class="statistics-title">New Sessions</p>
+                                        <p class="statistics-title">Today Send Moey</p>
                                         <h3 class="rate-percentage">78.5%</h3>
-                                        <p class="text-success d-flex">
-                                            <i class="mdi mdi-menu-up"></i>
-                                            <span>+3.1%</span>
-                                        </p>
+                                       
                                     </div>
 
                                     <!-- Avg. Time on Site -->
                                     <div class="d-none d-md-block">
-                                        <p class="statistics-title">Avg. Time on Site</p>
+                                        <p class="statistics-title">Applied Charges</p>
                                         <h3 class="rate-percentage">3m:12s</h3>
-                                        <p class="text-success d-flex">
-                                            <i class="mdi mdi-menu-up"></i>
-                                            <span>+0.9%</span>
-                                        </p>
+                                        
                                     </div>
 
                                     <!-- Conversion Rate -->

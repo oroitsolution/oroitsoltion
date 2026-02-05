@@ -31,8 +31,9 @@ use App\Models\additionlBankAccount;
 class DashboardController extends Controller
 {
    public function index(){
-
-        return view('admin.dashboards');
+    $today = Carbon::now()->format('d-m-Y');
+    $merchantWalletAmount = User::where('role_id', 2)->sum('wallet_amount');
+    return view('admin.dashboards',compact('merchantWalletAmount'));
     }
 
     public function contact(Request $request){
