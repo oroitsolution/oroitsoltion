@@ -24,17 +24,15 @@ class PayoutController extends Controller implements HasMiddleware
 
      public function index(Request $request){
         
-        $query = DB::table('payout_payment')
-            ->leftJoin('users', 'users.id', '=', 'payout_payment.merchant_id')
-            ->select('payout_payment.*', 'users.name as merchantname');
+        $query = DB::table('payout_payment')->leftJoin('users', 'users.id', '=', 'payout_payment.merchant_id')
+        ->select('payout_payment.*', 'users.name as merchantname');
 
-        // 🔍 Key Based Search
         if ($request->key && $request->search_data) {
             if (in_array($request->key, ['trx_id','utr', 'account_number'])) {
                 $query->where("payout_payment.{$request->key}", 'LIKE', '%' . $request->search_data . '%');
             }
         }
-        // 📅 Date Based Filter (only when key not selected)
+        
         else {
             if ($request->start_date) {
                 $query->where('payout_payment.created_at', '>=', $request->start_date . ' 00:00:00');

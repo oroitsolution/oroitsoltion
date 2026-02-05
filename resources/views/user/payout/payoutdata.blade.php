@@ -11,23 +11,81 @@
                     <h5 class="mb-0">
                         <i class="bi bi-wallet2 me-2"></i>Payout History
                     </h5>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
-                            <i class="bi bi-printer me-1"></i>Print
-                        </button>
-                        <button class="btn btn-outline-success btn-sm" onclick="exportToExcel()">
-                            <i class="bi bi-file-earmark-excel me-1"></i>Export
-                        </button>
-                    </div>
+                    
                 </div>
 
+                
                 <div class="card-body">
+
+            <form method="GET" action="{{ route('user.payout.data') }}">
+                  <div class="card-body">
+
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                            <label for="statusToggle" class="form-label">Key</label>
+                            <select name="key" class="form-control" id="keySelect">
+                              <option value="">Select</option>
+                               <option value="trx_id" {{ request('key') == 'trx_id' ? 'selected' : '' }}>Trx id</option>
+                                <option value="cus_trx_id" {{ request('key') == 'cus_trx_id' ? 'selected' : '' }}>User Trx Id</option>
+                              <option value="utr" {{ request('key') == 'utr' ? 'selected' : '' }}>UTR</option>
+                              <option value="account_number" {{ request('key') == 'account_number' ? 'selected' : '' }}>Account Number</option>
+                            </select>
+                          </div>
+            
+                           <div class="col-md-3 serchdata {{ request('key') ? '' : 'd-none' }}">
+                                <label class="form-label">Search</label>
+                                <input type="text" name="search_data" value="{{ request('search_data') }}" class="form-control" placeholder="Search..." />
+                            </div>
+                            
+                           <div class="col-md-3">
+                              <label for="exampleInputstartdate" class="form-label">Start Date</label>
+                              <input type="date" name="start_date" value="{{ old('start_date', request('start_date')) }}" class="form-control" id="exampleInputstartdate" />
+                              <div id="startdateHelp" class="form-text text-danger"></div>
+                           </div>
+                     
+                           <div class="col-md-3">
+                              <label for="exampleInputenddate" class="form-label">End Date</label>
+                              <input type="date" name="end_date" value="{{ old('end_date', request('end_date')) }}" class="form-control" id="exampleInputenddate" />
+                              <div id="enddateHelp" class="form-text text-danger"></div>
+                           </div>      
+                           
+                           <div class="col-md-3">
+                              <label for="statusToggle" class="form-label">Status Filter</label>
+                              <select name="status" class="form-control" id="statusToggle" onchange="this.form.submit()">
+                                <option value="">All</option>
+                                <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Success</option>
+                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>failed</option>
+                                <option value="Refunded" {{ request('status') == 'Refunded' ? 'selected' : '' }}>Refunded</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card-footer">
+                           <div class="d-flex">
+                              <button type="submit" class="btn btn-primary me-2">Submit</button>
+                              <a href="{{ url('user/payout/data') }}" class="btn btn-danger">Date Reset</a>
+                              @php
+                            //   $exportUrl = route('', [
+                            //      'start_date' => request('start_date'),
+                            //      'end_date' => request('end_date'),
+                            //      'status' => request('status'),
+                            //      'key' => request('key'),
+                            //      'search_data' => request('search_data'),
+                            //   ]);
+                              @endphp
+                           <a href="" class="btn btn-success" style="margin-left:10px">Export data</a>
+                           </div>
+                     </div>
+                     
+                     
+                  </form>
                     {{-- Summary Cards --}}
                     <div class="row mb-4">
                         <div class="col-md-3">
                             <div class="card border-success">
                                 <div class="card-body text-center">
-                                    <h4 class="text-success">{{ $payoutdata->where('status', 'success')->count() }}</h4>
+                                    <h4 class="text-success">{{ $data->where('status', 'success')->count() }}</h4>
                                     <small class="text-muted">Successful</small>
                                 </div>
                             </div>
@@ -35,7 +93,7 @@
                         <div class="col-md-3">
                             <div class="card border-warning">
                                 <div class="card-body text-center">
-                                    <h4 class="text-warning">{{ $payoutdata->where('status', 'pending')->count() }}</h4>
+                                    <h4 class="text-warning">{{ $data->where('status', 'pending')->count() }}</h4>
                                     <small class="text-muted">Pending</small>
                                 </div>
                             </div>
@@ -43,7 +101,7 @@
                         <div class="col-md-3">
                             <div class="card border-danger">
                                 <div class="card-body text-center">
-                                    <h4 class="text-danger">{{ $payoutdata->where('status', 'failed')->count() }}</h4>
+                                    <h4 class="text-danger">{{ $data->where('status', 'failed')->count() }}</h4>
                                     <small class="text-muted">Failed</small>
                                 </div>
                             </div>
@@ -51,7 +109,7 @@
                         <div class="col-md-3">
                             <div class="card border-info">
                                 <div class="card-body text-center">
-                                    <h4 class="text-info">₹{{ number_format($payoutdata->where('status', 'success')->sum('amount'), 2) }}</h4>
+                                    <h4 class="text-info">₹{{ number_format($data->where('status', 'success')->sum('amount'), 2) }}</h4>
                                     <small class="text-muted">Total Paid</small>
                                 </div>
                             </div>
@@ -64,11 +122,10 @@
                                 <tr>
                                     <th width="50">#</th>
                                     <th>Transaction ID</th>
-                                    <th>TXN ID</th>
+                                    <th>User TXN ID</th>
                                     <th>UTR</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                    
                                     <th>Wallet Balance</th>
                                     <th>Date</th>
                                     <th width="150">Actions</th>
@@ -76,7 +133,7 @@
                             </thead>
 
                             <tbody>
-                                @forelse($payoutdata as $key => $payout)
+                                @forelse($data as $key => $payout)
                                     <tr data-id="{{ $payout->id }}">
                                         <td>{{ $key + 1 }}</td>
                                         <td>
@@ -141,12 +198,7 @@
                                                     <i class="bi bi-receipt"></i>
                                                     <span class="d-none d-md-inline">Slip</span>
                                                 </button>
-                                                <button class="btn btn-info btn-sm" 
-                                                        onclick="checkStatus('{{ $payout->trx_id }}')" 
-                                                        title="Check Status">
-                                                    <i class="bi bi-arrow-clockwise"></i>
-                                                    <span class="d-none d-md-inline">Status</span>
-                                                </button>
+                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -172,20 +224,21 @@
 </div>
 
 {{-- Slip Modal --}}
-<div class="modal fade" id="slipModal" tabindex="-1">
+<div class="modal fade" id="slipModal" tabindex="-1" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">
                     <i class="bi bi-receipt me-2"></i>Payment Slip
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="location.reload()"></button>
             </div>
             <div class="modal-body" id="slipContent">
                 {{-- Slip content will be loaded here --}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="location.reload()">Close</button>
                 <button type="button" class="btn btn-primary" onclick="printSlip()">
                     <i class="bi bi-printer me-1"></i>Print
                 </button>
@@ -271,7 +324,8 @@
 @push('js')
 
 <script>
-    // Copy to clipboard function
+    
+
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(function() {
             showToast('Copied to clipboard!', 'success');
@@ -287,9 +341,7 @@
         });
     }
 
-    // View Slip Function
     function viewSlip(payoutId) {
-
     const modalEl = document.getElementById('slipModal');
     const modal   = new bootstrap.Modal(modalEl);
     const content = document.getElementById('slipContent');
@@ -321,49 +373,6 @@
 }
 
 
-    // Check Status Function
-    function checkStatus(trxId) {
-        const modal = new bootstrap.Modal(document.getElementById('statusModal'));
-        
-        // Show loading
-        document.getElementById('statusContent').innerHTML = `
-            <div class="text-center py-4">
-                <div class="spinner-border text-info" role="status">
-                    <span class="visually-hidden">Checking...</span>
-                </div>
-                <p class="mt-3 text-muted">Checking transaction status...</p>
-            </div>
-        `;
-        
-        modal.show();
-        
-        // Simulate API call - replace with actual endpoint
-        fetch(`/payout/status/${trxId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('statusContent').innerHTML = generateStatusHTML(data.status);
-                } else {
-                    document.getElementById('statusContent').innerHTML = `
-                        <div class="alert alert-warning">
-                            <i class="bi bi-exclamation-triangle me-2"></i>
-                            Unable to check status at this time
-                        </div>
-                    `;
-                }
-            })
-            .catch(error => {
-                console.error('Error checking status:', error);
-                document.getElementById('statusContent').innerHTML = `
-                    <div class="alert alert-danger">
-                        <i class="bi bi-exclamation-triangle me-2"></i>
-                        Error checking transaction status
-                    </div>
-                `;
-            });
-    }
-
-    // Generate Slip HTML
     function generateSlipHTML(payout) {
         return `
             <div class="p-3">
@@ -460,11 +469,7 @@
         printWindow.print();
     }
 
-    // Export to Excel Function
-    function exportToExcel() {
-        showToast('Export functionality will be implemented soon!', 'info');
-        // You can implement this using libraries like SheetJS or server-side export
-    }
+   
 
     // Toast Notification Function
     function showToast(message, type = 'success') {
@@ -492,10 +497,24 @@
         }, 3000);
     }
 
-    // Initialize DataTable (optional enhancement)
-    document.addEventListener('DOMContentLoaded', function() {
-        // You can initialize DataTable here if needed
-        // $('#payoutTable').DataTable();
-    });
+     document.getElementById('keySelect').addEventListener('change', function () {
+    const searchBox = document.querySelector('.serchdata');
+    const startDate = document.getElementById('exampleInputstartdate');
+    const endDate   = document.getElementById('exampleInputenddate');
+
+    if (this.value !== '') {
+        // Key selected → show search, hide date
+        searchBox.classList.remove('d-none');
+        startDate.disabled = true;
+        endDate.disabled = true;
+    } else {
+        // No key → hide search, show date
+        searchBox.classList.add('d-none');
+        startDate.disabled = false;
+        endDate.disabled = false;
+    }
+});
+
+
 </script>
 @endpush
