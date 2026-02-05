@@ -125,7 +125,8 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
         // Add by AMAN 
         Route::post('/payout/check-status', [PayoutController::class, 'payoutcheck'])->name('check.status');
         Route::post('/payment/refund',      [PayoutController::class, 'refundSelected'])->name('refund.payment');
-        Route::get('/fund/request',      [FundRequestController::class, 'index'])->name('fund.request');
+        Route::get('/fund/request',         [FundRequestController::class, 'index'])->name('fund.request');
+        Route::post('/fund/upload',         [FundRequestController::class, 'store'])->name('fund.upload');
 
 
         Route::get('/payin',            [PayinController::class, 'payindata'])->name('payin.index');
