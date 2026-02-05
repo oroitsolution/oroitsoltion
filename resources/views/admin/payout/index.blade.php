@@ -87,7 +87,7 @@
                           <td>
                             <span class="badge 
                                 @if($user->status == 'success') text-bg-success 
-                                @elseif($user->status == 'fail') text-bg-danger 
+                                @elseif($user->status == 'failed') text-bg-danger 
                                 @elseif($user->status == 'pending') text-bg-primary 
                                 @endif">
                                 {{ $user->status }}
@@ -109,11 +109,8 @@
                             </button>
                             <button
                                 class="btn btn-sm btn-info checkStatus"
-                                data-name="{{ $user->merchantname }}"
-                                data-trxid="{{ $user->trx_id ?? '-' }}"
-                                data-status="{{ $user->status }}"
-                                data-account="{{ $user->account_number }}"
-                                data-ifsc="{{ $user->ifsc }}">
+                                data-systemid="{{ $user->systemid ?? '-' }}"
+                                data-trxid="{{ $user->cus_trx_id ?? '-' }}">
                                 Check Status
                             </button>
 
@@ -241,11 +238,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const btn = this;
 
             const data = {
-                name: btn.dataset.name,
+              
+                systemid: btn.dataset.systemid,
                 trxid: btn.dataset.trxid,
-                status: btn.dataset.status,
-                account: btn.dataset.account,
-                ifsc: btn.dataset.ifsc,
+                
+
                 _token: "{{ csrf_token() }}"
             };
 

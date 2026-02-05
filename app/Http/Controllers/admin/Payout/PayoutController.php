@@ -64,23 +64,70 @@ class PayoutController extends Controller implements HasMiddleware
          return view('admin.payout.refund',compact('data'));
      }
 
-     // Add by AMAN 
-     public function payoutcheck(Request $request)
+ 
+    public function payoutcheck(Request $request)
     {
         $request->validate([
-            'trxid' => 'required'
+            'trxid'    => 'required|string',
+            'systemid' => 'required|string',
         ]);
 
-        // Example logic (API / DB / Status update)
-        // $status = call external API here
+        $postData = [
+            "token"          => "79Jk2BHqojrpGKTTpWpnFNJR5Mq5dU",
+            "transaction_id" => $request->trxid,
+            "external_ref"   => $request->systemid
+        ];
 
-        // Update DB if needed
-        // Transaction::where('trx_id', $request->trxid)->update([...]);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://dashboard.shreefintechsolutions.com/api/payout/v2/get-report-status',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+            curl_close($curl);
+
+            return response()->json([
+                'success' => false,
+                'error'   => $error
+            ], 500);
+        }
+
+        curl_close($curl);
+
+        // ✅ Convert JSON response to array
+        $responseData = json_decode($response, true);
+       
+        // Update DB
+        DB::table('payout_payment')
+            ->where('systemid', $request->systemid)
+            ->where('cus_trx_id', $request->trxid)
+            ->update([
+                'utr'    => $responseData['utr_no'] ?? null,
+                'status' => $responseData['status_text'] ?? 'pending',
+            ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Transaction status checked successfully'
+            'message' => 'Updated successfully',
+            'api_response' => $responseData
         ]);
     }
+
+
 
 }
