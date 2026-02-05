@@ -4,9 +4,9 @@ namespace App\Http\Controllers\admin\Payin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Payin;
-use DB;
 
 class PayinController extends Controller
 {

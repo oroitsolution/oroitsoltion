@@ -36,6 +36,7 @@
         @include('userlayout.header')
         <div class="container-fluid page-body-wrapper">
             @include('userlayout.sidebar')
+            
             <div class="main-panel">
                 @yield('content')
                 @include('userlayout.footer')

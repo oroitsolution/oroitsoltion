@@ -5,17 +5,24 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\payment\AdminPaymentController;
+use App\Http\Controllers\admin\Payout\PayoutController;
+use App\Http\Controllers\admin\charges\ChargesController;
+use App\Http\Controllers\admin\Payin\PayinController;
+use App\Http\Controllers\admin\Kyc\KycdataController;
+use App\Http\Controllers\admin\fund\FundRequestController;
+
+use App\Http\Controllers\Permission\PermissionController;
+use App\Http\Controllers\Permission\RoleController;
+
 use App\Http\Controllers\user\payment\PaymentController;
 use App\Http\Controllers\user\UserdashboardController;
 use App\Http\Controllers\user\kyc\UserkycController;
 use App\Http\Controllers\user\Payin\UserPayinController;
-use App\Http\Controllers\admin\charges\ChargesController;
-use App\Http\Controllers\Permission\PermissionController;
-use App\Http\Controllers\Permission\RoleController;
-use App\Http\Controllers\admin\payment\AdminPaymentController;
-use App\Http\Controllers\admin\Payout\PayoutController;
-use App\Http\Controllers\admin\Payin\PayinController;
-use App\Http\Controllers\admin\Kyc\KycdataController;
+use App\Http\Controllers\user\Payout\UserPayoutController;
+
+
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -117,6 +124,8 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
         Route::get('/payout/refund',    [PayoutController::class, 'refund'])->name('payout.refund');
         // Add by AMAN 
         Route::post('/payout/check-status', [PayoutController::class, 'payoutcheck'])->name('check.status');
+        Route::post('/payment/refund',      [PayoutController::class, 'refundSelected'])->name('refund.payment');
+        Route::get('/fund/request',      [FundRequestController::class, 'index'])->name('fund.request');
 
 
         Route::get('/payin',            [PayinController::class, 'payindata'])->name('payin.index');
@@ -140,9 +149,6 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
       });
 
       // ----------------------------------------------------------------//
-
-
-
 
 
 
@@ -173,8 +179,10 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
 
           Route::get('/payin/data', [UserPayinController::class, 'userpayindata'])->name('payin.data');
           
+          Route::get('/payout/data', [UserPayoutController::class, 'userpayoutdata'])->name('payout.data');
+          Route::get('/payout/{cus_trx_id}/slip', [UserPayoutController::class, 'slip'])->name('payout.slip');;
 
-
+         
       });
   });
 
