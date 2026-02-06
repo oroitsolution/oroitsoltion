@@ -33,7 +33,13 @@ class DashboardController extends Controller
    public function index(){
     $today = Carbon::now()->format('d-m-Y');
     $merchantWalletAmount = User::where('role_id', 2)->sum('wallet_amount');
-    return view('admin.dashboards',compact('merchantWalletAmount'));
+   $data = DB::table('payout_payment')
+    ->leftJoin('users', 'users.id', '=', 'payout_payment.merchant_id')
+    ->select('payout_payment.*', 'users.name as merchantname')
+    ->orderBy('payout_payment.id', 'DESC')
+    ->take(6)
+    ->get();
+    return view('admin.dashboards',compact('merchantWalletAmount','data'));
     }
 
     public function contact(Request $request){

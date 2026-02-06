@@ -141,9 +141,11 @@
                                             <td>
                                                 <span class="badge 
                                                     {{ $req->status == 'pending' ? 'bg-warning' : 
-                                                    ($req->status == 'approved' ? 'bg-success' : 'bg-danger') }}">
+                                                    ($req->status == 'success' ? 'bg-primary' : 
+                                                    ($req->status == 'Rejected' ? 'bg-danger' : 'bg-secondary')) }}">
                                                     {{ ucfirst($req->status) }}
                                                 </span>
+
                                             </td>
                                         </tr>
                                     @endforeach

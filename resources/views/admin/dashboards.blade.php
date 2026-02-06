@@ -29,29 +29,29 @@
                             <div class="col-sm-12">
                                 <div class="statistics-details d-flex align-items-center justify-content-between">
                                     <!-- Bounce Rate -->
-                                    <div>
+                                    <div id="merchant-balance">
                                         <p class="statistics-title">Merchant Wallet Balance</p>
-                                        <h3 class="rate-percentage">{{$merchantWalletAmount}}</h3>
+                                        <h3 class="rate-percentage" >{{$merchantWalletAmount}}</h3>
                                     </div>
 
                                     <!-- Page Views -->
-                                    <div>
+                                    <div id="today-add-money">
                                         <p class="statistics-title">Today Add Money</p>
-                                        <h3 class="rate-percentage">12,450</h3>
+                                        <h3 class="rate-percentage" >12,450</h3>
                                         
                                     </div>
 
                                     <!-- New Sessions -->
-                                    <div>
+                                    <div id="today-send-money">
                                         <p class="statistics-title">Today Send Moey</p>
-                                        <h3 class="rate-percentage">78.5%</h3>
+                                        <h3 class="rate-percentage" >78.5%</h3>
                                        
                                     </div>
 
                                     <!-- Avg. Time on Site -->
-                                    <div class="d-none d-md-block">
+                                    <div class="d-md-block" id="appliedcharges">
                                         <p class="statistics-title">Applied Charges</p>
-                                        <h3 class="rate-percentage">3m:12s</h3>
+                                        <h3 class="rate-percentage" >3m:12s</h3>
                                         
                                     </div>
 
@@ -92,124 +92,51 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="table-responsive mt-3">
+                                                <div class="table-responsive mt-3" id="payoutdata">
                                                     <table class="table select-table">
                                                         <thead>
                                                             <tr>
-                                                                <th>
-                                                                    <input type="checkbox" id="check-all">
-                                                                </th>
-                                                                <th>Customer</th>
-                                                                <th>Company</th>
-                                                                <th>Progress</th>
+                                                                <th>ID</th>
+                                                                <th>Name</th>
+                                                                <th>Trx id</th>
+                                                                <th>Account Number</th>
+                                                                <th>IFSC Code</th>
+                                                                <th>UTR</th>
+                                                                <th>Account Name</th>
+                                                                <th>Amount</th>
                                                                 <th>Status</th>
-                                                                <th>Action</th>
+                                                                <th>date</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                            <!-- Row 1 -->
-                                                            <tr>
-                                                                <td><input type="checkbox"></td>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <!-- <img src="assets/images/faces/face1.jpg" alt=""> -->
-                                                                        <div class="ms-2">
-                                                                            <h6>Rahul Sharma</h6>
-                                                                            <p class="text-muted">Manager</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <h6>TechSoft Pvt Ltd</h6>
-                                                                    <p class="text-muted">IT Services</p>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress progress-md">
-                                                                        <div class="progress-bar bg-success"
-                                                                            style="width: 80%"></div>
-                                                                    </div>
-                                                                    <small>80%</small>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="badge badge-opacity-warning">In
-                                                                        Progress</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-primary text-white">View
-                                                                        Status</a>
-                                                                </td>
+                                                            
+                                                              @if($data->isNotEmpty())
+                                                                @foreach($data as $key=> $user)
+                                                                    <tr class="align-middle">
+                                                                    <td>{{$key+1}}</td>
+                                                                    <td>{{$user->merchantname}}</td>
+                                                                    <td>{{$user->trx_id}}</td>
+                                                                    <td>{{$user->account_number}}</td>
+                                                                    <td>{{$user->ifsc}}</td>
+                                                                    <td>{{$user->utr}}</td>
+                                                                    <td>{{$user->name}}</td>
+                                                                    <td>{{$user->amount}}</td>
+                                                                    <td>
+                                                                        <span class="badge 
+                                                                        @if($user->status == 'success') text-bg-success
+                                                                        @elseif($user->status == 'failed') text-bg-danger
+                                                                        @elseif($user->status == 'pending') text-bg-primary
+                                                                        @elseif($user->status == 'Refunded') text-bg-info
+                                                                        @else text-bg-secondary
+                                                                        @endif">{{ $user->status }}
+                                                                    
+                                                                    </span>
+                                                                 </td>
+                                                                <td>{{\Carbon\Carbon::parse($user->txnRcvdTimeStamp)->format('d-m-y h:i:s')}}</td>
                                                             </tr>
-
-                                                            <!-- Row 2 -->
-                                                            <tr>
-                                                                <td><input type="checkbox"></td>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <!-- <img src="assets/images/faces/face2.jpg" alt=""> -->
-                                                                        <div class="ms-2">
-                                                                            <h6>Anita Verma</h6>
-                                                                            <p class="text-muted">HR</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <h6>Global Corp</h6>
-                                                                    <p class="text-muted">Consulting</p>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress progress-md">
-                                                                        <div class="progress-bar bg-warning"
-                                                                            style="width: 45%"></div>
-                                                                    </div>
-                                                                    <small>45%</small>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        class="badge badge-opacity-danger">Pending</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-primary text-white">View
-                                                                        Status</a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <!-- Row 3 -->
-                                                            <tr>
-                                                                <td><input type="checkbox"></td>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <!-- <img src="assets/images/faces/face3.jpg" alt=""> -->
-                                                                        <div class="ms-2">
-                                                                            <h6>Amit Patel</h6>
-                                                                            <p class="text-muted">Admin</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <h6>FinServe Ltd</h6>
-                                                                    <p class="text-muted">Finance</p>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress progress-md">
-                                                                        <div class="progress-bar bg-success"
-                                                                            style="width: 100%"></div>
-                                                                    </div>
-                                                                    <small>100%</small>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        class="badge badge-opacity-success">Completed</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-primary text-white">View
-                                                                        Status</a>
-                                                                </td>
-                                                            </tr>
-
+                                                            @endforeach
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -280,3 +207,15 @@
 <!-- partial:partials/_footer.html -->
 
 @endsection
+
+@push('js')
+<script>
+    setInterval(function() {
+        $('#today-add-money').load(location.href + ' #today-add-money > *');
+        $('#today-send-money').load(location.href + ' #today-send-money > *');
+        $('#appliedcharges').load(location.href + ' #appliedcharges > *');
+        $('#merchant-balance').load(location.href + ' #merchant-balance > *');
+        $('#payoutdata').load(location.href + ' #payoutdata > *');  
+    }, 4000);
+</script>
+@endpush

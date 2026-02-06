@@ -50,7 +50,7 @@
 
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center"
-               href="{{ route('user.payin.data') }}">
+               href="{{ route('user.payin.datalist') }}">
                  <i class="mdi mdi-cash-plus menu-icon"></i>
                 <span class="menu-title ms-2">Pay-In</span>
             </a>

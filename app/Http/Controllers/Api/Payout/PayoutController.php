@@ -161,6 +161,13 @@ class PayoutController extends Controller
                         $finalAmount
                     );
 
+                    $paymentData = DB::table('payout_payment')->where('id', $payoutPaymentId)->select('systemid','trx_id','cus_trx_id','utr','txn_type','pymt_type','status','account_number','amount')->first();
+                    $payloaddata = (array) $paymentData;
+                    return response()->json([
+                        "status" => "success.",
+                        "message" => "Payout processed successfully.",
+                        "data"    => $payloaddata,
+                    ]);
           
         }catch (\Exception $e) 
             {

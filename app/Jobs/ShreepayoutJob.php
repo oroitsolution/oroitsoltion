@@ -99,7 +99,7 @@ class ShreepayoutJob implements ShouldQueue
                     ]);
             }
 
-            $data = DB::table('payout_payment')->where('id', $this->payoutId)->first();
+            $data = DB::table('payout_payment')->where('id', $this->payoutId)->select('systemid','trx_id','cus_trx_id','utr','txn_type','pymt_type','status','account_number','amount')->first();
 
             $this->sendClientCallback([
                 'status' => 'SUCCESS',

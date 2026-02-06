@@ -181,7 +181,7 @@ Route::post('/payin/status', [PayinController::class, 'payinstatus'])->name('pay
           Route::post('/kyc-send-otp', [UserkycController::class, 'send_otp'])->name('kyc.sendOtp');
           Route::post('/kyc-verify-otp', [UserkycController::class, 'verify_otp'])->name('kyc.verifyOtp');
 
-          Route::get('/payin/data', [UserPayinController::class, 'userpayindata'])->name('payin.data');
+          Route::get('/payin/datalist', [UserPayinController::class, 'userpayindata'])->name('payin.datalist');
           
           Route::get('/payout/data', [UserPayoutController::class, 'userpayoutdata'])->name('payout.data');
           Route::get('/payout/{cus_trx_id}/slip', [UserPayoutController::class, 'slip'])->name('payout.slip');;

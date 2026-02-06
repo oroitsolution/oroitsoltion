@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('utr');
             $table->string('remark');
             $table->string('oldamount');
-            $table->string('status')->default('PENDING');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

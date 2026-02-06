@@ -5,7 +5,7 @@
    <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
          <div class="card">
-            <form method="GET" action="{{ route('user.payin.data') }}" >
+            <form method="GET" action="{{ route('user.payin.datalist') }}" >
                <div class="card-body">
                   <div class="row align-items-end">
                      <div class="col-md-3">

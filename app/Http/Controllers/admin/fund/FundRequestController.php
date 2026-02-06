@@ -80,7 +80,7 @@ class FundRequestController extends Controller
             'utr'            => $request->utr,
             'remark'         => $request->remark,
             'oldamount'      => $user->wallet_amount,
-            'status'         => 'PENDING',
+            'status'         => 'pending',
         ]);
 
         return response()->json([

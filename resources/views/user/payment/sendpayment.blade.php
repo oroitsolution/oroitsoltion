@@ -5,9 +5,11 @@
     <div class="row">  
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
+          <div class="alert alert-danger resmsg d-none" role="alert"></div>
           <div class="card-body text-end">
+           
             <a href="#" class="btn btn-primary"  data-bs-toggle="modal" id="addBeneficiaryBtn">Send Payment</a>
-            </p>
+             
             <div class="table-responsive">
               <table class="table table-striped" >
                   <thead>
@@ -176,14 +178,15 @@
          e.preventDefault();
          var formData = $(this).serialize();
          $('.form-text.text-danger').text('');
+         let btn = $('#payoutForm button[type="submit"]');
+          btn.prop('disabled', true).text('Processing...');
 
          $.ajax({
              url: '/user/payment-request-send',
             method: 'POST',
             data: formData,
           success: function(response) {
-               if (response.status == 'false') {
-                 
+               if (response.status == false) {
                   $('.resmsg').text(response.message);
                   $('.resmsg').removeClass('d-none');
                   $('#payoutForm')[0].reset();
