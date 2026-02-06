@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiJsonResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Models\User;
 use App\Models\Freeze;
 use App\Models\Charge;
 use App\Jobs\ShreepayoutJob;
+use App\Models\Kyc;
+use App\Models\Clints;
+use App\Models\PayoutPayment;
 
 class PayoutController extends Controller
 {
@@ -177,4 +183,119 @@ class PayoutController extends Controller
                 ], 500);
             }
    }
+                    
+        // ------------------------------------------------------------------------------------------//
+        //------------------------Check Status API--------------------------------------------------//
+
+        public function check_status(Request $request)
+        {
+            // ✅ Validation
+            $validator = Validator::make($request->all(), [
+                'apiRefNum' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'data'   => [
+                        'resultCode'    => '422',
+                        'resultStatus'  => 'Validation Failed',
+                        'resultMessage' => $validator->errors()->first(),
+                        'errors'        => $validator->errors(),
+                    ]
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $orderId = $request->apiRefNum;
+
+            // ✅ Fetch transaction
+            $txn21 = DB::table('payout_payment')
+                    ->where('trx_id', $orderId)
+                    ->first();
+
+            $txn = PayoutPayment::where('trx_id', $orderId)->first();
+
+            //  Not found
+            if (!$txn) {
+                return response()->json([
+                    'status'   => 'error',
+                    'order_id'=> $orderId,
+                    'data'     => [
+                        'resultCode'    => '404',
+                        'resultStatus'  => 'Failed',
+                        'resultMessage' => 'Invalid Order ID',
+                        'data'          => []
+                    ]
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // ✅ Success response (PRO FORMAT)
+            return response()->json([
+                'status'    => 'success',
+                'order_id' => $orderId,
+                'data'      => [
+                    'resultCode'    => '200',
+                    'resultStatus'  => ucfirst($txn->status),
+                    'resultMessage' => 'Transaction ' . ucfirst($txn->status),
+                    'data'          => [
+                        [
+                            'TransactionId'   => $txn->trx_id,
+                            'CustomerRefNo'   => $txn->cus_trx_id ?? '',
+                            'TransactionDate'=> Carbon::parse($txn->updated_at)
+                                                        ->format('m/d/Y h:i:s A'),
+                            'TxnStatus'       => $txn->status,
+                            'Amount'          => (float) $txn->amount,
+                            'UTR'             => $txn->utr ?? 'N/A',
+                            'Remarks'         => $txn->remark ?? 'N/A',
+                        ]
+                    ]
+                ]
+            ], Response::HTTP_OK);
+        }
+
+
+        public function checkStatus($orderId)
+        {
+            $txn = PayoutPayment::where('trx_id', $orderId)->first();
+
+            if (!$txn) {
+                return response()->json([
+                    'status' => 'error',
+                    'order_id' => $orderId,
+                    'data' => [
+                        'resultCode' => '404',
+                        'resultStatus' => 'Failed',
+                        'resultMessage' => 'Transaction not found',
+                        'data' => []
+                    ]
+                ], Response::HTTP_NOT_FOUND);
+            }
+                    
+            return response()->json([
+                'status' => 'success',
+                'order_id' => $orderId,
+                'data' => [
+                    'resultCode' => '200',
+                    'resultStatus' => ucfirst($txn->status),
+                    'resultMessage' => 'Transaction ' . ucfirst($txn->status),
+                    'data' => [
+                        [
+                            'TransactionId'   => $txn->trx_id,
+                            'CustomerRefNo'   => $txn->cus_trx_id ?? '',
+                            'TransactionDate'=> Carbon::parse($txn->updated_at)
+                                                    ->format('m/d/Y h:i:s A'),
+                            'TxnStatus'       => $txn->status,
+                            'rrn'             => $txn->utr ?? '',
+                            'PayerName'       => $txn->name ?? '',
+                            'Amount'          => (float) $txn->amount,
+                           
+                        ]
+                    ]
+                ]
+            ], Response::HTTP_OK);
+        }
+
+
+
+
 }

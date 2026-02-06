@@ -26,12 +26,19 @@ class UserHeaderAuth
 
             // Validate credentials against the database
             $user = DB::table('clints')->where('client_id', $clientId)->where('secret_id', $secretId)->where('status','active')->first();
-           
+
+            if ($user === NULL || $user === null ) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your Header API Status is Not Active! Contact to Admin'
+                ], 401);
+            }
+
             if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid credentials'
-            ], 401);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401);
             }
            
             // if (!$user) {

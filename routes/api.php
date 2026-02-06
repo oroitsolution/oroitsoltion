@@ -12,7 +12,10 @@ Route::post('/payin/response/data',  [PayinresponseController::class, 'payinresp
 Route::post('/payout/response/data', [PayoutresponseController::class, 'payoutresponse']);
 
 Route::middleware('header_auth')->group(function () {
-Route::post('/payin/data',  [PayinController::class, 'payindata']);
-Route::post('/payout/data', [PayoutController::class, 'payoutdata']);
-
+    Route::post('/payin/data',  [PayinController::class, 'payindata']);
+    Route::post('/payout/data', [PayoutController::class, 'payoutdata']);
+    // Created By AMAN
+    Route::post('/payout/v1/check-status', [PayoutController::class, 'check_status']);
+    Route::get('/payout/v2/check-status/{orderId}', [PayoutController::class, 'checkStatus']);
+    
 });
