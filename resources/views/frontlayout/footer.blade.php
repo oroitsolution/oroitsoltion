@@ -155,7 +155,7 @@
                   hierarchies.
                 </p>
                 <p class="copyright-text">
-                  <span>© 2024 ORO IT.</span>Designed and Developed by
+                  <span>© 2026 ORO IT.</span>Designed and Developed by
                   <a href="javascript:void(0)" rel="nofollow"> ORO IT SOLUTION </a></a>
                 </p>
               </div>
