@@ -112,7 +112,6 @@ class UserdashboardController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
-                // ❗ update() returns number of rows affected
                 if ($updated > 0) {
                     return response()->json([
                         'success'    => true,

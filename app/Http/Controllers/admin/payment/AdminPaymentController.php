@@ -9,7 +9,7 @@ use App\Models\Freeze;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AdminPaymentController extends Controller 
 {

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\user\Payout;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
