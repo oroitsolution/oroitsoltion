@@ -13,8 +13,8 @@ class UserHeaderAuth
 
         public function handle(Request $request, Closure $next)
         {
-            $clientId = $request->header('client_id');
-            $secretId = $request->header('secret_id');
+            $clientId = $request->header('X-Client-Id');
+            $secretId = $request->header('X-Secret-Id');
 
             // Check if required headers are present
             if (empty($clientId) || empty($secretId)) {
